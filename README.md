@@ -2,7 +2,9 @@
 
 A free, visual revision guide for the **MA Psychology, Semester 1** paper *Theories of Personality*. It is written for students who are new to psychology and want to understand each theorist quickly before a unit test.
 
-Everything is in one self-contained file, [`index.html`](index.html). Open it in any web browser; it needs no internet connection or installation.
+**Open it online:** https://fruitjs.github.io/theories-of-personality/
+
+Everything is in one self-contained file, [`index.html`](index.html). You can also download it and open it in any web browser; it works offline with no installation.
 
 ## What's inside
 
