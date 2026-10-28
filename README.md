@@ -8,7 +8,27 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 
 ## What's inside
 
-### Semester 1 (two papers ready)
+### Semester 1 (all four theory papers ready)
+
+**Foundations of Psychology (MPY26-C101)**
+
+| Unit | Topics |
+|---|---|
+| I | Concept and nature of psychology; psychology as a science; goals; branches and scope |
+| II | Learning: classical and operant conditioning, observational, verbal and discrimination learning |
+| III | Memory and forgetting: stages, Atkinson–Shiffrin and working memory, LTM types, forgetting curve and causes |
+| IV | Motivation: instincts, needs, drives, arousal, incentives; biological and social motives; Maslow |
+| V | Emotion: types, Ekman's primary emotions, physiology, James–Lange, Cannon–Bard, Schachter–Singer, Lazarus |
+
+**Research Methodology (MPY26-C104)**
+
+| Unit | Topics |
+|---|---|
+| I | Scientific research; variables and their control; research problem; hypothesis |
+| II | Descriptive, survey, correlational, ex post facto, experimental, quasi-experimental, field, qualitative and mixed-method research |
+| III | Sampling: purpose, sample size, probability and non-probability methods, sampling error |
+| IV | Research design: between, within, factorial, randomised block, matched group and single-subject designs |
+| V | Interview, observation, questionnaire and schedule, rating scales; APA report writing; research ethics |
 
 **Psychology of Personality (MPY26-C103)**
 
@@ -32,7 +52,7 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 
 ### Semesters 2–4 (placeholders)
 
-Every paper in Semesters 2, 3 and 4, plus the remaining Semester 1 papers, is listed with its code and unit headings and marked **Coming soon**.
+Every paper in Semesters 2, 3 and 4, plus the Semester 1 practical, is listed with its code and unit headings and marked **Coming soon**.
 
 ## Each guide includes
 
