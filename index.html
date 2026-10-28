@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Visual Semester 1 MA Psychology study guide for Theories of Personality: Units I-V with diagrams, mnemonics and self-tests.">
-<title>Theories of Personality</title>
+<meta name="description" content="Visual MA Psychology study guides: Semester 1 Psychology of Personality and Advanced Social Psychology, with diagrams, mnemonics and self-tests.">
+<title>MA Psychology Study Guides</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,6 +80,52 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .utabs button[aria-selected="true"] { color: var(--nav-fg); border-bottom-color: var(--hl-bg); }
 .utabs button:hover { color: var(--nav-fg); }
 .utabs button:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: -2px; }
+
+.subtabs { display: flex; gap: 6px; flex-wrap: wrap; padding-block: 2px 4px; }
+.subtabs button {
+  cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.82rem; padding: 4px 12px; border-radius: 999px;
+  border: 1px solid var(--nav-muted); background: transparent; color: var(--nav-muted);
+}
+.subtabs button[aria-selected="true"] { background: var(--hl-bg); border-color: var(--hl-bg); color: var(--hl-fg); }
+.subtabs button:hover { color: var(--nav-fg); }
+.subtabs button[aria-selected="true"]:hover { color: var(--hl-fg); }
+.subtabs button:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 2px; }
+.scards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+.scard { all: unset; cursor: pointer; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.scard:hover { border-color: var(--ink); }
+.scard:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
+.scard h2 { font-size: 1.5rem; }
+.scard p { color: var(--muted); font-size: 0.95rem; }
+.scard ol { margin: 0; padding-left: 1.3em; font-size: 0.92rem; }
+
+/* semester paper cards */
+.papers { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.paper { all: unset; box-sizing: border-box; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+button.paper { cursor: pointer; border: 2px solid var(--good); }
+button.paper:hover { border-color: var(--ink); }
+button.paper:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
+.paper.soon { border-style: dashed; background: var(--bg); }
+.paper .code { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); letter-spacing: .04em; }
+.paper h3 { font-size: 1.08rem; }
+.paper ol { margin: 0; padding-left: 1.3em; font-size: 0.88rem; color: var(--muted); }
+.badge { align-self: flex-start; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: .06em; padding: 2px 8px; border-radius: 999px; }
+.badge.ready { background: var(--good); color: var(--paper); }
+.badge.soon { border: 1px solid var(--muted); color: var(--muted); }
+.badge.kind { border: 1px solid var(--line); color: var(--muted); }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+
+/* key researcher / key study cards (social psychology) */
+.who { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--bg); min-width: 0; }
+.who .portrait, .who img.photo { width: 64px; height: 64px; border-radius: 50%; font-size: 1.2rem; }
+.who img.photo { object-fit: cover; border: 3px solid var(--tc, var(--c3)); }
+.who .portrait { background: var(--tc, var(--c3)); }
+.who b { font-family: var(--display); display: block; }
+.who span { font-size: 0.88rem; color: var(--muted); display: block; }
+.who .credit { font-size: 0.72rem; }
+.study { border-left: 4px solid var(--tc, var(--c3)); background: var(--bg); border-radius: 0 8px 8px 0; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.study .lbl { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--tc, var(--muted)); }
+.study h4 { font-size: 1.05rem; }
+.study p { font-size: 0.95rem; }
 
 /* section tabs inside a unit */
 .unit-head { display: flex; flex-direction: column; gap: 10px; }
@@ -239,31 +285,107 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 <header class="topbar">
   <div class="gutter"><div class="inner">
     <ol class="crumbs" id="crumbs" aria-label="Breadcrumb"></ol>
+    <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
     <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
   </div></div>
 </header>
 
 <main class="gutter"><div class="inner" id="content">
 
-<section class="view" id="home" data-label="Overview">
-  <div class="eyebrow">MA Psychology · Semester 1</div>
-  <h1>Theories of Personality</h1>
-  <p class="lede">Five units, seventeen theorists. Pick a unit to start. Every theorist has a fact card, diagrams, memory tricks and a self-test at the end of the unit. Use the breadcrumb at the top to step back out.</p>
-  <div class="ucards" id="ucards"></div>
+<section class="view" id="home" data-label="MA Psychology">
+  <div class="eyebrow">Two-year programme · four semesters</div>
+  <h1>MA Psychology Study Guides</h1>
+  <p class="lede">Pick a semester, then a paper, then a unit. Every unit has an overview, one tab per theorist or topic, diagrams, yellow memory tricks, and a self-test at the end. Use the breadcrumb at the top to step back out.</p>
+  <div class="scards" id="semcards"></div>
   <div class="block">
     <h3>How to use this for your unit test</h3>
     <ol>
       <li>Read the unit <b>Overview</b> tab first: it tells you the big idea in a few lines.</li>
-      <li>Open each theorist tab. Learn the <b>yellow memory tricks</b> and practise drawing the diagrams. Examiners reward a neat labelled diagram.</li>
-      <li>Use the <b>Compare</b> tab for "differentiate" or "critically evaluate" questions.</li>
+      <li>Open each tab. Learn the <b>yellow memory tricks</b> and practise drawing the diagrams. Examiners reward a neat labelled diagram.</li>
+      <li>Learn the <b>key studies</b> with the researcher's name and year. Quoting them earns marks.</li>
       <li>Finish with the <b>Self-test</b> tab. Say the answer aloud before you open it.</li>
     </ol>
   </div>
 </section>
 
-<section class="view unit" id="u1" data-num="Unit I" data-short="Personality Basics" data-title="Personality: Meaning, Determinants and Body-Type Theories" hidden>
+<section class="view subject" id="pp" data-sem="sem1" data-code="MPY26-C103" data-name="Psychology of Personality" data-short="Personality" data-blurb="Five units and seventeen theorists, from body-type theories to Freud, the trait theorists and the cognitive approaches." hidden>
+  <div class="eyebrow">MA Psychology · Semester 1</div>
+  <h1>Psychology of Personality</h1>
+  <p class="lede">Five units and seventeen theorists. Every theorist has a fact card with a photo, diagrams, memory tricks, and answer outlines.</p>
+  <div class="ucards"></div>
+</section>
+
+<section class="view subject" id="sp" data-sem="sem1" data-code="MPY26-C102" data-name="Advanced Social Psychology" data-short="Social Psychology" data-blurb="How other people shape what we think, feel and do: helping, social thinking, the self, attitudes, prejudice, conformity and groups." hidden>
+  <div class="eyebrow">MA Psychology · Semester 1</div>
+  <h1>Advanced Social Psychology</h1>
+  <p class="lede">Five units built around the classic studies examiners expect you to quote, with the researcher, the year and what was found.</p>
+  <div class="ucards"></div>
+</section>
+
+<section class="view semester" id="sem1" data-name="Semester 1" data-blurb="Foundations, social psychology, personality and research methods." hidden>
+  <div class="eyebrow">MA Psychology · Year 1</div>
+  <h1>Semester 1</h1>
+  <p class="lede">Two papers are ready to study. The rest are listed with their units and will be added next.</p>
+  <div class="papers">
+    <div class="paper soon"><span class="code">MPY26-C101</span><h3>Foundations of Psychology</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Learning</li><li>Memory and Forgetting</li><li>Motivation</li><li>Emotion</li></ol></div>
+    <button type="button" class="paper" data-go="sp"><span class="code">MPY26-C102</span><h3>Advanced Social Psychology</h3><div class="badges"><span class="badge kind">Core</span><span class="badge ready">Ready</span></div><ol><li>Intro &amp; Prosocial Behaviour</li><li>Social Cognition &amp; Perception</li><li>Self, Dissonance, Aggression</li><li>Attitudes &amp; Prejudice</li><li>Social Influence &amp; Groups</li></ol></button>
+    <button type="button" class="paper" data-go="pp"><span class="code">MPY26-C103</span><h3>Psychology of Personality</h3><div class="badges"><span class="badge kind">Core</span><span class="badge ready">Ready</span></div><ol><li>Personality Basics</li><li>Psychodynamic</li><li>Psychosocial &amp; Existential</li><li>Dispositional</li><li>Cognitive-Behavioural</li></ol></button>
+    <div class="paper soon"><span class="code">MPY26-C104</span><h3>Research Methodology</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><ol><li>Variables, Problem, Hypothesis</li><li>Types of Research</li><li>Sampling</li><li>Research Design</li><li>Data Collection &amp; Report Writing</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-C151</span><h3>Practical</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><p class="cap">Any five practicals: learning, memory, motivation, emotion, personality, attitude, prejudice, conformity, aggression, sociogram and more.</p></div>
+  </div>
+</section>
+
+<section class="view semester" id="sem2" data-name="Semester 2" data-blurb="Cognitive psychology, statistics, testing, counselling and electives." hidden>
+  <div class="eyebrow">MA Psychology · Year 1</div>
+  <h1>Semester 2</h1>
+  <p class="lede">Placeholder: these papers will be added as study guides. Exit option after Year 1: PG Diploma in Psychology.</p>
+  <div class="papers">
+    <div class="paper soon"><span class="code">MPY26-C201</span><h3>Cognitive Psychology</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Attention and Perception</li><li>Thinking and Problem Solving</li><li>Creativity and Decision Making</li><li>Intelligence</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-C202</span><h3>Advanced Statistical Techniques</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction &amp; Central Tendency</li><li>Variability &amp; Normal Curve</li><li>Parametric Statistics</li><li>Non-Parametric Statistics</li><li>Correlation Methods</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E203</span><h3>Psychological Testing &amp; Assessment</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Assumptions and Types</li><li>Test Construction &amp; Standardisation</li><li>Attitude Scales</li><li>Areas of Testing</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E204</span><h3>Counselling &amp; Psychotherapy</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction &amp; Counselling Skills</li><li>Psychodynamic, Humanistic, Existential</li><li>Cognitive-Behavioural Approaches</li><li>Recent Approaches (DBT, ACT, Mindfulness)</li><li>Specific Therapies and Ethics</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E205</span><h3>Developmental Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Prenatal and Motor Development</li><li>Cognitive and Language Development</li><li>Social and Emotional Development</li><li>Moral Development and Aggression</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E206</span><h3>School Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Psychological Issues</li><li>Assessment</li><li>Management</li><li>Parenting, Values and Ethics</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E207</span><h3>Biological Basis of Behaviour</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Sensation and Perception</li><li>Neurons and Neural Communication</li><li>Nervous and Endocrine Systems</li><li>Learning, Motivation &amp; Emotion</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-C251</span><h3>Practical</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><p class="cap">Any five practicals: attention, perception, memory, creativity, intelligence, personality, inkblot, apperception test, aptitude and more.</p></div>
+  </div>
+</section>
+
+<section class="view semester" id="sem3" data-name="Semester 3" data-blurb="Psychopathology, rehabilitation, health, stress, Indian and Western thought." hidden>
+  <div class="eyebrow">MA Psychology · Year 2</div>
+  <h1>Semester 3</h1>
+  <p class="lede">Placeholder: these papers will be added as study guides.</p>
+  <div class="papers">
+    <div class="paper soon"><span class="code">MPY26-C301</span><h3>Psychopathology</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction; ICD and DSM</li><li>Approaches to Psychopathology</li><li>Anxiety, OCD, PTSD, Dissociative, Somatoform</li><li>Schizophrenia, Mood, Delusional</li><li>Delirium, Dementia, Amnestic</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-C302</span><h3>Disabilities &amp; Rehabilitation</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Assessment of Disabilities</li><li>Behaviour Modification</li><li>Rehabilitation Techniques</li><li>Rehabilitation Services and Laws</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E303</span><h3>Health Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Body Systems</li><li>Health Behaviours</li><li>Health Promoting &amp; Compromising Behaviours</li><li>Chronic Diseases</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E304</span><h3>Stress Management</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Stress and Health</li><li>Emotions, Stress and Coping</li><li>Relaxation and Biofeedback</li><li>Psychological Approaches</li><li>Other Approaches</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E305</span><h3>Indian Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Yogic Psychology</li><li>Bhagavad Gita and Buddhism</li><li>Indian Psychological Thoughts</li><li>Ayurveda and Psychology</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E306</span><h3>Western Thoughts and Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Associationism</li><li>Structuralism</li><li>Functionalism and Behaviourism</li><li>Gestalt and Transpersonal</li><li>Cognitive Revolution &amp; Multiculturalism</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-C351</span><h3>Practical</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><p class="cap">Any five practicals: biofeedback, anxiety, depression, stress, coping, self-efficacy, emotional regulation, job satisfaction and more.</p></div>
+  </div>
+</section>
+
+<section class="view semester" id="sem4" data-name="Semester 4" data-blurb="Positive psychology, applied electives, practical or dissertation." hidden>
+  <div class="eyebrow">MA Psychology · Year 2</div>
+  <h1>Semester 4</h1>
+  <p class="lede">Placeholder: these papers will be added as study guides. Option 1 is coursework only; Option 2 replaces coursework with a 20-credit dissertation (MPY26-D471).</p>
+  <div class="papers">
+    <div class="paper soon"><span class="code">MPY26-C401</span><h3>Positive Psychology</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><ol><li>Positive Perspective; PERMA</li><li>Living Well at Every Stage</li><li>Positive Emotional &amp; Cognitive States</li><li>Prosocial Behaviour</li><li>Applications</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E402</span><h3>Psychology at Workplace</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Employee Attitudes &amp; Behaviour</li><li>Theories of Work Motivation</li><li>Leadership</li><li>Communication at Work</li><li>Stress at Workplace</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E403</span><h3>Forensic Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Criminal Behaviour &amp; Psychopathy</li><li>Assessment &amp; Investigation</li><li>Insanity and Competence</li><li>Custody, Victims, Interrogation</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E404</span><h3>Environmental Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Environmental Stress &amp; Nature</li><li>Theories of Environmental Behaviour</li><li>Children and Nature</li><li>Values &amp; Pro-environmental Behaviour</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E405</span><h3>Sports Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Attitudes &amp; Social Factors</li><li>Arousal, Anxiety &amp; Performance</li><li>Motivation and Sports</li><li>Skill Acquisition</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E406</span><h3>Neuropsychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Brain Anatomy &amp; Functions</li><li>Assessment &amp; Neuroimaging</li><li>Cognition and Emotion</li><li>Brain Damage &amp; Rehabilitation</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E407</span><h3>Qualitative Research Methods</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Interviewing</li><li>Methods I</li><li>Methods II</li><li>Coding &amp; Reporting</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-E408</span><h3>Transpersonal Psychology</h3><div class="badges"><span class="badge kind">Elective</span><span class="badge soon">Coming soon</span></div><ol><li>Introduction</li><li>Consciousness and Spirituality</li><li>Integral Psychology</li><li>Neuroscience and the Transpersonal</li><li>Transformation and Healing</li></ol></div>
+    <div class="paper soon"><span class="code">MPY26-C451</span><h3>Practical</h3><div class="badges"><span class="badge kind">Core</span><span class="badge soon">Coming soon</span></div><p class="cap">One case study or 50-hour internship (compulsory), plus any four practicals.</p></div>
+    <div class="paper soon"><span class="code">MPY26-D471</span><h3>Dissertation (Option 2)</h3><div class="badges"><span class="badge kind">20 credits</span><span class="badge soon">Coming soon</span></div><p class="cap">For students with at least 55% aggregate in Semesters 1–3. APA-format report with a similarity check.</p></div>
+  </div>
+</section>
+<section class="view unit" id="u1" data-subject="pp" data-num="Unit I" data-short="Personality Basics" data-title="Personality: Meaning, Determinants and Body-Type Theories" hidden>
   <div class="unit-head">
-    <div class="eyebrow">Unit I</div>
+    <div class="eyebrow">Psychology of Personality · Unit I</div>
     <h1>Personality: Meaning, Determinants and Body Types</h1>
     <div class="stabs" role="tablist" aria-label="Sections of Unit I"></div>
   </div>
@@ -622,9 +744,9 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
   </div>
 </section>
 
-<section class="view unit" id="u2" data-num="Unit II" data-short="Psychodynamic" data-title="Psychodynamic Approaches" hidden>
+<section class="view unit" id="u2" data-subject="pp" data-num="Unit II" data-short="Psychodynamic" data-title="Psychodynamic Approaches" hidden>
   <div class="unit-head">
-    <div class="eyebrow">Unit II</div>
+    <div class="eyebrow">Psychology of Personality · Unit II</div>
     <h1>Psychodynamic Approaches</h1>
     <div class="stabs" role="tablist" aria-label="Sections of Unit II"></div>
   </div>
@@ -1053,9 +1175,9 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
   </div>
 </section>
 
-<section class="view unit" id="u3" data-num="Unit III" data-short="Psychosocial &amp; Existential" data-title="Psychosocial and Existential Approaches" hidden>
+<section class="view unit" id="u3" data-subject="pp" data-num="Unit III" data-short="Psychosocial &amp; Existential" data-title="Psychosocial and Existential Approaches" hidden>
   <div class="unit-head">
-    <div class="eyebrow">Unit III</div>
+    <div class="eyebrow">Psychology of Personality · Unit III</div>
     <h1>Psychosocial and Existential Approaches</h1>
     <div class="stabs" role="tablist" aria-label="Sections of Unit III"></div>
   </div>
@@ -1374,9 +1496,9 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
   </div>
 </section>
 
-<section class="view unit" id="u4" data-num="Unit IV" data-short="Dispositional" data-title="Dispositional (Trait) Approaches" hidden>
+<section class="view unit" id="u4" data-subject="pp" data-num="Unit IV" data-short="Dispositional" data-title="Dispositional (Trait) Approaches" hidden>
   <div class="unit-head">
-    <div class="eyebrow">Unit IV</div>
+    <div class="eyebrow">Psychology of Personality · Unit IV</div>
     <h1>Dispositional Approaches</h1>
     <div class="stabs" role="tablist" aria-label="Sections of Unit IV"></div>
   </div>
@@ -1808,8 +1930,8 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
     <details><summary>Explain the Five-Factor Model. <span class="marks">10 marks</span></summary><div><ol><li>Intro; history of the lexical approach.</li><li>OCEAN with high/low and facets.</li><li>NEO-PI-R.</li><li>Five-Factor Theory: core and peripheral (draw).</li><li>Universality, stability, heritability.</li><li>Evaluation.</li></ol></div></details>
   </div>
 </section>
-<section class="view unit" id="u5" data-num="Unit V" data-short="Cognitive-Behavioural" data-title="Cognitive-Behavioural Approaches" hidden>
-  <div class="unit-head"><div class="eyebrow">Unit V</div><h1>Cognitive-Behavioural Approaches</h1><div class="stabs" role="tablist" aria-label="Sections of Unit V"></div></div>
+<section class="view unit" id="u5" data-subject="pp" data-num="Unit V" data-short="Cognitive-Behavioural" data-title="Cognitive-Behavioural Approaches" hidden>
+  <div class="unit-head"><div class="eyebrow">Psychology of Personality · Unit V</div><h1>Cognitive-Behavioural Approaches</h1><div class="stabs" role="tablist" aria-label="Sections of Unit V"></div></div>
 <div class="panel" data-key="overview" data-label="Overview">
   <h2>The 5-minute summary</h2>
   <div class="block">
@@ -2365,52 +2487,1279 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 </div>
 </section>
 
+
+
+
+
+<section class="view unit" id="s1" data-subject="sp" data-num="Unit I" data-short="Intro &amp; Prosocial" data-title="Introduction and Prosocial Behaviour" hidden>
+  <div class="unit-head">
+    <div class="eyebrow">Advanced Social Psychology · Unit I</div>
+    <h1>Introduction and Prosocial Behaviour</h1>
+    <div class="stabs" role="tablist" aria-label="Sections of Unit I"></div>
+  </div>
+
+  <!-- INTRO -->
+  <div class="panel t1" data-key="overview" data-label="Meaning &amp; Scope" data-full="Meaning, scope and importance">
+    <div class="block">
+      <h2>What is social psychology?</h2>
+      <div class="prose">
+        <p>Social psychology studies how <mark>other people</mark>, whether real, imagined or implied, affect the way we <b>think, feel and behave</b>. It looks at the <b>individual</b> in a social situation, while sociology looks at groups and society as a whole.</p>
+      </div>
+      <div class="grid">
+        <div class="concept"><span class="sym">Gordon Allport (1954/1985)</span><p>"An attempt to understand and explain how the <b>thoughts, feelings and behaviour</b> of individuals are influenced by the <b>actual, imagined or implied presence of others</b>."</p><p class="eg">The classic definition. Learn it word for word.</p></div>
+        <div class="concept"><span class="sym">Baron &amp; Branscombe</span><p>"The scientific field that seeks to understand the <b>nature and causes</b> of individual behaviour, feelings and thought in <b>social situations</b>."</p></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Four key features (from the definition)</h3>
+      <div class="grid">
+        <div class="concept"><h4>Scientific</h4><p>Uses the scientific method: experiments, surveys, observation. It values accuracy, objectivity, scepticism and open-mindedness.</p></div>
+        <div class="concept"><h4>Focus on the individual</h4><p>Studies how one person is affected, not whole societies.</p></div>
+        <div class="concept"><h4>Nature and causes</h4><p>Not just describing behaviour but explaining <b>why</b> it happens.</p></div>
+        <div class="concept"><h4>Social situations</h4><p>Other people, even imagined ones, change our behaviour.</p></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Where social psychology sits</h3>
+      <figure class="fig">
+        <svg viewBox="0 0 680 230" role="img" aria-label="Social psychology overlaps with general psychology and sociology">
+          <circle cx="250" cy="115" r="100" style="fill:var(--c3)" opacity="0.3"/>
+          <circle cx="430" cy="115" r="100" style="fill:var(--c2)" opacity="0.3"/>
+          <text x="200" y="110" text-anchor="middle" class="t" font-size="15" font-weight="800">Psychology</text>
+          <text x="200" y="130" text-anchor="middle" class="tb" font-size="12">the individual mind</text>
+          <text x="480" y="110" text-anchor="middle" class="t" font-size="15" font-weight="800">Sociology</text>
+          <text x="480" y="130" text-anchor="middle" class="tb" font-size="12">society, groups</text>
+          <text x="340" y="108" text-anchor="middle" class="t" font-size="14" font-weight="800">Social</text>
+          <text x="340" y="126" text-anchor="middle" class="t" font-size="14" font-weight="800">psychology</text>
+          <text x="340" y="222" text-anchor="middle" class="tm" font-size="11">the individual IN a social context</text>
+        </svg>
+      </figure>
+    </div>
+
+    <div class="block">
+      <h3>Scope: what it studies</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Social thinking</span><p>Social cognition, perception, attribution, the self, attitudes</p></div>
+        <div class="concept"><span class="sym">Social influence</span><p>Conformity, compliance, obedience, persuasion</p></div>
+        <div class="concept"><span class="sym">Social relations</span><p>Prejudice, aggression, helping, attraction, love</p></div>
+        <div class="concept"><span class="sym">Groups</span><p>Group processes, leadership, decision-making, conflict</p></div>
+        <div class="concept"><span class="sym">Applied areas</span><p>Health, law, workplace, environment, education, politics</p></div>
+      </div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span>Scope = <b>Thinking, Influence, Relations</b> (+ groups and applications): "how we <b>think about</b>, are <b>influenced by</b>, and <b>relate to</b> one another" (David Myers).</span></div>
+    </div>
+
+    <div class="block">
+      <h3>Importance</h3>
+      <ul>
+        <li><b>Understanding everyday life</b>: why we help, conform, fall in love or hate.</li>
+        <li><b>Solving social problems</b>: reducing prejudice, violence, communal conflict and bullying.</li>
+        <li><b>Health</b>: changing health habits (e.g. hand-washing, vaccination campaigns).</li>
+        <li><b>Law</b>: eyewitness accuracy, jury decisions.</li>
+        <li><b>Workplace</b>: teamwork, leadership, motivation.</li>
+        <li><b>Self-understanding</b>: knowing our own biases helps us think more fairly.</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <h3>Short history</h3>
+      <div class="steps">
+        <div class="step"><div class="when"><b>1898</b>Triplett</div><p>First social psychology experiment: cyclists and children winding fishing reels went faster with others present (social facilitation).</p></div>
+        <div class="step"><div class="when"><b>1908</b>First textbooks</div><p>William McDougall (psychologist) and E. A. Ross (sociologist) both published books titled <i>Social Psychology</i>.</p></div>
+        <div class="step"><div class="when"><b>1924</b>F. H. Allport</div><p>Made it an experimental science.</p></div>
+        <div class="step"><div class="when"><b>1930s–40s</b>Kurt Lewin</div><p>"Father of modern social psychology". Behaviour = f(Person × Environment).</p></div>
+        <div class="step"><div class="when"><b>1950s–70s</b>Classic studies</div><p>Asch (conformity), Festinger (dissonance), Milgram (obedience), Latané &amp; Darley (bystanders).</p></div>
+        <div class="step"><div class="when"><b>Today</b>New directions</div><p>Social neuroscience, implicit processes, culture and diversity.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROSOCIAL -->
+  <div class="panel t2" data-key="prosocial" data-label="Prosocial Behaviour" data-full="Meaning of prosocial behaviour">
+    <div class="block">
+      <h2>Prosocial behaviour</h2>
+      <div class="prose">
+        <p><b>Prosocial behaviour</b> is any act that <mark>benefits others</mark>, such as helping, sharing, donating, cooperating or volunteering. It may or may not cost the helper something, and it may or may not have selfish motives.</p>
+      </div>
+      <div class="grid">
+        <div class="concept"><span class="sym">Prosocial behaviour</span><p>The <b>widest</b> term: any helpful act, whatever the motive.</p></div>
+        <div class="concept"><span class="sym">Helping</span><p>An act that intentionally benefits another person.</p></div>
+        <div class="concept"><span class="sym">Altruism</span><p>Helping <b>purely for the other's benefit</b>, often at a cost to oneself, with no expectation of reward.</p></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>The bystander effect</h3>
+      <div class="study"><span class="lbl">Real event · 1964</span><h4>Kitty Genovese, New York</h4><p>Newspapers reported that 38 neighbours witnessed her murder and none helped. Later research found the number and details were exaggerated, but the case inspired the research below.</p></div>
+      <div class="who">
+        <div class="portrait" data-photo="latane">L&amp;D</div>
+        <div><b>Bibb Latané &amp; John Darley (1968)</b><span>Students heard another "participant" have a seizure over an intercom. Alone: about 85% helped quickly. With 4 others believed present: about 31% helped.</span></div>
+      </div>
+      <p><b>Bystander effect:</b> the more bystanders present, the <mark>less likely</mark> any one person is to help. The main reason is <b>diffusion of responsibility</b>: "someone else will do it."</p>
+    </div>
+
+    <div class="block">
+      <h3>Five steps to helping (Latané &amp; Darley)</h3>
+      <figure class="fig">
+        <svg viewBox="0 0 680 300" role="img" aria-label="Five decision steps in an emergency; failure at any step means no help">
+          <defs><marker id="sp1a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--c2)"/></marker></defs>
+          <g font-size="12.5">
+            <rect x="10" y="20" width="118" height="70" rx="10" style="fill:var(--c2)"/><text x="69" y="50" text-anchor="middle" class="tw" font-weight="800">1 Notice</text><text x="69" y="70" text-anchor="middle" class="tw" font-size="11">the event</text>
+            <rect x="146" y="20" width="118" height="70" rx="10" style="fill:var(--c2)"/><text x="205" y="50" text-anchor="middle" class="tw" font-weight="800">2 Interpret</text><text x="205" y="70" text-anchor="middle" class="tw" font-size="11">as emergency</text>
+            <rect x="282" y="20" width="118" height="70" rx="10" style="fill:var(--c2)"/><text x="341" y="50" text-anchor="middle" class="tw" font-weight="800">3 Assume</text><text x="341" y="70" text-anchor="middle" class="tw" font-size="11">responsibility</text>
+            <rect x="418" y="20" width="118" height="70" rx="10" style="fill:var(--c2)"/><text x="477" y="50" text-anchor="middle" class="tw" font-weight="800">4 Know how</text><text x="477" y="70" text-anchor="middle" class="tw" font-size="11">to help</text>
+            <rect x="554" y="20" width="116" height="70" rx="10" style="fill:var(--c2)"/><text x="612" y="50" text-anchor="middle" class="tw" font-weight="800">5 Decide</text><text x="612" y="70" text-anchor="middle" class="tw" font-size="11">to help → HELP</text>
+          </g>
+          <g style="stroke:var(--c2)" stroke-width="2.5"><line x1="128" y1="55" x2="142" y2="55" marker-end="url(#sp1a)"/><line x1="264" y1="55" x2="278" y2="55" marker-end="url(#sp1a)"/><line x1="400" y1="55" x2="414" y2="55" marker-end="url(#sp1a)"/><line x1="536" y1="55" x2="550" y2="55" marker-end="url(#sp1a)"/></g>
+          <g class="ln" stroke-width="1.5" stroke-dasharray="4 3"><line x1="69" y1="90" x2="69" y2="130"/><line x1="205" y1="90" x2="205" y2="130"/><line x1="341" y1="90" x2="341" y2="130"/><line x1="477" y1="90" x2="477" y2="130"/><line x1="612" y1="90" x2="612" y2="130"/></g>
+          <g font-size="11.5" class="tb" text-anchor="middle">
+            <rect x="10" y="130" width="118" height="80" rx="8" class="boxbg" style="stroke:var(--warn)"/><text x="69" y="152" font-weight="700" style="fill:var(--warn)">Fails if…</text><text x="69" y="172">busy, distracted,</text><text x="69" y="188">in a hurry</text>
+            <rect x="146" y="130" width="118" height="80" rx="8" class="boxbg" style="stroke:var(--warn)"/><text x="205" y="152" font-weight="700" style="fill:var(--warn)">Fails if…</text><text x="205" y="172">pluralistic</text><text x="205" y="188">ignorance</text>
+            <rect x="282" y="130" width="118" height="80" rx="8" class="boxbg" style="stroke:var(--warn)"/><text x="341" y="152" font-weight="700" style="fill:var(--warn)">Fails if…</text><text x="341" y="172">diffusion of</text><text x="341" y="188">responsibility</text>
+            <rect x="418" y="130" width="118" height="80" rx="8" class="boxbg" style="stroke:var(--warn)"/><text x="477" y="152" font-weight="700" style="fill:var(--warn)">Fails if…</text><text x="477" y="172">lacks skills</text><text x="477" y="188">or knowledge</text>
+            <rect x="554" y="130" width="116" height="80" rx="8" class="boxbg" style="stroke:var(--warn)"/><text x="612" y="152" font-weight="700" style="fill:var(--warn)">Fails if…</text><text x="612" y="172">costs or danger</text><text x="612" y="188">seem too high</text>
+          </g>
+          <text x="340" y="250" text-anchor="middle" class="t" font-size="13" font-weight="700">A "no" at any step = no help</text>
+          <text x="340" y="270" text-anchor="middle" class="tm" font-size="11">Pluralistic ignorance: everyone looks calm, so each person assumes it isn't an emergency</text>
+        </svg>
+      </figure>
+      <div class="mnemonic"><span class="lbl">Remember</span><span><b>N-I-A-K-D</b>: "<b>N</b>ever <b>I</b>gnore <b>A</b>nyone; <b>K</b>indly <b>D</b>o help."</span></div>
+    </div>
+  </div>
+
+  <!-- EMPATHY & ALTRUISM -->
+  <div class="panel t3" data-key="empathy" data-label="Empathy &amp; Altruism" data-full="Empathy and altruism">
+    <div class="block">
+      <h2>Empathy</h2>
+      <p><b>Empathy</b> is the ability to <mark>feel and understand</mark> another person's emotional state, to "put yourself in their shoes".</p>
+      <div class="grid">
+        <div class="concept"><span class="sym">Affective (emotional) empathy</span><p>Feeling what the other person feels: their sadness makes you sad.</p></div>
+        <div class="concept"><span class="sym">Cognitive empathy (perspective-taking)</span><p>Understanding what they think and feel, even without feeling it.</p></div>
+        <div class="concept"><span class="sym">Empathic concern</span><p>Feeling sympathy and wanting to help. This is the part that most strongly predicts helping.</p></div>
+      </div>
+      <p class="cap">Empathy shows early (babies cry when other babies cry), increases with age, and is partly inherited (twin studies) and partly learned from parents.</p>
+    </div>
+
+    <div class="block">
+      <h3>Why do we help? Four explanations</h3>
+      <div class="who">
+        <div class="portrait" data-photo="batson">CB</div>
+        <div><b>C. Daniel Batson</b><span>Empathy-altruism hypothesis (1981 onwards): true altruism exists.</span></div>
+      </div>
+      <div class="grid2">
+        <div class="concept"><span class="sym">1 · Empathy-altruism hypothesis (Batson)</span><p>When we feel <b>empathic concern</b>, we help <b>purely to relieve the other person's distress</b>, even when we could easily escape.</p></div>
+        <div class="concept"><span class="sym">2 · Negative-state relief model (Cialdini)</span><p>We help to relieve <b>our own</b> bad mood: seeing suffering makes us feel bad, and helping makes us feel better. Selfish motive.</p></div>
+        <div class="concept"><span class="sym">3 · Empathic joy hypothesis</span><p>We help because we enjoy seeing the <b>positive effect</b> of our help on the other person.</p></div>
+        <div class="concept"><span class="sym">4 · Genetic determinism (kin selection)</span><p>Evolution favours helping <b>genetic relatives</b>, since it helps our genes survive. We help family more than strangers.</p></div>
+      </div>
+      <figure class="fig">
+        <svg viewBox="0 0 680 210" role="img" aria-label="Batson's model: seeing someone in need leads either to personal distress and egoistic helping, or to empathic concern and altruistic helping">
+          <defs><marker id="sp1b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--c3)"/></marker></defs>
+          <rect x="10" y="75" width="150" height="60" rx="10" class="boxbg" stroke-width="1.5"/>
+          <text x="85" y="102" text-anchor="middle" class="t" font-size="13" font-weight="700">See someone</text><text x="85" y="120" text-anchor="middle" class="t" font-size="13" font-weight="700">in need</text>
+          <path d="M160 95 C200 60 220 50 250 48" fill="none" style="stroke:var(--c3)" stroke-width="2.2" marker-end="url(#sp1b)"/>
+          <path d="M160 115 C200 150 220 160 250 162" fill="none" style="stroke:var(--c3)" stroke-width="2.2" marker-end="url(#sp1b)"/>
+          <rect x="255" y="20" width="170" height="56" rx="10" class="boxbg" style="stroke:var(--warn)" stroke-width="2"/>
+          <text x="340" y="44" text-anchor="middle" class="t" font-size="13" font-weight="700">Personal distress</text><text x="340" y="62" text-anchor="middle" class="tb" font-size="11.5">"I feel upset"</text>
+          <rect x="255" y="134" width="170" height="56" rx="10" class="boxbg" style="stroke:var(--good)" stroke-width="2"/>
+          <text x="340" y="158" text-anchor="middle" class="t" font-size="13" font-weight="700">Empathic concern</text><text x="340" y="176" text-anchor="middle" class="tb" font-size="11.5">"I feel for them"</text>
+          <path d="M425 48 L475 48" style="stroke:var(--c3)" stroke-width="2.2" marker-end="url(#sp1b)"/>
+          <path d="M425 162 L475 162" style="stroke:var(--c3)" stroke-width="2.2" marker-end="url(#sp1b)"/>
+          <rect x="480" y="20" width="190" height="56" rx="10" class="pagebg" style="stroke:var(--warn)"/>
+          <text x="575" y="44" text-anchor="middle" class="t" font-size="13" font-weight="700">Egoistic helping</text><text x="575" y="62" text-anchor="middle" class="tb" font-size="11.5">or escape if easy</text>
+          <rect x="480" y="134" width="190" height="56" rx="10" class="pagebg" style="stroke:var(--good)"/>
+          <text x="575" y="158" text-anchor="middle" class="t" font-size="13" font-weight="700">Altruistic helping</text><text x="575" y="176" text-anchor="middle" class="tb" font-size="11.5">even when escape is easy</text>
+        </svg>
+      </figure>
+    </div>
+  </div>
+
+  <!-- DETERMINANTS -->
+  <div class="panel t4" data-key="determinants" data-label="Determinants" data-full="Determinants of prosocial behaviour">
+    <div class="block">
+      <h2>Determinants of prosocial behaviour</h2>
+      <p class="lede">What makes helping more or less likely? Group the factors into <b>situational</b>, <b>personal</b> and <b>emotional</b>.</p>
+      <h3>A. Situational factors</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Number of bystanders</span><p>More bystanders → less helping (diffusion of responsibility).</p></div>
+        <div class="concept"><span class="sym">Ambiguity</span><p>If it's unclear whether it's an emergency, people hold back.</p></div>
+        <div class="concept"><span class="sym">Time pressure</span><p><b>Good Samaritan study</b> (Darley &amp; Batson, 1973): seminary students in a hurry rarely stopped to help a groaning man, even on the way to give a talk on the Good Samaritan.</p></div>
+        <div class="concept"><span class="sym">Similarity and liking</span><p>We help people who are like us, attractive, or part of our in-group.</p></div>
+        <div class="concept"><span class="sym">Deservingness</span><p>We help more if the victim is not responsible for their own problem.</p></div>
+        <div class="concept"><span class="sym">Role models</span><p>Seeing others help increases helping.</p></div>
+        <div class="concept"><span class="sym">Place</span><p>People in villages and small towns help strangers more than people in big crowded cities.</p></div>
+      </div>
+      <h3>B. Personal factors</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Altruistic personality</span><p>High empathy, belief in a just world, social responsibility, internal locus of control, low egocentrism.</p></div>
+        <div class="concept"><span class="sym">Skills and competence</span><p>People with relevant training (e.g. first aid) help more.</p></div>
+        <div class="concept"><span class="sym">Religion and values</span><p>Values such as <i>seva</i> and <i>dana</i> encourage helping, especially when they are internalised.</p></div>
+        <div class="concept"><span class="sym">Gender</span><p>Men help more in risky, heroic situations; women give more long-term, nurturing help.</p></div>
+        <div class="concept"><span class="sym">Culture</span><p>Collectivist cultures help in-group members more strongly.</p></div>
+      </div>
+      <h3>C. Emotional factors</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Good mood</span><p>Usually increases helping (feel good, do good), unless helping would spoil the mood.</p></div>
+        <div class="concept"><span class="sym">Bad mood</span><p>Guilt often increases helping. Sadness can increase helping if helping lifts the mood (negative-state relief).</p></div>
+      </div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span>Determinants = <b>S-P-E</b>: <b>S</b>ituation, <b>P</b>erson, <b>E</b>motion.</span></div>
+    </div>
+    <div class="block">
+      <h3>How to increase helping</h3>
+      <ul>
+        <li>Reduce ambiguity: say clearly "This is an emergency!"</li>
+        <li>Assign responsibility: point to one person ("You in the blue shirt, call 108").</li>
+        <li>Teach skills (first aid) and model helping.</li>
+        <li>Build empathy and a shared identity ("we are all one community").</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- TEST -->
+  <div class="panel" data-key="test" data-label="Self-test">
+    <h2>Unit I self-test</h2>
+    <div class="cards">
+      <details><summary>Allport's definition of social psychology?</summary><div><p>An attempt to understand and explain how the thoughts, feelings and behaviour of individuals are influenced by the actual, imagined or implied presence of others.</p></div></details>
+      <details><summary>Who did the first social psychology experiment?</summary><div><p>Norman Triplett (1898): people performed faster in the presence of others.</p></div></details>
+      <details><summary>Prosocial vs altruism?</summary><div><p>Prosocial = any act that benefits others. Altruism = helping purely for the other's sake, often at a cost, with no expected reward.</p></div></details>
+      <details><summary>What is diffusion of responsibility?</summary><div><p>With more bystanders, each person feels less personally responsible to help.</p></div></details>
+      <details><summary>Latané &amp; Darley's five steps?</summary><div><p>Notice, interpret as emergency, assume responsibility, know how to help, decide to help.</p></div></details>
+      <details><summary>Who proposed the empathy-altruism hypothesis?</summary><div><p>C. Daniel Batson.</p></div></details>
+      <details><summary>Negative-state relief model?</summary><div><p>Cialdini: we help to relieve our own bad mood.</p></div></details>
+      <details><summary>What did the Good Samaritan study show?</summary><div><p>Time pressure strongly reduces helping (Darley &amp; Batson, 1973).</p></div></details>
+    </div>
+    <h3>Long-answer outlines</h3>
+    <details><summary>Explain the meaning, scope and importance of social psychology. <span class="marks">10 marks</span></summary><div><ol><li>Definitions (Allport; Baron &amp; Branscombe) and four features.</li><li>Relation to psychology and sociology (draw the overlap).</li><li>Scope: thinking, influence, relations, groups, applied.</li><li>Brief history.</li><li>Importance with examples; conclusion.</li></ol></div></details>
+    <details><summary>Discuss empathy and altruism. <span class="marks">10 marks</span></summary><div><ol><li>Prosocial behaviour vs altruism.</li><li>Empathy: affective, cognitive, empathic concern.</li><li>Four explanations: empathy-altruism (draw Batson's model), negative-state relief, empathic joy, kin selection.</li><li>Evaluation; conclusion.</li></ol></div></details>
+    <details><summary>Explain the determinants of prosocial behaviour. <span class="marks">10 marks</span></summary><div><ol><li>Meaning of prosocial behaviour.</li><li>Bystander effect and five steps (draw).</li><li>Situational, personal and emotional determinants with studies.</li><li>Ways to increase helping.</li></ol></div></details>
+  </div>
+</section>
+
+<section class="view unit" id="s2" data-subject="sp" data-num="Unit II" data-short="Social Cognition" data-title="Social Cognition and Social Perception" hidden>
+  <div class="unit-head">
+    <div class="eyebrow">Advanced Social Psychology · Unit II</div>
+    <h1>Social Cognition and Social Perception</h1>
+    <div class="stabs" role="tablist" aria-label="Sections of Unit II"></div>
+  </div>
+
+  <div class="panel t1" data-key="overview" data-label="Social Cognition" data-full="Meaning of social cognition">
+    <div class="block">
+      <h2>What is social cognition?</h2>
+      <div class="prose">
+        <p><b>Social cognition</b> is how we <mark>interpret, analyse, remember and use information</mark> about the social world: about ourselves, other people and situations.</p>
+        <p>We have limited mental capacity, so we are <b>"cognitive misers"</b>: we save effort whenever we can. So there are two modes of thinking.</p>
+      </div>
+      <figure class="fig">
+        <svg viewBox="0 0 680 250" role="img" aria-label="Two systems of thinking: automatic low-effort thinking and controlled high-effort thinking">
+          <rect x="10" y="10" width="320" height="230" rx="14" style="fill:var(--c1-soft);stroke:var(--c1)" stroke-width="2"/>
+          <rect x="350" y="10" width="320" height="230" rx="14" style="fill:var(--c3-soft);stroke:var(--c3)" stroke-width="2"/>
+          <text x="170" y="44" text-anchor="middle" class="t" font-size="18" font-weight="800" style="fill:var(--c1)">Automatic</text>
+          <text x="170" y="64" text-anchor="middle" class="tm" font-size="11">LOW-EFFORT · "SYSTEM 1"</text>
+          <text x="510" y="44" text-anchor="middle" class="t" font-size="18" font-weight="800" style="fill:var(--c3)">Controlled</text>
+          <text x="510" y="64" text-anchor="middle" class="tm" font-size="11">HIGH-EFFORT · "SYSTEM 2"</text>
+          <g class="tb" font-size="13">
+            <text x="40" y="100">• Fast, effortless</text><text x="40" y="124">• Unconscious, unintended</text><text x="40" y="148">• Uses schemas and heuristics</text><text x="40" y="172">• Can't easily be stopped</text><text x="40" y="196">• Prone to bias</text>
+            <text x="380" y="100">• Slow, effortful</text><text x="380" y="124">• Conscious, deliberate</text><text x="380" y="148">• Logical, careful reasoning</text><text x="380" y="172">• Needs time and energy</text><text x="380" y="196">• Can correct automatic errors</text>
+          </g>
+          <text x="170" y="226" text-anchor="middle" class="tm" font-size="11">e.g. judging a face as friendly</text>
+          <text x="510" y="226" text-anchor="middle" class="tm" font-size="11">e.g. choosing a career</text>
+        </svg>
+      </figure>
+    </div>
+  </div>
+
+  <div class="panel t1" data-key="lowEffort" data-label="Low-effort Thinking" data-full="Automatic thinking, schemas and heuristics">
+    <div class="block">
+      <h2>Low-effort (automatic) thinking</h2>
+      <h3>Schemas</h3>
+      <p>A <b>schema</b> is a <mark>mental framework</mark> that organises our knowledge about a topic and guides how we process new information.</p>
+      <div class="grid">
+        <div class="concept"><span class="sym">Person schemas</span><p>About types of people: "a typical professor".</p></div>
+        <div class="concept"><span class="sym">Role schemas</span><p>About social roles: "doctor", "mother".</p></div>
+        <div class="concept"><span class="sym">Event schemas (scripts)</span><p>About what happens in events: a restaurant visit, a wedding.</p></div>
+        <div class="concept"><span class="sym">Self-schemas</span><p>About ourselves: "I am good at maths".</p></div>
+      </div>
+      <h4>Schemas affect three stages of processing</h4>
+      <div class="grid">
+        <div class="concept"><span class="sym">Attention</span><p>We notice what fits (or sharply violates) the schema.</p></div>
+        <div class="concept"><span class="sym">Encoding</span><p>What we notice gets stored in memory.</p></div>
+        <div class="concept"><span class="sym">Retrieval</span><p>We remember schema-consistent information better.</p></div>
+      </div>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Priming</span><p>Recent experiences make a schema easier to activate. Seeing words about rudeness makes people interrupt more (Bargh et al., 1996).</p></div>
+        <div class="concept"><span class="sym">Perseverance effect</span><p>Schemas resist change, even when the evidence for them is shown to be false.</p></div>
+      </div>
+      <div class="study"><span class="lbl">Key study · 1968</span><h4>Self-fulfilling prophecy: "Pygmalion in the classroom"</h4><p>Rosenthal &amp; Jacobson told teachers that some randomly chosen pupils were "late bloomers". By the end of the year those pupils showed bigger IQ gains: the teachers' expectations (schemas) changed how they treated them.</p></div>
+    </div>
+
+    <div class="block">
+      <h3>Heuristics: mental shortcuts</h3>
+      <div class="who">
+        <div class="portrait" data-photo="kahneman">DK</div>
+        <div><b>Amos Tversky &amp; Daniel Kahneman (1974)</b><span>Showed that people rely on simple rules of thumb that are quick but cause predictable errors. Kahneman won the 2002 Nobel Prize in Economics.</span></div>
+      </div>
+      <div class="grid">
+        <div class="concept"><span class="sym">Representativeness</span><p>Judging by <b>how similar</b> someone is to a typical member of a category, while ignoring base rates.</p><p class="eg">"He is quiet and wears glasses, so he must be a librarian, not a farmer."</p></div>
+        <div class="concept"><span class="sym">Availability</span><p>Judging how common something is by <b>how easily examples come to mind</b>.</p><p class="eg">After news of a plane crash, flying feels more dangerous than driving.</p></div>
+        <div class="concept"><span class="sym">Anchoring and adjustment</span><p>Starting from a <b>reference point</b> (anchor) and adjusting too little.</p><p class="eg">A shop's "original price ₹2,000" makes ₹1,200 seem cheap.</p></div>
+        <div class="concept"><span class="sym">Status quo heuristic</span><p>Assuming the existing option is better than a new one.</p></div>
+      </div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span><b>R-A-A</b>: "<b>R</b>eally <b>A</b>vailable <b>A</b>nchors." (Representativeness, Availability, Anchoring)</span></div>
+    </div>
+
+    <div class="block">
+      <h3>Types of automatic thinking</h3>
+      <ul>
+        <li><b>Automatic priming</b>: schemas activated without our awareness.</li>
+        <li><b>Automatic stereotyping</b>: categorising people by race, gender, age in milliseconds.</li>
+        <li><b>Automatic affect</b>: instant liking or disliking ("affect is primary", Zajonc).</li>
+        <li><b>Implicit attitudes</b>: evaluations we may not consciously endorse (see Unit IV).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel t3" data-key="highEffort" data-label="High-effort Thinking" data-full="Controlled thinking and its errors">
+    <div class="block">
+      <h2>High-effort (controlled) thinking</h2>
+      <p>Controlled thinking is <b>conscious, deliberate and effortful</b>. We use it when the stakes are high, we have time, or something unexpected happens. But it also has typical errors.</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Counterfactual thinking</span><p>Imagining "what might have been". <b>Upward</b> ("if only I'd studied more") gives regret but motivates. <b>Downward</b> ("it could have been worse") brings relief.</p><p class="eg">Bronze medallists often look happier than silver medallists (Medvec et al., 1995).</p></div>
+        <div class="concept"><span class="sym">Planning fallacy</span><p>Underestimating how long a task will take. Students almost always start revising too late.</p></div>
+        <div class="concept"><span class="sym">Optimistic bias</span><p>Expecting good things to happen to us more than to others.</p></div>
+        <div class="concept"><span class="sym">Negativity bias</span><p>Negative information gets more attention and weight than positive.</p></div>
+        <div class="concept"><span class="sym">Thought suppression</span><p>Trying hard not to think of something can make it come back more often ("don't think of a white bear", Wegner).</p></div>
+        <div class="concept"><span class="sym">Magical thinking</span><p>Beliefs with no rational basis: "if I wear my lucky pen, I'll pass".</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Affect and cognition</h3>
+      <p>Feelings and thinking influence each other. Good moods make us rely more on heuristics and stereotypes; bad moods make us more careful. Our thoughts also shape our feelings (e.g. how we label an arousal).</p>
+    </div>
+  </div>
+
+  <div class="panel t2" data-key="nonverbal" data-label="Nonverbal Communication" data-full="Nonverbal communication">
+    <div class="block">
+      <h2>Nonverbal communication</h2>
+      <p><b>Social perception</b> is how we try to understand other people. Our first clue is <mark>nonverbal communication</mark>: communication without words.</p>
+      <div class="grid">
+        <div class="concept"><span class="sym">Facial expressions</span><p>Six basic emotions recognised across cultures: <b>happiness, sadness, anger, fear, surprise, disgust</b> (Paul Ekman). Contempt is sometimes added.</p></div>
+        <div class="concept"><span class="sym">Eye contact (gaze)</span><p>Shows liking and attention; a long stare can signal hostility.</p></div>
+        <div class="concept"><span class="sym">Body language</span><p>Posture, gestures, movements. Emblems are gestures with specific meanings (thumbs-up, namaste).</p></div>
+        <div class="concept"><span class="sym">Touch</span><p>Can show warmth, comfort, dominance; meaning depends on culture and relationship.</p></div>
+        <div class="concept"><span class="sym">Paralanguage</span><p>Tone, pitch, speed and loudness of voice.</p></div>
+        <div class="concept"><span class="sym">Personal space</span><p>Distance we keep shows intimacy and status.</p></div>
+      </div>
+      <div class="who">
+        <div class="portrait" data-photo="ekman">PE</div>
+        <div><b>Paul Ekman</b><span>Showed basic facial expressions are universal: even the isolated Fore people of Papua New Guinea recognised them.</span></div>
+      </div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span>Six basic emotions: "<b>H</b>appy <b>S</b>ad <b>A</b>ngry <b>F</b>riends <b>S</b>urprise <b>D</b>ad." (Happiness, Sadness, Anger, Fear, Surprise, Disgust)</span></div>
+    </div>
+    <div class="block">
+      <h3>Detecting deception</h3>
+      <p>People are only slightly better than chance at spotting lies. Useful cues include <b>micro-expressions</b> (flashes of emotion lasting a fraction of a second), <b>interchannel discrepancies</b> (face says one thing, voice another), changes in pitch, and exaggerated or very brief eye contact.</p>
+    </div>
+  </div>
+
+  <div class="panel t2" data-key="impressions" data-label="First Impressions" data-full="First impressions">
+    <div class="block">
+      <h2>First impressions</h2>
+      <p>We form impressions of people <mark>very quickly</mark>, sometimes from a face shown for just 100 milliseconds (Willis &amp; Todorov, 2006), and they tend to last.</p>
+      <div class="who">
+        <div class="portrait" data-photo="asch1">SA</div>
+        <div><b>Solomon Asch (1946)</b><span>Showed that some traits are "central" and change the whole impression.</span></div>
+      </div>
+      <div class="study"><span class="lbl">Key study · Asch, 1946</span><h4>Warm vs cold: central traits</h4><p>Two groups read the same list of traits (intelligent, skilful, industrious, <b>warm / cold</b>, determined, practical, cautious). Only one word differed. The "warm" person was seen as generous, happy and good-natured; the "cold" person very differently.</p></div>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Primacy effect</span><p>Information we receive <b>first</b> has more influence. "Intelligent, industrious… envious" is liked more than the same list in reverse order (Asch).</p></div>
+        <div class="concept"><span class="sym">Implicit personality theories</span><p>Our beliefs about which traits go together, e.g. "beautiful people are also kind" (halo effect).</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Impression management</h3>
+      <p>We try to control the impressions others form of us (self-presentation).</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Self-enhancement</span><p>Making ourselves look good: dress, grooming, highlighting achievements.</p></div>
+        <div class="concept"><span class="sym">Other-enhancement (ingratiation)</span><p>Making the other person feel good: flattery, agreeing, showing interest.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel t4" data-key="attribution" data-label="Causal Attribution" data-full="Causal attributions">
+    <div class="block">
+      <h2>Causal attribution</h2>
+      <p><b>Attribution</b> is how we explain the <mark>causes</mark> of our own and others' behaviour.</p>
+      <div class="who">
+        <div class="portrait" data-photo="heider">FH</div>
+        <div><b>Fritz Heider (1958)</b><span>Father of attribution theory. People are "naive scientists" explaining behaviour by <b>internal</b> (dispositional) or <b>external</b> (situational) causes.</span></div>
+      </div>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Internal attribution</span><p>Cause is inside the person: personality, effort, ability. "She failed because she's lazy."</p></div>
+        <div class="concept"><span class="sym">External attribution</span><p>Cause is in the situation: luck, task difficulty, other people. "She failed because the paper was hard."</p></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Jones &amp; Davis: correspondent inference (1965)</h3>
+      <p>When do we infer that behaviour reflects a stable trait? When the behaviour is <b>freely chosen</b>, has <b>non-common effects</b> (a unique outcome only that choice gives), and is <b>low in social desirability</b> (not what anyone would do).</p>
+    </div>
+
+    <div class="block">
+      <h3>Kelley's covariation model (1967)</h3>
+      <div class="who">
+        <div class="portrait" data-photo="kelley">HK</div>
+        <div><b>Harold Kelley</b><span>We look at three kinds of information to decide between internal and external causes.</span></div>
+      </div>
+      <div class="grid">
+        <div class="concept"><span class="sym">Consensus</span><p>Do <b>other people</b> act the same way toward this stimulus?</p></div>
+        <div class="concept"><span class="sym">Consistency</span><p>Does this person act the same way toward this stimulus <b>at other times</b>?</p></div>
+        <div class="concept"><span class="sym">Distinctiveness</span><p>Does this person act this way toward <b>other stimuli</b> too?</p></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Example: Ravi laughs at a comedian</th><th>Consensus</th><th>Consistency</th><th>Distinctiveness</th><th>Attribution</th></tr></thead>
+        <tbody>
+          <tr><td>Everyone laughs; Ravi always laughs at him; Ravi doesn't laugh at other comedians</td><td>High</td><td>High</td><td>High</td><td><b style="color:var(--c1)">External</b>: the comedian is funny</td></tr>
+          <tr><td>Nobody else laughs; Ravi always laughs at him; Ravi laughs at all comedians</td><td>Low</td><td>High</td><td>Low</td><td><b style="color:var(--c2)">Internal</b>: Ravi laughs easily</td></tr>
+          <tr><td>Ravi laughed only this once</td><td>any</td><td>Low</td><td>any</td><td><b>Circumstances</b>: something special about that day</td></tr>
+        </tbody>
+      </table></div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span>All <b>HIGH</b> (H-H-H) = external. <b>LOW</b>, high, <b>LOW</b> (L-H-L) = internal. Consistency must be high for any stable attribution.</span></div>
+    </div>
+
+    <div class="block">
+      <h3>Attribution errors and biases</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Fundamental attribution error</span><p>Over-blaming <b>internal</b> causes for <b>others'</b> behaviour and ignoring the situation (Ross, 1977). Also called correspondence bias.</p></div>
+        <div class="concept"><span class="sym">Actor–observer effect</span><p>We explain <b>our own</b> behaviour by the situation but <b>others'</b> by their personality.</p></div>
+        <div class="concept"><span class="sym">Self-serving bias</span><p>Success → internal ("I'm smart"); failure → external ("bad luck").</p></div>
+      </div>
+      <p class="cap">Weiner added that attributions also differ in <b>stability</b> (stable vs unstable) and <b>controllability</b>, which affect motivation after success or failure.</p>
+    </div>
+  </div>
+
+  <div class="panel" data-key="test" data-label="Self-test">
+    <h2>Unit II self-test</h2>
+    <div class="cards">
+      <details><summary>Define social cognition.</summary><div><p>How we interpret, analyse, remember and use information about the social world.</p></div></details>
+      <details><summary>What is a schema?</summary><div><p>A mental framework that organises knowledge and guides how we process new information.</p></div></details>
+      <details><summary>Three heuristics of Tversky &amp; Kahneman?</summary><div><p>Representativeness, availability, anchoring and adjustment.</p></div></details>
+      <details><summary>What is the planning fallacy?</summary><div><p>Underestimating how long a task will take.</p></div></details>
+      <details><summary>Ekman's six basic emotions?</summary><div><p>Happiness, sadness, anger, fear, surprise, disgust.</p></div></details>
+      <details><summary>What did Asch's warm–cold study show?</summary><div><p>Some traits are central and change the whole impression.</p></div></details>
+      <details><summary>Kelley's three information types?</summary><div><p>Consensus, consistency, distinctiveness.</p></div></details>
+      <details><summary>Fundamental attribution error?</summary><div><p>Over-emphasising internal causes of others' behaviour and ignoring situational ones.</p></div></details>
+    </div>
+    <h3>Long-answer outlines</h3>
+    <details><summary>Explain low-effort and high-effort thinking. <span class="marks">10 marks</span></summary><div><ol><li>Meaning of social cognition; cognitive misers.</li><li>Two systems (draw).</li><li>Schemas: types, effects, priming, perseverance, self-fulfilling prophecy.</li><li>Heuristics with examples.</li><li>Controlled thinking and its errors.</li></ol></div></details>
+    <details><summary>Describe social perception: nonverbal cues and first impressions. <span class="marks">10 marks</span></summary><div><ol><li>Meaning of social perception.</li><li>Nonverbal channels; Ekman; deception cues.</li><li>First impressions: Asch, primacy, thin slices.</li><li>Impression management.</li></ol></div></details>
+    <details><summary>Discuss theories of attribution. <span class="marks">10 marks</span></summary><div><ol><li>Heider: internal vs external.</li><li>Jones &amp; Davis.</li><li>Kelley's covariation model (table).</li><li>Errors: FAE, actor–observer, self-serving.</li></ol></div></details>
+  </div>
+</section>
+
+<section class="view unit" id="s3" data-subject="sp" data-num="Unit III" data-short="Self, Dissonance, Aggression" data-title="The Self, Cognitive Dissonance and Aggression" hidden>
+  <div class="unit-head">
+    <div class="eyebrow">Advanced Social Psychology · Unit III</div>
+    <h1>The Self, Cognitive Dissonance and Aggression</h1>
+    <div class="stabs" role="tablist" aria-label="Sections of Unit III"></div>
+  </div>
+
+  <div class="panel t1" data-key="overview" data-label="Self-concept" data-full="Origins and nature of self-concept">
+    <div class="block">
+      <h2>The self-concept</h2>
+      <p>The <b>self-concept</b> is the <mark>organised set of beliefs</mark> we hold about who we are: our traits, roles, abilities, values and social identities.</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">William James (1890)</span><p>Split the self into the <b>"I"</b> (the self as knower, the one who thinks) and the <b>"me"</b> (the self as known: material, social and spiritual selves).</p></div>
+        <div class="concept"><span class="sym">Self-schema</span><p>Our self-concept works like a schema: we notice and remember self-relevant information better (the <b>self-reference effect</b>).</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Origins: where does the self-concept come from?</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Looking-glass self</span><p>Charles Cooley (1902): we see ourselves as we think <b>others see us</b>, like a mirror.</p></div>
+        <div class="concept"><span class="sym">Symbolic interactionism</span><p>G. H. Mead: the self develops through social interaction and language.</p></div>
+        <div class="concept"><span class="sym">Self-recognition</span><p>Mirror test: children recognise themselves at about 18–24 months.</p></div>
+        <div class="concept"><span class="sym">Social roles and identities</span><p>Student, daughter, Indian, musician: each adds to the self.</p></div>
+        <div class="concept"><span class="sym">Culture</span><p>Shapes whether the self is independent or interdependent (below).</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Culture and the self (Markus &amp; Kitayama, 1991)</h3>
+      <figure class="fig">
+        <svg viewBox="0 0 680 230" role="img" aria-label="Independent self is a separate circle; interdependent self overlaps with family and friends">
+          <circle cx="170" cy="115" r="58" style="fill:var(--c1)"/>
+          <text x="170" y="120" text-anchor="middle" class="tw" font-size="15" font-weight="800">SELF</text>
+          <g class="pagebg" style="stroke:var(--line)" stroke-width="1.5"><circle cx="60" cy="50" r="30"/><circle cx="285" cy="55" r="30"/><circle cx="70" cy="190" r="30"/><circle cx="280" cy="185" r="30"/></g>
+          <g class="tm" font-size="10.5" text-anchor="middle"><text x="60" y="54">mother</text><text x="285" y="59">friend</text><text x="70" y="194">father</text><text x="280" y="189">co-worker</text></g>
+          <text x="170" y="222" text-anchor="middle" class="t" font-size="13" font-weight="700">Independent self (USA, Europe)</text>
+          <g style="fill:var(--c2)" opacity="0.3"><circle cx="475" cy="80" r="42"/><circle cx="565" cy="80" r="42"/><circle cx="475" cy="150" r="42"/><circle cx="565" cy="150" r="42"/></g>
+          <circle cx="520" cy="115" r="52" style="fill:var(--c2)"/>
+          <text x="520" y="120" text-anchor="middle" class="tw" font-size="15" font-weight="800">SELF</text>
+          <text x="520" y="222" text-anchor="middle" class="t" font-size="13" font-weight="700">Interdependent self (India, Japan)</text>
+        </svg>
+      </figure>
+      <p class="cap">Independent: "I am confident, creative". Interdependent: "I am a good son, a loyal friend". The self is defined by relationships.</p>
+    </div>
+  </div>
+
+  <div class="panel t1" data-key="knowing" data-label="Knowing Oneself" data-full="Ways of knowing oneself">
+    <div class="block">
+      <h2>Ways of knowing oneself</h2>
+      <div class="grid2">
+        <div class="concept"><span class="sym">1 · Introspection</span><p>Looking inward at our own thoughts and feelings. Limited: we often <b>don't know why</b> we do things, and we may invent reasons (Nisbett &amp; Wilson, 1977).</p></div>
+        <div class="concept"><span class="sym">2 · Self-perception theory (Bem, 1972)</span><p>When our inner feelings are unclear, we infer them by <b>observing our own behaviour</b>, like an outsider. "I go to the gym daily, so I must like fitness."</p></div>
+        <div class="concept"><span class="sym">3 · Social comparison (Festinger, 1954)</span><p>We judge our abilities and opinions by <b>comparing with others</b>. <b>Upward</b> comparison (with better) can inspire or depress; <b>downward</b> (with worse) boosts self-esteem.</p></div>
+        <div class="concept"><span class="sym">4 · Feedback from others</span><p>Others' reactions (the looking-glass self) and what close people tell us.</p></div>
+      </div>
+      <div class="concept"><span class="sym">Overjustification effect</span><p>Self-perception also explains why rewarding an enjoyable activity can <b>reduce</b> intrinsic interest: "I'm doing it for the reward, not because I like it" (Lepper, Greene &amp; Nisbett, 1973).</p></div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span><b>I-S-S-F</b>: <b>I</b>ntrospection, <b>S</b>elf-perception, <b>S</b>ocial comparison, <b>F</b>eedback.</span></div>
+    </div>
+  </div>
+
+  <div class="panel t1" data-key="selfcontrol" data-label="Self-control &amp; Self-esteem" data-full="Self-control and self-esteem">
+    <div class="block">
+      <h2>Self-control</h2>
+      <p><b>Self-control</b> (self-regulation) is the ability to <mark>override impulses</mark> and act toward long-term goals.</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Ego depletion (Baumeister)</span><p>Self-control may work like a <b>muscle</b> that gets tired with use: after resisting cookies, people gave up sooner on puzzles. Later large studies found this effect much weaker than first reported, so mention it with caution.</p></div>
+        <div class="concept"><span class="sym">Strategies that help</span><ul><li>Avoid temptation (remove the phone)</li><li>Implementation intentions: "If X, then I will do Y"</li><li>Distraction and "cool" thinking (Mischel)</li><li>Rest, sleep, glucose, positive mood</li></ul></div>
+      </div>
+    </div>
+    <div class="block">
+      <h2>Self-esteem</h2>
+      <p><b>Self-esteem</b> is our <mark>overall evaluation of ourselves</mark>: the attitude we hold toward ourselves, positive or negative.</p>
+      <div class="grid">
+        <div class="concept"><span class="sym">Measurement</span><p><b>Rosenberg Self-Esteem Scale</b> (10 items) for explicit self-esteem; the Implicit Association Test for implicit self-esteem.</p></div>
+        <div class="concept"><span class="sym">Sources</span><p>Feedback from others, social comparison, success in areas that matter to us.</p></div>
+        <div class="concept"><span class="sym">Sociometer theory</span><p>Self-esteem is a gauge of how accepted and included we are (Leary).</p></div>
+      </div>
+      <div class="grid2">
+        <div class="concept"><h4 style="color:var(--good)">High self-esteem</h4><ul><li>Happier, more persistent after failure</li><li>Less depression</li><li>But very high, unstable self-esteem can become narcissism and aggression when threatened</li></ul></div>
+        <div class="concept"><h4 style="color:var(--warn)">Low self-esteem</h4><ul><li>Linked with depression, anxiety</li><li>More sensitive to rejection</li><li>Self-handicapping (making excuses in advance)</li></ul></div>
+      </div>
+      <p class="cap">Self-esteem tends to drop in adolescence (especially for girls), rise through adulthood, and fall again in old age.</p>
+    </div>
+  </div>
+
+  <div class="panel t2" data-key="dissonance" data-label="Cognitive Dissonance" data-full="Meaning and theory of cognitive dissonance">
+    <div class="who">
+      <div class="portrait" data-photo="festinger">LF</div>
+      <div><b>Leon Festinger (1919–1989)</b><span>American social psychologist. <i>A Theory of Cognitive Dissonance</i> (1957). Also proposed social comparison theory (1954).</span></div>
+    </div>
+    <div class="block">
+      <h2>Cognitive dissonance</h2>
+      <div class="prose">
+        <p><b>Cognitive dissonance</b> is the <mark>unpleasant tension</mark> we feel when we hold two inconsistent cognitions, or when our <b>behaviour contradicts our attitudes</b>.</p>
+        <p>Because it feels bad, we are <b>motivated to reduce it</b>, often by changing our attitude to fit what we did.</p>
+      </div>
+      <figure class="fig">
+        <svg viewBox="0 0 680 260" role="img" aria-label="Two clashing cognitions produce dissonance, reduced by changing behaviour, changing attitude, adding consonant thoughts or trivialising">
+          <defs><marker id="sp3a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--c2)"/></marker></defs>
+          <rect x="10" y="20" width="200" height="54" rx="10" class="boxbg" stroke-width="1.5"/>
+          <text x="110" y="44" text-anchor="middle" class="t" font-size="13" font-weight="700">"Smoking causes cancer"</text><text x="110" y="62" text-anchor="middle" class="tm" font-size="10.5">ATTITUDE / BELIEF</text>
+          <rect x="10" y="100" width="200" height="54" rx="10" class="boxbg" stroke-width="1.5"/>
+          <text x="110" y="124" text-anchor="middle" class="t" font-size="13" font-weight="700">"I smoke"</text><text x="110" y="142" text-anchor="middle" class="tm" font-size="10.5">BEHAVIOUR</text>
+          <path d="M210 47 C240 47 240 80 262 84" fill="none" style="stroke:var(--c2)" stroke-width="2.2" marker-end="url(#sp3a)"/>
+          <path d="M210 127 C240 127 240 96 262 92" fill="none" style="stroke:var(--c2)" stroke-width="2.2" marker-end="url(#sp3a)"/>
+          <rect x="266" y="56" width="150" height="66" rx="33" style="fill:var(--c2)"/>
+          <text x="341" y="86" text-anchor="middle" class="tw" font-size="15" font-weight="800">DISSONANCE</text>
+          <text x="341" y="104" text-anchor="middle" class="tw" font-size="11">uncomfortable tension</text>
+          <g fill="none" style="stroke:var(--c2)" stroke-width="2"><path d="M416 80 L452 36" marker-end="url(#sp3a)"/><path d="M416 86 L452 92" marker-end="url(#sp3a)"/><path d="M416 96 L452 148" marker-end="url(#sp3a)"/><path d="M400 118 L452 206" marker-end="url(#sp3a)"/></g>
+          <g font-size="12.5">
+            <rect x="456" y="14" width="214" height="44" rx="8" class="pagebg" style="stroke:var(--line)"/><text x="466" y="34" class="t" font-weight="700">1 Change behaviour</text><text x="466" y="50" class="tb" font-size="11.5">quit smoking</text>
+            <rect x="456" y="70" width="214" height="44" rx="8" class="pagebg" style="stroke:var(--line)"/><text x="466" y="90" class="t" font-weight="700">2 Change attitude</text><text x="466" y="106" class="tb" font-size="11.5">"the evidence is weak"</text>
+            <rect x="456" y="126" width="214" height="44" rx="8" class="pagebg" style="stroke:var(--line)"/><text x="466" y="146" class="t" font-weight="700">3 Add consonant thoughts</text><text x="466" y="162" class="tb" font-size="11.5">"it helps me relax"</text>
+            <rect x="456" y="184" width="214" height="44" rx="8" class="pagebg" style="stroke:var(--line)"/><text x="466" y="204" class="t" font-weight="700">4 Trivialise</text><text x="466" y="220" class="tb" font-size="11.5">"life is risky anyway"</text>
+          </g>
+        </svg>
+      </figure>
+      <div class="mnemonic"><span class="lbl">Remember</span><span>Reduce dissonance with <b>B-A-C-T</b>: change <b>B</b>ehaviour, change <b>A</b>ttitude, add <b>C</b>onsonant thoughts, <b>T</b>rivialise.</span></div>
+    </div>
+
+    <div class="block">
+      <h3>The $1 / $20 experiment (Festinger &amp; Carlsmith, 1959)</h3>
+      <div class="prose"><p>Students did a very boring task (turning pegs) for an hour. They were then paid <b>$1 or $20</b> to tell the next person it was fun. Later they rated how enjoyable the task really was (scale −5 to +5).</p></div>
+      <figure class="fig">
+        <svg viewBox="0 0 680 260" role="img" aria-label="Bar chart: control group -0.45, twenty dollar group -0.05, one dollar group +1.35 on enjoyment rating">
+          <line x1="90" y1="40" x2="640" y2="40" class="ln" stroke-dasharray="3 4"/>
+          <line x1="90" y1="160" x2="640" y2="160" class="ink" stroke-width="1.5"/>
+          <line x1="90" y1="100" x2="640" y2="100" class="ln" stroke-dasharray="3 4"/>
+          <line x1="90" y1="220" x2="640" y2="220" class="ln" stroke-dasharray="3 4"/>
+          <g class="tm" font-size="11" text-anchor="end"><text x="80" y="44">+2</text><text x="80" y="104">+1</text><text x="80" y="164">0</text><text x="80" y="224">−1</text></g>
+          <rect x="140" y="160" width="110" height="27" style="fill:var(--muted)"/>
+          <rect x="310" y="160" width="110" height="3" style="fill:var(--c3)"/>
+          <rect x="480" y="79" width="110" height="81" style="fill:var(--c2)"/>
+          <g text-anchor="middle">
+            <text x="195" y="206" class="t" font-size="14" font-weight="800">−0.45</text>
+            <text x="365" y="152" class="t" font-size="14" font-weight="800">−0.05</text>
+            <text x="535" y="71" class="t" font-size="14" font-weight="800">+1.35</text>
+            <text x="195" y="245" class="tb" font-size="12.5">Control (no lie)</text>
+            <text x="365" y="245" class="tb" font-size="12.5">Paid $20</text>
+            <text x="535" y="245" class="tb" font-size="12.5" font-weight="700">Paid $1</text>
+          </g>
+          <text x="20" y="22" class="tm" font-size="11">HOW ENJOYABLE WAS THE TASK? (−5 to +5)</text>
+        </svg>
+        <figcaption>The $20 group had a good external reason for lying, so no dissonance. The $1 group had <b>insufficient justification</b>, so they reduced dissonance by convincing themselves the task really was fun.</figcaption>
+      </figure>
+    </div>
+
+    <div class="block">
+      <h3>Other forms of dissonance</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Induced compliance</span><p>Being led to act against our attitude with little reward (the $1 study). <b>Less</b> reward → <b>more</b> attitude change.</p></div>
+        <div class="concept"><span class="sym">Effort justification</span><p>We value what we suffered for. Aronson &amp; Mills (1959): a severe initiation made a dull group discussion seem more interesting.</p></div>
+        <div class="concept"><span class="sym">Post-decision dissonance</span><p>After choosing, we rate the chosen option higher and the rejected one lower ("spreading of alternatives", Brehm, 1956).</p></div>
+        <div class="concept"><span class="sym">Hypocrisy induction</span><p>Reminding people that they preach something they don't practise makes them change behaviour (e.g. condom use, water saving).</p></div>
+      </div>
+      <p class="cap"><b>Alternative view:</b> Bem's self-perception theory explains the $1 result without any tension: people simply infer their attitude from their behaviour.</p>
+    </div>
+  </div>
+
+  <div class="panel t3" data-key="aggression" data-label="Aggression" data-full="Social psychological views on aggression">
+    <div class="block">
+      <h2>Aggression</h2>
+      <p><b>Aggression</b> is behaviour <mark>intended to harm</mark> another person who wants to avoid that harm. Accidental harm is not aggression; an intended but failed attack is.</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Hostile (reactive) aggression</span><p>Driven by anger; harm is the goal. "He insulted me, so I hit him."</p></div>
+        <div class="concept"><span class="sym">Instrumental aggression</span><p>Harm is a means to another goal: robbery, a contract killing.</p></div>
+        <div class="concept"><span class="sym">Direct vs indirect</span><p>Direct: physical or verbal attack. Indirect (relational): gossip, exclusion, spreading rumours.</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Views on aggression</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">1 · Instinct theories</span><p><b>Freud</b>: Thanatos, the death instinct, turned outward. <b>Konrad Lorenz</b>: a fighting instinct that evolved for survival.</p></div>
+        <div class="concept"><span class="sym">2 · Biological and evolutionary</span><p>Testosterone, low serotonin, brain areas (amygdala, prefrontal cortex), genetics. Evolution: male aggression over status and mates.</p></div>
+        <div class="concept"><span class="sym">3 · Drive theories: frustration–aggression hypothesis</span><p>Dollard et al. (1939): frustration <b>always</b> leads to aggression, and aggression always comes from frustration. Berkowitz revised it: frustration causes anger, which leads to aggression especially when <b>aggressive cues</b> are present (the <b>weapons effect</b>, 1967).</p></div>
+        <div class="concept"><span class="sym">4 · Social learning theory (Bandura)</span><p>Aggression is <b>learned by observing</b> and imitating models, especially rewarded ones.</p></div>
+      </div>
+      <div class="who">
+        <div class="portrait" data-photo="bandura">AB</div>
+        <div><b>Albert Bandura (1961) · Bobo doll study</b><span>Children who watched an adult hit and kick an inflatable Bobo doll copied the same aggressive acts, even the exact words used.</span></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>General Aggression Model (Anderson &amp; Bushman, 2002)</h3>
+      <figure class="fig">
+        <svg viewBox="0 0 680 230" role="img" aria-label="General aggression model: person and situation inputs affect internal states of cognition, affect and arousal, leading to appraisal and aggressive or thoughtful action">
+          <defs><marker id="sp3b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--c3)"/></marker></defs>
+          <rect x="10" y="20" width="150" height="80" rx="10" class="boxbg" stroke-width="1.5"/>
+          <text x="85" y="46" text-anchor="middle" class="t" font-size="13" font-weight="700">Person factors</text><text x="85" y="66" text-anchor="middle" class="tb" font-size="11">traits, beliefs,</text><text x="85" y="82" text-anchor="middle" class="tb" font-size="11">hostile attribution</text>
+          <rect x="10" y="130" width="150" height="80" rx="10" class="boxbg" stroke-width="1.5"/>
+          <text x="85" y="156" text-anchor="middle" class="t" font-size="13" font-weight="700">Situation factors</text><text x="85" y="176" text-anchor="middle" class="tb" font-size="11">provocation, heat,</text><text x="85" y="192" text-anchor="middle" class="tb" font-size="11">violent media, alcohol</text>
+          <rect x="210" y="45" width="180" height="140" rx="12" style="fill:var(--c3-soft);stroke:var(--c3)" stroke-width="1.5"/>
+          <text x="300" y="72" text-anchor="middle" class="tm" font-size="10.5">INTERNAL STATE</text>
+          <g text-anchor="middle" class="t" font-size="13" font-weight="700"><text x="300" y="104">Cognition</text><text x="300" y="134">Affect (anger)</text><text x="300" y="164">Arousal</text></g>
+          <rect x="430" y="80" width="110" height="70" rx="10" class="boxbg" stroke-width="1.5"/>
+          <text x="485" y="110" text-anchor="middle" class="t" font-size="13" font-weight="700">Appraisal</text><text x="485" y="128" text-anchor="middle" class="tb" font-size="11">&amp; decision</text>
+          <rect x="575" y="30" width="95" height="60" rx="10" style="fill:var(--warn)"/><text x="622" y="65" text-anchor="middle" class="tw" font-size="12.5" font-weight="700">Impulsive</text>
+          <rect x="575" y="140" width="95" height="60" rx="10" style="fill:var(--good)"/><text x="622" y="175" text-anchor="middle" class="tw" font-size="12.5" font-weight="700">Thoughtful</text>
+          <g fill="none" style="stroke:var(--c3)" stroke-width="2.2"><path d="M160 60 L205 95" marker-end="url(#sp3b)"/><path d="M160 170 L205 140" marker-end="url(#sp3b)"/><path d="M390 115 L425 115" marker-end="url(#sp3b)"/><path d="M540 105 L570 70" marker-end="url(#sp3b)"/><path d="M540 125 L570 160" marker-end="url(#sp3b)"/></g>
+        </svg>
+      </figure>
+      <h4>Factors that increase aggression</h4>
+      <ul>
+        <li><b>Provocation</b> and frustration; <b>hostile attribution bias</b> (seeing others' acts as deliberately hostile)</li>
+        <li><b>Violent media and video games</b></li>
+        <li><b>Heat</b> (more violence on hot days), <b>alcohol</b>, crowding, noise</li>
+        <li><b>Culture of honour</b>, gender norms, deindividuation in crowds</li>
+      </ul>
+      <h4>Reducing aggression</h4>
+      <ul>
+        <li>Punishment that is prompt, certain and strong, but it can model aggression too</li>
+        <li><b>Catharsis is mostly a myth</b>: "venting" (hitting a pillow) usually <b>increases</b> later aggression (Bushman, 2002)</li>
+        <li>Cognitive strategies: apologies, pre-attribution (explaining the situation), delaying responses</li>
+        <li>Teaching social skills, empathy, and non-aggressive models</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="panel" data-key="test" data-label="Self-test">
+    <h2>Unit III self-test</h2>
+    <div class="cards">
+      <details><summary>Who proposed the looking-glass self?</summary><div><p>Charles Horton Cooley (1902).</p></div></details>
+      <details><summary>What is self-perception theory?</summary><div><p>Bem (1972): when feelings are unclear, we infer them from our own behaviour.</p></div></details>
+      <details><summary>Upward vs downward comparison?</summary><div><p>Upward = with people better off (can inspire or deflate); downward = with people worse off (boosts self-esteem).</p></div></details>
+      <details><summary>Define cognitive dissonance.</summary><div><p>Unpleasant tension from inconsistent cognitions, especially when behaviour contradicts attitudes.</p></div></details>
+      <details><summary>Which group in Festinger &amp; Carlsmith rated the task most enjoyable?</summary><div><p>The $1 group (insufficient justification).</p></div></details>
+      <details><summary>What is effort justification?</summary><div><p>Valuing something more because we suffered to get it (Aronson &amp; Mills, 1959).</p></div></details>
+      <details><summary>Hostile vs instrumental aggression?</summary><div><p>Hostile: harm is the goal, driven by anger. Instrumental: harm is a means to another goal.</p></div></details>
+      <details><summary>Does catharsis reduce aggression?</summary><div><p>Mostly no: venting usually increases later aggression.</p></div></details>
+    </div>
+    <h3>Long-answer outlines</h3>
+    <details><summary>Discuss the nature and origins of the self-concept and ways of knowing oneself. <span class="marks">10 marks</span></summary><div><ol><li>Definition; James's I and me; self-schema.</li><li>Origins: Cooley, Mead, mirror test, roles, culture (draw independent vs interdependent).</li><li>Ways of knowing: introspection, self-perception, social comparison, feedback.</li><li>Self-control and self-esteem briefly.</li></ol></div></details>
+    <details><summary>Explain Festinger's theory of cognitive dissonance. <span class="marks">10 marks</span></summary><div><ol><li>Meaning; examples.</li><li>Ways to reduce dissonance (draw).</li><li>$1/$20 study (chart).</li><li>Induced compliance, effort justification, post-decision dissonance, hypocrisy.</li><li>Criticism: self-perception theory; conclusion.</li></ol></div></details>
+    <details><summary>Describe social psychological views on aggression. <span class="marks">10 marks</span></summary><div><ol><li>Definition and types.</li><li>Instinct, biological, frustration–aggression (Berkowitz revision), social learning (Bobo doll).</li><li>General Aggression Model (draw).</li><li>Factors and ways of reducing aggression.</li></ol></div></details>
+  </div>
+</section>
+
+<section class="view unit" id="s4" data-subject="sp" data-num="Unit IV" data-short="Attitudes &amp; Prejudice" data-title="Attitudes and Prejudice" hidden>
+  <div class="unit-head">
+    <div class="eyebrow">Advanced Social Psychology · Unit IV</div>
+    <h1>Attitudes and Prejudice</h1>
+    <div class="stabs" role="tablist" aria-label="Sections of Unit IV"></div>
+  </div>
+
+  <div class="panel t1" data-key="overview" data-label="Nature of Attitudes" data-full="Nature and components of attitude">
+    <div class="block">
+      <h2>What is an attitude?</h2>
+      <p>An <b>attitude</b> is an <mark>evaluation</mark> of any aspect of the social world (a person, object, idea, issue) as positive or negative, favourable or unfavourable.</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">G. W. Allport (1935)</span><p>"A mental and neural state of <b>readiness</b>, organised through experience, exerting a directive or dynamic influence upon the individual's response to all objects and situations with which it is related."</p></div>
+        <div class="concept"><span class="sym">Features</span><ul><li>Learned, not inborn</li><li>Have direction (+/−) and strength</li><li>Fairly stable, but can change</li><li>Guide behaviour</li></ul></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>ABC model: three components</h3>
+      <figure class="fig">
+        <svg viewBox="0 0 680 270" role="img" aria-label="Triangle of attitude components: affective, behavioural, cognitive, around the attitude">
+          <path d="M340 30 L590 230 L90 230 Z" class="pagebg" style="stroke:var(--line)" stroke-width="2"/>
+          <circle cx="340" cy="160" r="48" style="fill:var(--c1)"/>
+          <text x="340" y="166" text-anchor="middle" class="tw" font-size="15" font-weight="800">Attitude</text>
+          <rect x="255" y="8" width="170" height="56" rx="10" style="fill:var(--c2)"/>
+          <text x="340" y="32" text-anchor="middle" class="tw" font-size="14" font-weight="800">A · Affective</text><text x="340" y="51" text-anchor="middle" class="tw" font-size="11.5">feelings: "I love dogs"</text>
+          <rect x="10" y="206" width="190" height="56" rx="10" style="fill:var(--c3)"/>
+          <text x="105" y="230" text-anchor="middle" class="tw" font-size="14" font-weight="800">B · Behavioural</text><text x="105" y="249" text-anchor="middle" class="tw" font-size="11.5">actions: "I adopt a dog"</text>
+          <rect x="480" y="206" width="190" height="56" rx="10" style="fill:var(--c4)"/>
+          <text x="575" y="230" text-anchor="middle" class="tw" font-size="14" font-weight="800">C · Cognitive</text><text x="575" y="249" text-anchor="middle" class="tw" font-size="11.5">beliefs: "dogs are loyal"</text>
+        </svg>
+      </figure>
+      <div class="mnemonic"><span class="lbl">Remember</span><span>Attitudes are as easy as <b>ABC</b>: <b>A</b>ffect, <b>B</b>ehaviour, <b>C</b>ognition.</span></div>
+    </div>
+    <div class="block">
+      <h3>How attitudes form</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Classical conditioning</span><p>Pairing an object with pleasant or unpleasant feelings (adverts with happy music). Can be <b>subliminal</b>.</p></div>
+        <div class="concept"><span class="sym">Instrumental conditioning</span><p>Being rewarded or punished for expressing an attitude.</p></div>
+        <div class="concept"><span class="sym">Observational learning</span><p>Copying the attitudes of parents, peers and media figures.</p></div>
+        <div class="concept"><span class="sym">Social comparison</span><p>Adopting the views of groups we identify with.</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Do attitudes predict behaviour?</h3>
+      <div class="study"><span class="lbl">Key study · LaPiere, 1934</span><h4>Attitudes ≠ behaviour</h4><p>LaPiere travelled across the USA with a Chinese couple. They were refused service only once in 251 places. Yet when he later wrote asking whether these places would serve Chinese guests, over 90% of those that replied said <b>no</b>.</p></div>
+      <p>Attitudes predict behaviour better when they are <b>strong</b> (extreme, certain, from personal experience), <b>specific</b> to the behaviour, and <b>accessible</b>.</p>
+      <div class="concept"><span class="sym">Theory of planned behaviour (Ajzen, 1991)</span><p><b>Attitude</b> toward the behaviour + <b>subjective norms</b> (what others expect) + <b>perceived behavioural control</b> → <b>intention</b> → behaviour.</p></div>
+    </div>
+  </div>
+
+  <div class="panel t1" data-key="implicit" data-label="Explicit &amp; Implicit" data-full="Explicit and implicit attitudes">
+    <div class="block">
+      <h2>Explicit and implicit attitudes</h2>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Explicit attitudes</span><p><b>Conscious</b>, deliberate, easy to report. Measured by questionnaires and rating scales (Likert, semantic differential).</p><p class="eg">"I believe men and women are equally good at science."</p></div>
+        <div class="concept"><span class="sym">Implicit attitudes</span><p><b>Automatic</b>, often unconscious, hard to control. Can differ from explicit attitudes.</p><p class="eg">Faster to link "male" with "science" despite saying otherwise.</p></div>
+      </div>
+      <div class="study"><span class="lbl">Measurement · Greenwald et al., 1998</span><h4>Implicit Association Test (IAT)</h4><p>Measures how <b>quickly</b> people sort words or faces into paired categories (e.g. "young + good" vs "old + good"). Faster pairing suggests a stronger automatic association.</p></div>
+      <p class="cap"><b>Why it matters:</b> explicit attitudes predict deliberate behaviour (voting); implicit attitudes predict spontaneous behaviour (body language, seating distance). The IAT's reliability for predicting an individual's behaviour is debated.</p>
+    </div>
+  </div>
+
+  <div class="panel t2" data-key="change" data-label="Attitude Change" data-full="Attitude change and persuasion">
+    <div class="block">
+      <h2>Attitude change: persuasion</h2>
+      <h3>Yale approach (Hovland, 1950s): who says what to whom</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Communicator (who)</span><p><b>Credible</b> (expert, trustworthy), attractive and similar sources persuade more. Fast speakers often seem more credible.</p></div>
+        <div class="concept"><span class="sym">Message (what)</span><p>Messages that don't seem designed to persuade work better. Fear appeals work if they also show how to avoid the danger. Two-sided messages for informed audiences.</p></div>
+        <div class="concept"><span class="sym">Audience (to whom)</span><p>Mood, intelligence, self-esteem and age affect persuasion. People in a good mood are easier to persuade.</p></div>
+      </div>
+      <p class="cap"><b>Sleeper effect:</b> a message from a low-credibility source can become more persuasive over time, as people forget the source.</p>
+    </div>
+    <div class="block">
+      <h3>Elaboration Likelihood Model (Petty &amp; Cacioppo, 1986)</h3>
+      <figure class="fig">
+        <svg viewBox="0 0 680 290" role="img" aria-label="Elaboration likelihood model: persuasive message goes by central route if motivated and able, producing lasting change, or peripheral route producing temporary change">
+          <defs><marker id="sp4a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--c2)"/></marker></defs>
+          <rect x="10" y="115" width="140" height="60" rx="10" class="boxbg" stroke-width="1.5"/>
+          <text x="80" y="141" text-anchor="middle" class="t" font-size="13" font-weight="700">Persuasive</text><text x="80" y="159" text-anchor="middle" class="t" font-size="13" font-weight="700">message</text>
+          <path d="M150 145 L190 145" style="stroke:var(--c2)" stroke-width="2.2" marker-end="url(#sp4a)"/>
+          <path d="M195 145 L250 105 L305 145 L250 185 Z" class="pagebg" style="stroke:var(--c2)" stroke-width="2"/>
+          <text x="250" y="141" text-anchor="middle" class="t" font-size="11.5" font-weight="700">Motivated</text><text x="250" y="156" text-anchor="middle" class="t" font-size="11.5" font-weight="700">&amp; able?</text>
+          <path d="M280 120 C320 70 340 60 370 58" fill="none" style="stroke:var(--good)" stroke-width="2.2" marker-end="url(#sp4a)"/>
+          <path d="M280 170 C320 220 340 230 370 232" fill="none" style="stroke:var(--warn)" stroke-width="2.2" marker-end="url(#sp4a)"/>
+          <text x="300" y="80" class="tm" font-size="11">YES</text><text x="300" y="218" class="tm" font-size="11">NO</text>
+          <rect x="375" y="20" width="160" height="80" rx="10" style="fill:var(--c2)"/>
+          <text x="455" y="50" text-anchor="middle" class="tw" font-size="14" font-weight="800">Central route</text><text x="455" y="70" text-anchor="middle" class="tw" font-size="11">careful thought about</text><text x="455" y="85" text-anchor="middle" class="tw" font-size="11">argument quality</text>
+          <rect x="375" y="190" width="160" height="80" rx="10" class="boxbg" style="stroke:var(--c2)" stroke-width="2"/>
+          <text x="455" y="220" text-anchor="middle" class="t" font-size="14" font-weight="800">Peripheral route</text><text x="455" y="240" text-anchor="middle" class="tb" font-size="11">cues: celebrity, looks,</text><text x="455" y="255" text-anchor="middle" class="tb" font-size="11">number of arguments</text>
+          <path d="M535 60 L570 60" style="stroke:var(--c2)" stroke-width="2.2" marker-end="url(#sp4a)"/>
+          <path d="M535 230 L570 230" style="stroke:var(--c2)" stroke-width="2.2" marker-end="url(#sp4a)"/>
+          <text x="575" y="55" class="t" font-size="12.5" font-weight="700">Lasting change</text><text x="575" y="72" class="tb" font-size="11">resists counter-</text><text x="575" y="86" class="tb" font-size="11">arguments</text>
+          <text x="575" y="225" class="t" font-size="12.5" font-weight="700">Short-lived</text><text x="575" y="242" class="tb" font-size="11">change, easily</text><text x="575" y="256" class="tb" font-size="11">reversed</text>
+        </svg>
+      </figure>
+      <p class="cap">A similar model is Chaiken's heuristic–systematic model.</p>
+    </div>
+    <div class="block">
+      <h3>Other routes to attitude change, and resisting persuasion</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Cognitive dissonance</span><p>Acting against our attitude (with little justification) changes the attitude (see Unit III).</p></div>
+        <div class="concept"><span class="sym">Resisting persuasion</span><ul><li><b>Reactance</b>: pushing back when we feel our freedom is threatened</li><li><b>Forewarning</b>: knowing persuasion is coming</li><li><b>Selective avoidance</b> of opposing information</li><li><b>Inoculation</b> (McGuire): exposure to weak counter-arguments builds resistance, like a vaccine</li><li><b>Biased assimilation</b>: evidence against our view seems weaker</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel t3" data-key="prejudice" data-label="Prejudice: Causes" data-full="Meaning, development and causes of prejudice">
+    <div class="block">
+      <h2>Prejudice</h2>
+      <p><b>Prejudice</b> is a <mark>negative attitude</mark> toward members of a social group, based only on their membership in that group.</p>
+      <div class="grid">
+        <div class="concept"><span class="sym">Stereotype · Cognitive</span><p>Beliefs about a group's traits: "group X are lazy".</p></div>
+        <div class="concept"><span class="sym">Prejudice · Affective</span><p>Negative feelings toward the group.</p></div>
+        <div class="concept"><span class="sym">Discrimination · Behavioural</span><p>Unfair negative actions toward group members.</p></div>
+      </div>
+      <p class="cap">Prejudice follows the ABC structure of attitudes. Examples: caste, religion, gender, region, skin colour, disability, sexual orientation.</p>
+    </div>
+    <div class="block">
+      <h3>Development: how prejudice is learned</h3>
+      <ul>
+        <li><b>Socialisation</b>: children pick up attitudes from parents (by about age 5 they can show racial preferences).</li>
+        <li><b>Social learning</b>: rewarded for expressing the "right" views; imitating peers.</li>
+        <li><b>Media</b>: repeated stereotyped portrayals.</li>
+        <li><b>Social norms</b>: what one's community treats as normal.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>Causes of prejudice</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">1 · Realistic conflict theory</span><p>Competition for scarce resources (jobs, land) creates hostility.</p></div>
+        <div class="concept"><span class="sym">2 · Social identity theory (Tajfel &amp; Turner, 1979)</span><p>We boost self-esteem by seeing <b>our group</b> as better than others (in-group favouritism).</p></div>
+        <div class="concept"><span class="sym">3 · Social categorisation</span><p>Dividing the world into "us" and "them". <b>Out-group homogeneity</b>: "they are all the same".</p></div>
+        <div class="concept"><span class="sym">4 · Cognitive sources</span><p>Stereotypes save mental effort; <b>illusory correlation</b> links minority groups with rare (negative) behaviour.</p></div>
+        <div class="concept"><span class="sym">5 · Personality</span><p><b>Authoritarian personality</b> (Adorno et al., 1950): rigid, obedient to authority, hostile to out-groups. Also social dominance orientation.</p></div>
+        <div class="concept"><span class="sym">6 · Frustration and scapegoating</span><p>Displacing anger onto a weaker group (e.g. blaming migrants for economic problems).</p></div>
+      </div>
+      <div class="study"><span class="lbl">Key study · Sherif, 1954</span><h4>Robbers Cave experiment</h4><p>Boys at a summer camp were split into two groups, "Eagles" and "Rattlers". <b>Competition</b> for prizes quickly produced name-calling and raids. Friendly contact alone didn't fix it; <b>superordinate goals</b> (tasks needing both groups, like fixing the water supply) reduced hostility.</p></div>
+      <div class="who">
+        <div class="portrait" data-photo="tajfel">HT</div>
+        <div><b>Henri Tajfel · minimal group paradigm (1970s)</b><span>Even groups formed on trivial grounds (preferring Klee or Kandinsky paintings) favoured their own members when sharing rewards.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel t4" data-key="reducing" data-label="Effects &amp; Reduction" data-full="Effects of prejudice and reducing prejudice">
+    <div class="block">
+      <h2>Effects of prejudice</h2>
+      <div class="grid">
+        <div class="concept"><span class="sym">Stereotype threat</span><p>Fear of confirming a negative stereotype lowers performance. Black students did worse on a test described as measuring intelligence (Steele &amp; Aronson, 1995).</p></div>
+        <div class="concept"><span class="sym">Self-fulfilling prophecy</span><p>Low expectations lead to poor treatment, which leads to poor outcomes.</p></div>
+        <div class="concept"><span class="sym">Health and well-being</span><p>Chronic stress, anxiety, depression, poorer physical health.</p></div>
+        <div class="concept"><span class="sym">Social</span><p>Discrimination in jobs, housing, education; conflict and violence.</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h2>Reducing prejudice</h2>
+      <div class="who">
+        <img class="photo" data-key="gallport" src="data:image/jpeg;base64,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" alt="Photograph of Gordon Allport">
+        <div><b>Gordon Allport · <i>The Nature of Prejudice</i> (1954)</b><span>Proposed the contact hypothesis.</span><span class="credit">Photo: C. George Boeree, Free Art License, <a href="https://commons.wikimedia.org/wiki/File:Gordon_Allport.gif">Wikimedia Commons</a></span></div>
+      </div>
+      <h3>Contact hypothesis: contact works under four conditions</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">1 · Equal status</span><p>Groups meet as equals.</p></div>
+        <div class="concept"><span class="sym">2 · Common goals</span><p>Working toward shared goals.</p></div>
+        <div class="concept"><span class="sym">3 · Cooperation</span><p>Interdependence, not competition.</p></div>
+        <div class="concept"><span class="sym">4 · Support of authorities</span><p>Laws, norms, leaders back the contact.</p></div>
+      </div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span><b>E-C-C-S</b>: "<b>E</b>qual <b>C</b>lassmates <b>C</b>ooperate <b>S</b>uccessfully."</span></div>
+      <h3>Other strategies</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Recategorisation</span><p>Common in-group identity model: turn "us and them" into "<b>we</b>" (e.g. "we are all Indians").</p></div>
+        <div class="concept"><span class="sym">Jigsaw classroom (Aronson)</span><p>Each student holds one piece of the lesson, so everyone depends on each other.</p></div>
+        <div class="concept"><span class="sym">Learning not to hate</span><p>Parents and teachers modelling tolerance; education.</p></div>
+        <div class="concept"><span class="sym">Extended contact</span><p>Knowing that an in-group friend has an out-group friend reduces prejudice.</p></div>
+        <div class="concept"><span class="sym">Cognitive interventions</span><p>Training to "just say no" to stereotypes; perspective-taking; awareness of implicit bias.</p></div>
+        <div class="concept"><span class="sym">Social influence</span><p>Showing that peers hold tolerant attitudes changes norms.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-key="test" data-label="Self-test">
+    <h2>Unit IV self-test</h2>
+    <div class="cards">
+      <details><summary>Three components of an attitude?</summary><div><p>Affective, behavioural, cognitive (ABC).</p></div></details>
+      <details><summary>What did LaPiere (1934) show?</summary><div><p>Stated attitudes did not match actual behaviour: he and a Chinese couple were refused service only once, yet most establishments said in writing they would refuse.</p></div></details>
+      <details><summary>What does the IAT measure?</summary><div><p>Implicit attitudes, through reaction times to paired categories.</p></div></details>
+      <details><summary>Central vs peripheral route?</summary><div><p>Central: careful thought about arguments, lasting change. Peripheral: superficial cues, short-lived change.</p></div></details>
+      <details><summary>Stereotype, prejudice, discrimination?</summary><div><p>Belief (cognitive), feeling (affective), action (behavioural).</p></div></details>
+      <details><summary>What reduced hostility in Robbers Cave?</summary><div><p>Superordinate goals that required cooperation.</p></div></details>
+      <details><summary>Allport's four conditions for contact?</summary><div><p>Equal status, common goals, cooperation, support of authorities.</p></div></details>
+      <details><summary>What is stereotype threat?</summary><div><p>Fear of confirming a negative stereotype, which lowers performance.</p></div></details>
+    </div>
+    <h3>Long-answer outlines</h3>
+    <details><summary>Explain the nature and components of attitudes, and explicit vs implicit attitudes. <span class="marks">10 marks</span></summary><div><ol><li>Definition; features.</li><li>ABC model (draw).</li><li>Formation.</li><li>Explicit vs implicit; IAT.</li><li>Attitude–behaviour link: LaPiere, planned behaviour.</li></ol></div></details>
+    <details><summary>Discuss attitude change. <span class="marks">10 marks</span></summary><div><ol><li>Yale approach: communicator, message, audience.</li><li>ELM (draw).</li><li>Dissonance.</li><li>Resistance to persuasion.</li></ol></div></details>
+    <details><summary>Explain the causes of prejudice and ways to reduce it. <span class="marks">10 marks</span></summary><div><ol><li>Definition; stereotype–prejudice–discrimination.</li><li>Development.</li><li>Causes: realistic conflict (Robbers Cave), social identity, categorisation, cognitive, personality, scapegoating.</li><li>Effects.</li><li>Reduction: contact hypothesis, recategorisation, jigsaw, others.</li></ol></div></details>
+  </div>
+</section>
+
+<section class="view unit" id="s5" data-subject="sp" data-num="Unit V" data-short="Influence &amp; Groups" data-title="Social Influence and Group Processes" hidden>
+  <div class="unit-head">
+    <div class="eyebrow">Advanced Social Psychology · Unit V</div>
+    <h1>Social Influence and Group Processes</h1>
+    <div class="stabs" role="tablist" aria-label="Sections of Unit V"></div>
+  </div>
+
+  <div class="panel t1" data-key="overview" data-label="Conformity" data-full="Social conformity">
+    <div class="block">
+      <h2>Social influence and conformity</h2>
+      <p><b>Social influence</b> is the effort by one or more people to change the attitudes, beliefs or behaviour of others. <b>Conformity</b> means <mark>changing our behaviour to match social norms</mark>, the rules about how we ought to behave.</p>
+      <div class="grid">
+        <div class="concept"><span class="sym">Conformity</span><p>Going along with the group, without being directly asked.</p></div>
+        <div class="concept"><span class="sym">Compliance</span><p>Agreeing to a direct request.</p></div>
+        <div class="concept"><span class="sym">Obedience</span><p>Following a command from an authority figure.</p></div>
+      </div>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Descriptive norms</span><p>What most people <b>do</b>: "most people here don't litter".</p></div>
+        <div class="concept"><span class="sym">Injunctive norms</span><p>What people <b>ought</b> to do: "littering is wrong".</p></div>
+      </div>
+    </div>
+
+    <div class="block">
+      <h3>Classic studies</h3>
+      <div class="study"><span class="lbl">Key study · Sherif, 1935</span><h4>Autokinetic effect</h4><p>In a dark room, a still point of light seems to move. Alone, people gave very different estimates of the movement. In groups, their estimates <b>converged</b> on a shared norm, which they kept even when tested alone later. This is <b>informational</b> influence in an ambiguous situation.</p></div>
+      <div class="who">
+        <div class="portrait" data-photo="asch">SA</div>
+        <div><b>Solomon Asch (1951, 1956)</b><span>Line-judgement studies: conformity even when the right answer is obvious.</span></div>
+      </div>
+      <div class="study"><span class="lbl">Key study · Asch, 1951–56</span><h4>Line judgement</h4><p>A real participant sat with 6–8 confederates who, on 12 of 18 trials, all gave the same <b>obviously wrong</b> answer about which line matched a standard line. Alone, people made almost no errors (under 1%).</p><ul><li>Participants conformed on about <b>37%</b> of critical trials</li><li>About <b>75%</b> conformed at least once</li><li>About 25% never conformed</li></ul></div>
+      <figure class="fig">
+        <svg viewBox="0 0 680 270" role="img" aria-label="Approximate conformity by number of confederates: rises from about 3 percent with one to about 32 percent with three, then levels off">
+          <line x1="70" y1="40" x2="650" y2="40" class="ln" stroke-dasharray="3 4"/>
+          <line x1="70" y1="110" x2="650" y2="110" class="ln" stroke-dasharray="3 4"/>
+          <line x1="70" y1="180" x2="650" y2="180" class="ink" stroke-width="1.5"/>
+          <g class="tm" font-size="11" text-anchor="end"><text x="62" y="44">40%</text><text x="62" y="114">20%</text><text x="62" y="184">0%</text></g>
+          <polyline points="110,169.5 210,134.5 310,68 410,57.5 510,68 610,71.5" fill="none" style="stroke:var(--c1)" stroke-width="3"/>
+          <g style="fill:var(--c1)"><circle cx="110" cy="169.5" r="5"/><circle cx="210" cy="134.5" r="5"/><circle cx="310" cy="68" r="5"/><circle cx="410" cy="57.5" r="5"/><circle cx="510" cy="68" r="5"/><circle cx="610" cy="71.5" r="5"/></g>
+          <g class="t" font-size="12" font-weight="700" text-anchor="middle"><text x="110" y="158">≈3%</text><text x="210" y="123">≈13%</text><text x="310" y="56">≈32%</text><text x="410" y="46">≈35%</text><text x="510" y="56">≈32%</text><text x="610" y="60">≈31%</text></g>
+          <g class="tb" font-size="12" text-anchor="middle"><text x="110" y="202">1</text><text x="210" y="202">2</text><text x="310" y="202">3</text><text x="410" y="202">4</text><text x="510" y="202">8</text><text x="610" y="202">15–16</text></g>
+          <text x="360" y="228" text-anchor="middle" class="tm" font-size="11">NUMBER OF CONFEDERATES GIVING THE WRONG ANSWER</text>
+          <text x="20" y="24" class="tm" font-size="11">% OF ANSWERS THAT CONFORMED (approximate, Asch 1956)</text>
+          <text x="360" y="254" text-anchor="middle" class="tb" font-size="12">One dissenting partner cut conformity sharply, to about 5%</text>
+        </svg>
+      </figure>
+    </div>
+
+    <div class="block">
+      <h3>Why do we conform? (Deutsch &amp; Gerard, 1955)</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Normative influence</span><p>The desire to be <b>liked and accepted</b>, and fear of rejection. Leads to public compliance without private agreement (Asch).</p></div>
+        <div class="concept"><span class="sym">Informational influence</span><p>The desire to be <b>right</b>: we treat others as a source of information, especially when uncertain. Leads to real private acceptance (Sherif).</p></div>
+      </div>
+      <h4>Factors affecting conformity</h4>
+      <div class="grid">
+        <div class="concept"><span class="sym">Cohesiveness</span><p>We conform more to groups we like and belong to.</p></div>
+        <div class="concept"><span class="sym">Group size</span><p>Rises up to about 3–4 people, then levels off.</p></div>
+        <div class="concept"><span class="sym">Unanimity</span><p>One ally breaks the pressure.</p></div>
+        <div class="concept"><span class="sym">Public response</span><p>More conformity when answers are public.</p></div>
+        <div class="concept"><span class="sym">Culture</span><p>Higher in collectivist cultures.</p></div>
+        <div class="concept"><span class="sym">Task difficulty</span><p>Harder or ambiguous tasks → more informational conformity.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel t1" data-key="bias" data-label="Bias, Feedback, Non-conformity" data-full="Conformity bias, feedback and non-conformity">
+    <div class="block">
+      <h2>Conformity bias</h2>
+      <p><b>Conformity bias</b> is our tendency to <mark>behave like the people around us</mark> rather than use our own independent judgement, and to <b>underestimate</b> how much we are influenced. Most people believe "others conform, but I don't".</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Pluralistic ignorance</span><p>Everyone privately disagrees with a norm but wrongly thinks others accept it, so the norm continues (e.g. heavy drinking at college parties).</p></div>
+        <div class="concept"><span class="sym">Introspection illusion</span><p>We judge ourselves by our inner thoughts ("I chose freely") and others by their behaviour ("they just copied").</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h2>Impact of feedback</h2>
+      <div class="prose">
+        <p>Feedback from the group strongly shapes conformity:</p>
+      </div>
+      <ul>
+        <li><b>Social approval</b> (smiles, praise, inclusion) for agreeing increases conformity. <b>Social disapproval and rejection</b> for disagreeing push people back into line. Even seeing someone else rejected increases conformity.</li>
+        <li><b>Feedback about accuracy</b>: if people learn the group was often wrong, they conform less; if the group is shown to be right, informational conformity grows.</li>
+        <li><b>Normative feedback</b> ("your neighbours use less electricity than you") changes behaviour toward the norm; this is used in energy-saving campaigns.</li>
+        <li>Feedback that confirms our own competence (e.g. being told we are an expert) <b>reduces</b> conformity.</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h2>Non-conformity: resisting group pressure</h2>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Need for individuation</span><p>The wish to be distinct and unique from others.</p></div>
+        <div class="concept"><span class="sym">Need for control</span><p>People with a high desire for control resist pressure more.</p></div>
+        <div class="concept"><span class="sym">Reactance</span><p>Pushing back when we feel our freedom is threatened.</p></div>
+        <div class="concept"><span class="sym">Social support</span><p>Having even one ally who disagrees with the group.</p></div>
+        <div class="concept"><span class="sym">Idiosyncrasy credits</span><p>People who have conformed in the past "earn credits" that let them deviate later without rejection.</p></div>
+        <div class="concept"><span class="sym">Power</span><p>High-power people conform less.</p></div>
+      </div>
+      <div class="study"><span class="lbl">Minority influence · Moscovici, 1969</span><h4>The consistent minority</h4><p>A minority that <b>consistently</b> called blue slides "green" influenced the majority's later colour judgements. A consistent, confident minority can change majority views, often slowly and privately.</p></div>
+    </div>
+  </div>
+
+  <div class="panel t2" data-key="obedience" data-label="Obedience" data-full="Obedience to authority">
+    <div class="who">
+      <div class="portrait" data-photo="milgram">SM</div>
+      <div><b>Stanley Milgram (1933–1984)</b><span>Yale University. <i>Obedience to Authority</i> (1974). He was inspired by the trial of Nazi official Adolf Eichmann.</span></div>
+    </div>
+    <div class="block">
+      <h2>Obedience to authority</h2>
+      <p><b>Obedience</b> is following the <mark>direct orders of an authority figure</mark>. Can ordinary people be made to harm others simply because they are told to?</p>
+      <div class="study"><span class="lbl">Key study · Milgram, 1963</span><h4>The "shock" experiment</h4><p>Participants, as "teachers", were told to give electric shocks to a "learner" (a confederate) for each wrong answer, rising in 15-volt steps from 15 V to <b>450 V</b>. No real shocks were given, but the learner screamed, protested, then fell silent. When teachers hesitated, the experimenter used prods such as "The experiment requires that you continue."</p><p>Psychiatrists predicted almost no one would go to the end. In fact <b>65%</b> obeyed all the way to 450 V.</p></div>
+      <figure class="fig">
+        <svg viewBox="0 0 680 300" role="img" aria-label="Bar chart of full obedience in Milgram variations: baseline 65 percent, office building 47.5, same room 40, touch 30, orders by phone 20.5, peers rebel 10">
+          <text x="10" y="20" class="tm" font-size="11">% WHO OBEYED TO 450 V (Milgram, 1974)</text>
+          <g class="tb" font-size="12.5" text-anchor="end">
+            <text x="220" y="52">Baseline (voice feedback)</text>
+            <text x="220" y="92">Run-down office building</text>
+            <text x="220" y="132">Learner in same room</text>
+            <text x="220" y="172">Teacher must touch learner</text>
+            <text x="220" y="212">Orders given by phone</text>
+            <text x="220" y="252">Two peers rebel</text>
+          </g>
+          <g style="fill:var(--c2)">
+            <rect x="232" y="36" width="260" height="24" rx="3"/>
+            <rect x="232" y="76" width="190" height="24" rx="3" opacity="0.85"/>
+            <rect x="232" y="116" width="160" height="24" rx="3" opacity="0.8"/>
+            <rect x="232" y="156" width="120" height="24" rx="3" opacity="0.75"/>
+            <rect x="232" y="196" width="82" height="24" rx="3" opacity="0.7"/>
+            <rect x="232" y="236" width="40" height="24" rx="3" opacity="0.65"/>
+          </g>
+          <g class="t" font-size="13" font-weight="800">
+            <text x="500" y="53">65%</text><text x="430" y="93">47.5%</text><text x="400" y="133">40%</text><text x="360" y="173">30%</text><text x="322" y="213">20.5%</text><text x="280" y="253">10%</text>
+          </g>
+          <line x1="232" y1="28" x2="232" y2="268" class="ink" stroke-width="1.5"/>
+          <text x="232" y="288" class="tm" font-size="10.5" text-anchor="middle">0%</text>
+          <text x="632" y="288" class="tm" font-size="10.5" text-anchor="middle">100%</text>
+        </svg>
+        <figcaption>Obedience fell when the victim was closer, the authority was further away or less prestigious, or others disobeyed.</figcaption>
+      </figure>
+    </div>
+    <div class="block">
+      <h3>Why do people obey?</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Agentic state</span><p>People see themselves as an "agent" carrying out another's wishes, so they shift <b>responsibility</b> to the authority.</p></div>
+        <div class="concept"><span class="sym">Legitimate authority</span><p>Uniforms, titles, a prestigious setting (Yale) increase obedience.</p></div>
+        <div class="concept"><span class="sym">Gradual escalation (foot-in-the-door)</span><p>Small 15-volt steps made each next step feel only slightly worse.</p></div>
+        <div class="concept"><span class="sym">Norms of obedience</span><p>We are taught from childhood to obey parents, teachers, police.</p></div>
+      </div>
+      <h4>Resisting destructive obedience</h4>
+      <ul>
+        <li>Remind people that <b>they</b> are responsible for harm</li>
+        <li>Teach that blind obedience is inappropriate; question authority's motives</li>
+        <li>Disobedient models: seeing others refuse</li>
+        <li>Know about the research: awareness itself helps</li>
+      </ul>
+      <p class="cap"><b>Ethics and replication:</b> Milgram's study caused severe stress and used deception, and led to stricter ethics rules. Burger (2009) ran a safer partial replication (stopping at 150 V) and found obedience rates similar to Milgram's.</p>
+    </div>
+  </div>
+
+  <div class="panel t3" data-key="groups" data-label="Groups" data-full="Meaning and functions of groups; why people join">
+    <div class="block">
+      <h2>What is a group?</h2>
+      <p>A <b>group</b> is <mark>two or more people who interact</mark>, are <b>interdependent</b>, share <b>common goals</b>, and see themselves as a unit. A crowd at a bus stop is not a group; a cricket team is.</p>
+      <div class="concept"><span class="sym">Entitativity</span><p>How much a collection of people is seen as a real, unified group. High for families and teams; low for people in a queue.</p></div>
+      <div class="grid">
+        <div class="concept"><span class="sym">Roles</span><p>Expected behaviours for each position (captain, secretary).</p></div>
+        <div class="concept"><span class="sym">Status</span><p>Rank or prestige within the group.</p></div>
+        <div class="concept"><span class="sym">Norms</span><p>Rules about how members should behave.</p></div>
+        <div class="concept"><span class="sym">Cohesiveness</span><p>Forces that bind members together; liking and commitment.</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Why do people join groups? (functions)</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Belonging</span><p>Basic need for affiliation, love and acceptance.</p></div>
+        <div class="concept"><span class="sym">Self-knowledge</span><p>Groups help us know who we are (social comparison).</p></div>
+        <div class="concept"><span class="sym">Identity and self-esteem</span><p>Group membership adds to self-concept and pride.</p></div>
+        <div class="concept"><span class="sym">Achieving goals</span><p>Doing together what we can't do alone.</p></div>
+        <div class="concept"><span class="sym">Security and protection</span><p>Safety in numbers, support in hard times.</p></div>
+        <div class="concept"><span class="sym">Information</span><p>Learning from others, reducing uncertainty.</p></div>
+      </div>
+      <div class="mnemonic"><span class="lbl">Remember</span><span>We join groups for <b>B-S-I-G-S-I</b>: "<b>B</b>elonging, <b>S</b>elf-knowledge, <b>I</b>dentity, <b>G</b>oals, <b>S</b>ecurity, <b>I</b>nformation."</span></div>
+    </div>
+    <div class="block">
+      <h3>Stages of group development (Tuckman, 1965)</h3>
+      <div class="steps">
+        <div class="step"><div class="when"><b>Forming</b>1</div><p>Getting to know each other; uncertainty.</p></div>
+        <div class="step"><div class="when"><b>Storming</b>2</div><p>Conflict over roles and leadership.</p></div>
+        <div class="step"><div class="when"><b>Norming</b>3</div><p>Agreement on norms and roles; cohesion grows.</p></div>
+        <div class="step"><div class="when"><b>Performing</b>4</div><p>Working effectively toward goals.</p></div>
+        <div class="step"><div class="when"><b>Adjourning</b>5</div><p>Group ends after the task (added in 1977).</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel t4" data-key="loafing" data-label="Social Loafing" data-full="Social loafing">
+    <div class="block">
+      <h2>Social loafing</h2>
+      <p><b>Social loafing</b> is the tendency to <mark>put in less effort</mark> when working in a group on a shared task, where individual contributions are pooled and not identifiable, than when working alone.</p>
+      <div class="study"><span class="lbl">Key study · Ringelmann, 1880s (published 1913)</span><h4>Rope pulling</h4><p>As more men pulled a rope together, the force <b>per person</b> fell.</p></div>
+      <figure class="fig">
+        <svg viewBox="0 0 680 230" role="img" aria-label="Effort per person in rope pulling: 100 percent alone, 93 with two, 85 with three, 49 with eight">
+          <text x="10" y="20" class="tm" font-size="11">EFFORT PER PERSON (% of working alone)</text>
+          <g style="fill:var(--c4)">
+            <rect x="80" y="40" width="100" height="150"/>
+            <rect x="230" y="50" width="100" height="140" opacity="0.85"/>
+            <rect x="380" y="62" width="100" height="128" opacity="0.75"/>
+            <rect x="530" y="117" width="100" height="73" opacity="0.65"/>
+          </g>
+          <g class="t" font-size="14" font-weight="800" text-anchor="middle"><text x="130" y="34">100%</text><text x="280" y="44">93%</text><text x="430" y="56">85%</text><text x="580" y="111">49%</text></g>
+          <line x1="60" y1="190" x2="660" y2="190" class="ink" stroke-width="1.5"/>
+          <g class="tb" font-size="12.5" text-anchor="middle"><text x="130" y="210">Alone</text><text x="280" y="210">2 people</text><text x="430" y="210">3 people</text><text x="580" y="210">8 people</text></g>
+        </svg>
+      </figure>
+      <div class="study"><span class="lbl">Key study · Latané, Williams &amp; Harkins, 1979</span><h4>Clapping and shouting</h4><p>Blindfolded students wearing headphones shouted or clapped "alone" or "with others". They made less noise per person when they believed others were also shouting, even when they were actually alone. So the drop is due to <b>reduced effort</b>, not just poor coordination.</p></div>
+    </div>
+    <div class="block">
+      <h3>Why it happens: collective effort model (Karau &amp; Williams, 1993)</h3>
+      <p>People work hard only when they believe their effort will <b>matter</b> for an outcome they <b>value</b>. In groups, each person's effort feels less important and less noticed.</p>
+      <h3>Reducing social loafing</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Identifiability</span><p>Make each person's contribution visible.</p></div>
+        <div class="concept"><span class="sym">Commitment</span><p>Increase commitment to the task's success.</p></div>
+        <div class="concept"><span class="sym">Importance</span><p>Make the task meaningful and valued.</p></div>
+        <div class="concept"><span class="sym">Unique contribution</span><p>Give each member a distinct, necessary role.</p></div>
+        <div class="concept"><span class="sym">Small groups and cohesion</span><p>Friends and small teams loaf less.</p></div>
+      </div>
+      <p class="cap">Loafing is weaker in collectivist cultures and among women. The opposite, <b>social compensation</b>, happens when people work harder to make up for weak teammates on an important task.</p>
+    </div>
+  </div>
+
+  <div class="panel t3" data-key="decisions" data-label="Group Decisions" data-full="Group decision-making">
+    <div class="block">
+      <h2>Group decision-making</h2>
+      <h3>How groups reach decisions: social decision schemes</h3>
+      <div class="grid">
+        <div class="concept"><span class="sym">Majority-wins</span><p>The view held by most members is chosen. The most common rule.</p></div>
+        <div class="concept"><span class="sym">Truth-wins</span><p>The correct answer wins once its correctness is recognised.</p></div>
+        <div class="concept"><span class="sym">First-shift</span><p>The group adopts the direction of the first person who changes position.</p></div>
+      </div>
+    </div>
+    <div class="block">
+      <h3>Group polarisation</h3>
+      <p>Group discussion makes members' views <mark>more extreme</mark> in the direction they already leaned. First found as the "<b>risky shift</b>" (Stoner, 1961), then shown to work in either direction (Moscovici &amp; Zavalloni, 1969).</p>
+      <figure class="fig">
+        <svg viewBox="0 0 680 160" role="img" aria-label="Before discussion, average opinion is mildly in favour; after discussion it becomes strongly in favour">
+          <defs><marker id="sp5a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" style="fill:var(--c3)"/></marker></defs>
+          <line x1="40" y1="80" x2="640" y2="80" class="ink" stroke-width="2"/>
+          <g class="tm" font-size="11" text-anchor="middle"><text x="40" y="104">Strongly against</text><text x="340" y="104">Neutral</text><text x="640" y="104" text-anchor="end">Strongly for</text></g>
+          <line x1="340" y1="72" x2="340" y2="88" class="ink"/>
+          <circle cx="430" cy="80" r="11" style="fill:var(--muted)"/>
+          <circle cx="570" cy="80" r="11" style="fill:var(--c3)"/>
+          <path d="M445 60 C490 40 520 40 558 60" fill="none" style="stroke:var(--c3)" stroke-width="2.2" marker-end="url(#sp5a)"/>
+          <text x="430" y="130" text-anchor="middle" class="t" font-size="12.5" font-weight="700">Before discussion</text>
+          <text x="570" y="130" text-anchor="middle" class="t" font-size="12.5" font-weight="700" style="fill:var(--c3)">After discussion</text>
+        </svg>
+      </figure>
+      <p><b>Why?</b> (1) <b>Social comparison</b>: members want to seem "better" than average in the valued direction. (2) <b>Persuasive arguments</b>: discussion brings out more arguments on the favoured side.</p>
+    </div>
+    <div class="block">
+      <h3>Groupthink (Irving Janis, 1972)</h3>
+      <div class="who">
+        <div class="portrait" data-photo="janis">IJ</div>
+        <div><b>Irving Janis</b><span>Studied disastrous US decisions such as the 1961 Bay of Pigs invasion.</span></div>
+      </div>
+      <p><b>Groupthink</b> happens when a highly <b>cohesive</b> group cares more about <mark>agreement than about making the right decision</mark>.</p>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Causes</span><ul><li>High cohesiveness</li><li>Isolation from outside views</li><li>A strong, directive leader</li><li>High stress, time pressure</li></ul></div>
+        <div class="concept"><span class="sym">Symptoms</span><ul><li>Illusion of invulnerability</li><li>Belief in the group's morality</li><li>Collective rationalisation</li><li>Stereotyping opponents</li><li>Pressure on dissenters</li><li>Self-censorship</li><li>Illusion of unanimity</li><li>Self-appointed "mindguards"</li></ul></div>
+      </div>
+      <h4>Preventing groupthink</h4>
+      <ul>
+        <li>The leader stays impartial and invites criticism</li>
+        <li>Assign a <b>devil's advocate</b>; encourage authentic dissent</li>
+        <li>Use sub-groups and outside experts</li>
+        <li>Hold a "second-chance" meeting before finalising</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h3>Other problems in group decisions</h3>
+      <div class="grid2">
+        <div class="concept"><span class="sym">Biased information sampling</span><p>Groups discuss information everyone already shares and ignore unique information held by individuals (the "hidden profile", Stasser &amp; Titus, 1985).</p></div>
+        <div class="concept"><span class="sym">Escalation of commitment</span><p>Continuing to invest in a failing decision because of what has already been spent (sunk cost).</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel" data-key="test" data-label="Self-test">
+    <h2>Unit V self-test</h2>
+    <div class="cards">
+      <details><summary>Normative vs informational influence?</summary><div><p>Normative: wanting to be liked. Informational: wanting to be right.</p></div></details>
+      <details><summary>Asch's main results?</summary><div><p>Conformity on about 37% of critical trials; about 75% conformed at least once.</p></div></details>
+      <details><summary>Effect of one dissenting ally in Asch's study?</summary><div><p>Conformity dropped sharply, to about 5%.</p></div></details>
+      <details><summary>What is pluralistic ignorance?</summary><div><p>Everyone privately disagrees with a norm but thinks others accept it.</p></div></details>
+      <details><summary>Percent who obeyed to 450 V in Milgram's baseline?</summary><div><p>65%.</p></div></details>
+      <details><summary>What is the agentic state?</summary><div><p>Seeing oneself as an agent carrying out another's orders, shifting responsibility to the authority.</p></div></details>
+      <details><summary>Define social loafing.</summary><div><p>Reduced effort when working in a group on a pooled task compared with working alone.</p></div></details>
+      <details><summary>Who proposed groupthink?</summary><div><p>Irving Janis (1972).</p></div></details>
+      <details><summary>What is group polarisation?</summary><div><p>Group discussion makes members' initial leanings more extreme.</p></div></details>
+      <details><summary>Tuckman's stages?</summary><div><p>Forming, storming, norming, performing, adjourning.</p></div></details>
+    </div>
+    <h3>Long-answer outlines</h3>
+    <details><summary>Discuss social conformity with classic studies. <span class="marks">10 marks</span></summary><div><ol><li>Social influence; conformity vs compliance vs obedience; norms.</li><li>Sherif and Asch (with chart).</li><li>Normative vs informational influence; factors.</li><li>Conformity bias, feedback, non-conformity, minority influence.</li></ol></div></details>
+    <details><summary>Explain obedience to authority. <span class="marks">10 marks</span></summary><div><ol><li>Definition; Eichmann background.</li><li>Milgram's procedure and results; variations (chart).</li><li>Reasons for obedience.</li><li>Resisting obedience; ethics; Burger's replication.</li></ol></div></details>
+    <details><summary>Describe groups, social loafing and group decision-making. <span class="marks">10 marks</span></summary><div><ol><li>Meaning of group; components; why people join; Tuckman.</li><li>Social loafing: Ringelmann (chart), Latané; reducing it.</li><li>Decision schemes; polarisation; groupthink (causes, symptoms, prevention).</li></ol></div></details>
+  </div>
+</section>
+
 </div></main>
 
 <script>
 (function () {
+  function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
   var home = document.getElementById('home');
-  var units = Array.prototype.slice.call(document.querySelectorAll('section.unit'));
+  var semesters = all('section.semester');
+  var subjects = all('section.subject');
+  var units = all('section.unit');
+  var subtabs = document.getElementById('subtabs');
   var utabs = document.getElementById('utabs');
   var crumbs = document.getElementById('crumbs');
-  var ucards = document.getElementById('ucards');
+  var semcards = document.getElementById('semcards');
 
-  function panelsOf(u) { return Array.prototype.slice.call(u.querySelectorAll(':scope > .panel')); }
+  function panelsOf(u) { return all(':scope > .panel', u); }
+  function unitsOf(s) { return units.filter(function (u) { return u.dataset.subject === s.id; }); }
+  function subjectsOf(sem) { return subjects.filter(function (s) { return s.dataset.sem === sem.id; }); }
   function tcls(p) { var m = p.className.match(/\bt[1-4]\b/); return m ? m[0] : ''; }
+  function tok(u, p) { return p.dataset.key === 'overview' ? u.id : u.id + '-' + p.dataset.key; }
+  function byId(list, id) { return list.filter(function (x) { return x.id === id; })[0] || null; }
 
-  // unit tabs + home cards
-  units.forEach(function (u) {
-    var b = document.createElement('button');
-    b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.go = u.id;
-    b.innerHTML = u.dataset.num + '<small>' + u.dataset.short + '</small>';
-    utabs.appendChild(b);
-
+  semesters.forEach(function (sem) {
+    var papers = all('.paper', sem);
+    var ready = papers.filter(function (p) { return p.tagName === 'BUTTON'; }).length;
     var c = document.createElement('button');
-    c.type = 'button'; c.className = 'ucard'; c.dataset.go = u.id;
-    var names = panelsOf(u).filter(function (p) { return tcls(p); }).map(function (p) { return '<li>' + p.dataset.full + '</li>'; }).join('');
-    c.innerHTML = '<span class="num">' + u.dataset.num + '</span><h3>' + u.dataset.title + '</h3><ul>' + names + '</ul>';
-    ucards.appendChild(c);
+    c.type = 'button'; c.className = 'scard'; c.dataset.go = sem.id;
+    c.innerHTML = '<span class="eyebrow">' + papers.length + ' papers · ' + (ready ? ready + ' ready' : 'coming soon') + '</span><h2>' + sem.dataset.name + '</h2><p>' + sem.dataset.blurb + '</p>' +
+      '<ol>' + papers.map(function (p) { var h = p.querySelector('h3').innerHTML; return '<li>' + (p.tagName === 'BUTTON' ? '<b>' + h + '</b> ✓' : h) + '</li>'; }).join('') + '</ol>';
+    semcards.appendChild(c);
+  });
 
-    // section tabs and pagers
+  subjects.forEach(function (s) {
+    var grid = s.querySelector('.ucards');
+    unitsOf(s).forEach(function (u) {
+      var uc = document.createElement('button');
+      uc.type = 'button'; uc.className = 'ucard'; uc.dataset.go = u.id;
+      var names = panelsOf(u).filter(function (p) { return p.dataset.full; }).map(function (p) { return '<li>' + p.dataset.full + '</li>'; }).join('');
+      uc.innerHTML = '<span class="num">' + u.dataset.num + '</span><h3>' + u.dataset.title + '</h3><ul>' + names + '</ul>';
+      grid.appendChild(uc);
+    });
+  });
+
+  units.forEach(function (u) {
     var bar = u.querySelector('.stabs');
     var ps = panelsOf(u);
-    ps.forEach(function (p, i) {
+    ps.forEach(function (p) {
       var t = document.createElement('button');
       t.type = 'button'; t.setAttribute('role', 'tab');
       var tc = tcls(p); if (tc) { t.className = tc; t.dataset.t = '1'; }
-      t.dataset.go = p.dataset.key === 'overview' ? u.id : u.id + '-' + p.dataset.key;
+      t.dataset.go = tok(u, p);
       t.textContent = p.dataset.label;
       bar.appendChild(t);
-      p.id = 'p-' + t.dataset.go;
     });
+    var sibs = units.filter(function (x) { return x.dataset.subject === u.dataset.subject; });
     ps.forEach(function (p, i) {
       var pg = document.createElement('nav'); pg.className = 'pager'; pg.setAttribute('aria-label', 'Next and previous');
       var prev = ps[i - 1], next = ps[i + 1];
-      function tok(q) { return q.dataset.key === 'overview' ? u.id : u.id + '-' + q.dataset.key; }
-      if (prev) pg.insertAdjacentHTML('beforeend', '<button type="button" data-go="' + tok(prev) + '"><small>Previous</small>← ' + prev.dataset.label + '</button>');
-      if (next) pg.insertAdjacentHTML('beforeend', '<button type="button" class="next" data-go="' + tok(next) + '"><small>Next</small>' + next.dataset.label + ' →</button>');
+      if (prev) pg.insertAdjacentHTML('beforeend', '<button type="button" data-go="' + tok(u, prev) + '"><small>Previous</small>← ' + prev.dataset.label + '</button>');
+      if (next) pg.insertAdjacentHTML('beforeend', '<button type="button" class="next" data-go="' + tok(u, next) + '"><small>Next</small>' + next.dataset.label + ' →</button>');
       else {
-        var nu = units[units.indexOf(u) + 1];
+        var nu = sibs[sibs.indexOf(u) + 1];
         if (nu) pg.insertAdjacentHTML('beforeend', '<button type="button" class="next" data-go="' + nu.id + '"><small>Next unit</small>' + nu.dataset.num + ': ' + nu.dataset.short + ' →</button>');
       }
       p.appendChild(pg);
@@ -2421,27 +3770,65 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
     return go ? '<li><button type="button" data-go="' + go + '">' + label + '</button></li>' : '<li><span aria-current="page">' + label + '</span></li>';
   }
 
+  function fillUnitTabs(s, activeUnit) {
+    utabs.innerHTML = '';
+    utabs.hidden = !s;
+    if (!s) return;
+    unitsOf(s).forEach(function (u) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.go = u.id;
+      b.setAttribute('aria-selected', u === activeUnit ? 'true' : 'false');
+      b.innerHTML = u.dataset.num + '<small>' + u.dataset.short + '</small>';
+      utabs.appendChild(b);
+    });
+  }
+
+  function fillTopTabs(sem, s) {
+    subtabs.innerHTML = '';
+    var list = sem ? subjectsOf(sem) : semesters;
+    list.forEach(function (x) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.go = x.id;
+      b.textContent = sem ? x.dataset.short : x.dataset.name;
+      b.setAttribute('aria-selected', x === s ? 'true' : 'false');
+      subtabs.appendChild(b);
+    });
+    subtabs.setAttribute('aria-label', sem ? 'Subjects in ' + sem.dataset.name : 'Semesters');
+  }
+
   function show(token, scroll) {
     token = token || 'home';
     var parts = token.split('-');
-    var u = units.filter(function (x) { return x.id === parts[0]; })[0];
-    if (!u) token = 'home';
-    home.hidden = !!u;
-    var html = '<li><span class="static">MA Psychology</span></li><li><span class="static">Semester 1</span></li>';
+    var u = byId(units, parts[0]);
+    var s = byId(subjects, u ? u.dataset.subject : parts[0]);
+    var sem = byId(semesters, s ? s.dataset.sem : parts[0]);
+    home.hidden = !!sem;
+    semesters.forEach(function (x) { x.hidden = !(x === sem && !s); });
+    subjects.forEach(function (x) { x.hidden = !(x === s && !u); });
     units.forEach(function (x) { x.hidden = x !== u; });
-    Array.prototype.forEach.call(utabs.children, function (b) { b.setAttribute('aria-selected', u && b.dataset.go === u.id ? 'true' : 'false'); });
-    if (!u) {
-      html += crumb('Theories of Personality');
+    fillTopTabs(sem, s);
+    fillUnitTabs(s, u);
+
+    var html = '';
+    if (!sem) {
+      html += crumb('MA Psychology');
+      token = 'home';
+    } else if (!s) {
+      html += crumb('MA Psychology', 'home') + crumb(sem.dataset.name);
+      token = sem.id;
+    } else if (!u) {
+      html += crumb('MA Psychology', 'home') + crumb(sem.dataset.name, sem.id) + crumb(s.dataset.name);
+      token = s.id;
     } else {
       var ps = panelsOf(u);
       var key = parts.slice(1).join('-') || 'overview';
       var p = ps.filter(function (q) { return q.dataset.key === key; })[0] || ps[0];
       ps.forEach(function (q) { q.hidden = q !== p; });
-      Array.prototype.forEach.call(u.querySelectorAll('.stabs button'), function (b) { b.setAttribute('aria-selected', b.dataset.go === (p.dataset.key === 'overview' ? u.id : u.id + '-' + p.dataset.key) ? 'true' : 'false'); });
-      html += crumb('Theories of Personality', 'home');
+      token = tok(u, p);
+      all('.stabs button', u).forEach(function (b) { b.setAttribute('aria-selected', b.dataset.go === token ? 'true' : 'false'); });
+      html += crumb('MA Psychology', 'home') + crumb(sem.dataset.name, sem.id) + crumb(s.dataset.name, s.id);
       if (p.dataset.key === 'overview') html += crumb(u.dataset.num + ': ' + u.dataset.short);
       else html += crumb(u.dataset.num + ': ' + u.dataset.short, u.id) + crumb(p.dataset.label);
-      token = p.dataset.key === 'overview' ? u.id : u.id + '-' + p.dataset.key;
     }
     crumbs.innerHTML = html;
     try { history.replaceState(null, '', '#' + token); } catch (e) {}

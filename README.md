@@ -1,12 +1,16 @@
-# Theories of Personality: Semester 1 Study Guide
+# MA Psychology Study Guides
 
-A free, visual revision guide for the **MA Psychology, Semester 1** paper *Theories of Personality*. It is written for students who are new to psychology and want to understand each theorist quickly before a unit test.
+Free, visual revision guides for an **MA Psychology** programme, organised by semester and paper. They are written for students who are new to psychology and want to understand each topic quickly before a unit test.
 
 **Open it online:** https://fruitjs.github.io/theories-of-personality/
 
 Everything is in one self-contained file, [`index.html`](index.html). You can also download it and open it in any web browser; it works offline with no installation.
 
 ## What's inside
+
+### Semester 1 (two papers ready)
+
+**Psychology of Personality (MPY26-C103)**
 
 | Unit | Topic | Theorists |
 |---|---|---|
@@ -16,32 +20,46 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 | IV | Dispositional (trait) approaches | Allport, Eysenck, Cattell, McCrae & Costa |
 | V | Cognitive-behavioural approaches | Rotter, Mischel, Kelly |
 
-For every theorist there is:
+**Advanced Social Psychology (MPY26-C102)**
 
-- a fact card (dates, key works) with a portrait
-- the core concepts in plain language
-- labelled diagrams you can practise drawing in the exam
+| Unit | Topics |
+|---|---|
+| I | Meaning, scope and importance; prosocial behaviour; empathy and altruism; determinants of helping |
+| II | Social cognition (schemas, heuristics, automatic and controlled thinking); nonverbal communication; first impressions; attribution |
+| III | The self (self-concept, knowing oneself, self-control, self-esteem); cognitive dissonance; aggression |
+| IV | Attitudes (components, explicit and implicit, attitude change); prejudice (causes, effects, reduction) |
+| V | Conformity, conformity bias, feedback and non-conformity; obedience; groups, social loafing, group decisions |
+
+### Semesters 2–4 (placeholders)
+
+Every paper in Semesters 2, 3 and 4, plus the remaining Semester 1 papers, is listed with its code and unit headings and marked **Coming soon**.
+
+## Each guide includes
+
+- fact cards with portraits for theorists and key researchers
+- core concepts in plain language
+- labelled diagrams and charts of classic studies (Asch, Milgram, Festinger & Carlsmith, Ringelmann)
 - memory tricks (mnemonics)
-- a comparison table and critique for each unit
+- comparison tables and critiques
 - flash cards and 5- and 10-mark answer outlines
 
 ## How to use it
 
-- **Unit tabs** at the top switch between Units I–V.
-- **Section tabs** inside each unit open the overview, each theorist, the comparison and the self-test.
-- The **breadcrumb** (`MA Psychology › Semester 1 › Theories of Personality › Unit › Theorist`) lets you step back up.
-- Each section ends with **Next / Previous** buttons, so you can read a unit straight through.
+- The **breadcrumb** (`MA Psychology › Semester › Paper › Unit › Topic`) shows where you are; click any part to step back.
+- **Tabs** at the top switch between semesters, papers and units.
+- **Section tabs** inside each unit open the overview, each topic and the self-test.
+- Each section ends with **Next / Previous** buttons.
 - It works on phones and in light or dark mode.
 
 ## Accuracy
 
-The content follows the standard textbook coverage of these theorists, as in Feist & Feist's *Theories of Personality*. It is a study aid, not a replacement for your textbook or lectures. Always check against your syllabus. The "if…then" chart in the Mischel section uses illustrative values to explain the idea.
+The content follows standard textbook coverage (e.g. Feist & Feist for personality; Baron & Branscombe, Aronson and Myers for social psychology). It is a study aid, not a replacement for your textbooks or lectures. Always check against your syllabus. Some charts use illustrative or approximate values, and this is marked on the chart.
 
 If you spot a mistake, please open an issue or a pull request.
 
 ## Photos
 
-Photographs come from Wikimedia Commons under free licences or the public domain. Each photo's author and licence are listed in [CREDITS.md](CREDITS.md) and beside the photo on the page. Theorists without a freely licensed photo are shown with an illustration or their initials.
+Photographs come from Wikimedia Commons under free licences or the public domain. Each photo's author and licence are listed in [CREDITS.md](CREDITS.md) and beside the photo on the page. People without a freely licensed photo are shown with an illustration or their initials.
 
 ## Licence
 

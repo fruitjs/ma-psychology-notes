@@ -10,7 +10,7 @@ All photographs are embedded in `index.html` as small, face-cropped versions of 
 | Karen Horney | Unknown | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Karen_Horney_1938.jpg) |
 | Erik Erikson | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Erik_Erikson.jpg) |
 | Rollo May | Unknown photographer | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Rollo_May_USD_Alcal%C3%A1_1977.jpg) |
-| Gordon Allport | C. George Boeree | Free Art License | [Commons](https://commons.wikimedia.org/wiki/File:Gordon_Allport.gif) |
+| Gordon Allport (used twice: Personality Unit IV and Social Psychology Unit IV) | C. George Boeree | Free Art License | [Commons](https://commons.wikimedia.org/wiki/File:Gordon_Allport.gif) |
 | Hans Eysenck | Sirswindon | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Hans_Eysenck_(cropped).jpg) |
 | Raymond Cattell | Cattell family | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Raymond_Cattell.jpg) |
 | Paul Costa Jr. | NIH | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Paul_Costa_Jr.gif) |
