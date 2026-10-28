@@ -16,7 +16,12 @@ All photographs are embedded in `index.html` as small, face-cropped versions of 
 | Paul Costa Jr. | NIH | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Paul_Costa_Jr.gif) |
 | Ernst Kretschmer | Martha Conrad | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Ernst_Kretschmer.jpg) |
 | Walter Mischel | RishitaSharma2106 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Walter_Mischel_Stanford_Psychologist.png) |
+| Albert Bandura | Albert Bandura | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Albert_Bandura_Psychologist.jpg) |
+| Daniel Kahneman | nrkbeta | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Daniel_Kahneman_(3283955327)_(cropped).jpg) |
+| Paul Ekman | Paul Ekman Group, LLC | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Paul_Ekman_(cropped).jpg) |
+| Henri Tajfel | European Association of Social Psychology | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Henri_Tajfel.jpg) |
+| Stanley Milgram | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Stanley_Milgram_1974.jpg) |
 
 ## Illustrations and initials
 
-No freely licensed photographs were found for **William Sheldon, Henry Murray, Robert McCrae, Julian Rotter and George Kelly**. Rotter and Kelly are shown as original illustrations made for this guide. Sheldon, Murray and the McCrae & Costa card use initials or the Costa photo only.
+No freely licensed photographs were found for **William Sheldon, Henry Murray, Robert McCrae, Julian Rotter and George Kelly** (Psychology of Personality), or for **Bibb Latané, John Darley, C. Daniel Batson, Solomon Asch, Fritz Heider, Harold Kelley, Leon Festinger and Irving Janis** (Advanced Social Psychology). Rotter and Kelly are shown as original illustrations made for this guide; the others use initials, and the McCrae & Costa card shows the Costa photo only.
