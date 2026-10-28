@@ -40,9 +40,25 @@ All photographs are embedded in `index.html` as small, face-cropped versions of 
 | Edward Deci | Center for Self-Determination Theory | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Edward_L_Deci.jpg) |
 | Donald Meichenbaum | Rosiestep | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Donald_Meichenbaum_at_TMI's_29th_Annual_Conference_2025_(crop).png) |
 | Jon Kabat-Zinn | ExperienceLifeMag | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Jon_Kabat-Zinn_(2018).png) |
+| Thomas Hobbes | John Michael Wright | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Thomas_Hobbes_by_John_Michael_Wright_(colour)_(3x4_cropped).jpg) |
+| John Locke | Godfrey Kneller | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Godfrey_Kneller_-_Portrait_of_John_Locke_(Hermitage).jpg) |
+| George Berkeley | John Smibert | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:John_Smibert_-_Bishop_George_Berkeley_-_Google_Art_Project_(cropped).jpg) |
+| David Hume | Allan Ramsay | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:David_Hume_Ramsay.jpg) |
+| David Hartley | Wellcome Collection | CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Portrait_of_D._Hartley,_17thC_Wellcome_L0002618.jpg) |
+| John Stuart Mill | London Stereoscopic Company | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:John_Stuart_Mill_by_London_Stereoscopic_Company,_c1870.jpg) |
+| Edward Titchener | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Edward_Bradford_Titchener.jpg) |
+| G. Stanley Hall | Frederick Gutekunst | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:G._Stanley_Hall.jpg) |
+| John B. Watson | Unknown (pre-1923) | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:John_Broadus_Watson.JPG) |
+| Max Wertheimer | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Max_Werheimer_(1880-1943).jpg) |
+| Kurt Koffka | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Kurt_Koffka.jpg) |
+| Wolfgang Köhler | Swarthmore College Historical Library | CC BY-SA 2.5 | [Commons](https://commons.wikimedia.org/wiki/File:Wolfgang_K%C3%B6hler.jpg) |
+| Sri Aurobindo | Rudolf (1922) | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Sri_aurobindo.jpg) |
+| Buddha statue (Sarnath Museum) | Photographer credited on Commons | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Buddha_in_Sarnath_Museum_(Dhammajak_Mutra).jpg) |
 
 ## Illustrations and initials
 
 No freely licensed photographs were found for **William Sheldon, Henry Murray, Robert McCrae, Julian Rotter and George Kelly** (Psychology of Personality), or for **Bibb Latané, John Darley, C. Daniel Batson, Solomon Asch, Fritz Heider, Harold Kelley, Leon Festinger and Irving Janis** (Advanced Social Psychology). Rotter and Kelly are shown as original illustrations made for this guide; the others use initials, and the McCrae & Costa card shows the Costa photo only.
 
 Semester 3 people shown with initials because no freely licensed portrait photograph was found: the National Institute researchers behind BASIC-MR (Peshawaria and Venkatesan), George Engel, Irwin Rosenstock, Icek Ajzen, James Prochaska, Meyer Friedman, Richard Lazarus, James Gross, Edmund Jacobson, Thomas D'Zurilla, Steve de Shazer and Frederick Kanfer.
+
+Semester 3 (Indian Psychology, Western Thoughts) people shown with initials because no suitable freely licensed portrait was found: Anand Paranjpe, Patanjali (no known likeness), Ken Wilber, and others without a free photo.
