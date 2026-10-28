@@ -50,7 +50,7 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 | IV | Attitudes (components, explicit and implicit, attitude change); prejudice (causes, effects, reduction) |
 | V | Conformity, conformity bias, feedback and non-conformity; obedience; groups, social loafing, group decisions |
 
-### Semester 3 (four papers ready)
+### Semester 3 (all seven papers ready)
 
 **Psychopathology (MPY26-C301)**
 
@@ -92,9 +92,31 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 | IV | Psychoeducation, problem solving, solution-focused therapy, mindfulness-based stress reduction |
 | V | Coping skills and stress inoculation, self-monitoring, self-instruction, guided imagery, psychological immunity, grounding, psychological first aid |
 
+**Indian Psychology (MPY26-E305)**
+
+| Unit | Topics |
+|---|---|
+| I | What is Indian psychology; history; need for indigenisation; assumptions; schools of Indian philosophy; comparison with modern psychology |
+| II | Antahkarana, pancha kosha, Prakriti and Purusha; Patanjali's Yoga Sutras (chitta bhumis, kleshas, ashtanga, kriya yoga); integral yoga; counselling implications |
+| III | Bhagavad Gita (Atman, mind, triguna, svabhava, svadharma, three yogas); Buddhism (anatta, Four Noble Truths, Eightfold Path, schools) |
+| IV | Self, mind, consciousness and spirituality; Indian models of personality; pramanas and cognition; rasa theory and emotions; sleep and dreams |
+| V | Ayurveda and the mind; triguna and tridosha; three kinds of dukkha and remedies; yajna; counselling implications |
+
+**Western Thoughts and Psychology (MPY26-E306)**
+
+| Unit | Topics |
+|---|---|
+| I | Associationism: Hobbes, Locke, Berkeley, Hume, Hartley, J. S. Mill |
+| II | Structuralism: Wundt, Titchener; criticisms |
+| III | Functionalism (James, Hall) and behaviourism (Watson, Pavlov, Skinner) |
+| IV | Gestalt school (Wertheimer, Koffka, Köhler); transpersonal psychology and Ken Wilber |
+| V | The cognitive revolution; multiculturalism: liberal, pluralist and cosmopolitan models and limitations |
+
+**Practical, Semester 3 (MPY26-C351)**: a lab and viva guide covering the test protocol, ethics, scoring and norms, the report format, and each listed practical (biofeedback, anxiety, depression, mental health, medico-psychological questionnaire, neuropsychological tests, stress, coping, social support, quality of life, optimism, self-efficacy, hopelessness, emotional regulation, Vedic personality, job anxiety, job satisfaction, leadership and occupational stress), with the common tools, scoring and viva questions. Follow the manual your lab provides.
+
 ### Semesters 2 and 4 (placeholders)
 
-Every paper in Semesters 2 and 4, plus Semester 3's Indian Psychology, Western Thoughts and Psychology and Practical, and the Semester 1 practical, is listed with its code and unit headings and marked **Coming soon**.
+Every paper in Semesters 2 and 4 and the Semester 1 practical is listed with its code and unit headings and marked **Coming soon**.
 
 ## Each guide includes
 
