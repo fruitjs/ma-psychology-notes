@@ -16,11 +16,19 @@ All photographs are embedded in `index.html` as small, face-cropped versions of 
 | Paul Costa Jr. | NIH | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Paul_Costa_Jr.gif) |
 | Ernst Kretschmer | Martha Conrad | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Ernst_Kretschmer.jpg) |
 | Walter Mischel | RishitaSharma2106 | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Walter_Mischel_Stanford_Psychologist.png) |
-| Albert Bandura | Albert Bandura | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Albert_Bandura_Psychologist.jpg) |
+| Albert Bandura (used twice: Social Psychology and Foundations) | Albert Bandura | CC BY-SA 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:Albert_Bandura_Psychologist.jpg) |
 | Daniel Kahneman | nrkbeta | CC BY-SA 2.0 | [Commons](https://commons.wikimedia.org/wiki/File:Daniel_Kahneman_(3283955327)_(cropped).jpg) |
-| Paul Ekman | Paul Ekman Group, LLC | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Paul_Ekman_(cropped).jpg) |
+| Paul Ekman (used twice: Social Psychology and Foundations) | Paul Ekman Group, LLC | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Paul_Ekman_(cropped).jpg) |
 | Henri Tajfel | European Association of Social Psychology | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Henri_Tajfel.jpg) |
 | Stanley Milgram | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Stanley_Milgram_1974.jpg) |
+| Wilhelm Wundt | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Wilhelm_Wundt.jpg) |
+| Ivan Pavlov | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Ivan_Pavlov_NLM3.jpg) |
+| B. F. Skinner | Silly rabbit | CC BY 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:B.F._Skinner_at_Harvard_circa_1950_(cropped).jpg) |
+| Edward Thorndike | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:PSM_V80_D211_Edward_Lee_Thorndike.png) |
+| Hermann Ebbinghaus | Unknown | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Ebbinghaus2.jpg) |
+| David McClelland | Oschult | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:DavidMcClelland.jpg) |
+| Abraham Maslow | William Carter | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Photo_of_Abraham_Harold_Maslow_by_William_Carter_(cropped).jpg) |
+| William James | Notman Studios | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:William_James_b1842c.jpg) |
 
 ## Illustrations and initials
 
