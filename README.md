@@ -50,9 +50,51 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 | IV | Attitudes (components, explicit and implicit, attitude change); prejudice (causes, effects, reduction) |
 | V | Conformity, conformity bias, feedback and non-conformity; obedience; groups, social loafing, group decisions |
 
-### Semesters 2–4 (placeholders)
+### Semester 3 (four papers ready)
 
-Every paper in Semesters 2, 3 and 4, plus the Semester 1 practical, is listed with its code and unit headings and marked **Coming soon**.
+**Psychopathology (MPY26-C301)**
+
+| Unit | Topics |
+|---|---|
+| I | Normality and abnormality; criteria; signs and symptoms; ICD and DSM; case history |
+| II | Biological, psychodynamic, behavioural, cognitive and socio-cultural approaches; diathesis-stress |
+| III | GAD, panic, phobias, OCD, PTSD, dissociative and somatoform disorders |
+| IV | Schizophrenia, mood disorders (depression and bipolar), delusional disorders |
+| V | Delirium, dementia and amnestic syndromes |
+
+**Disabilities & Rehabilitation (MPY26-C302)**
+
+| Unit | Topics |
+|---|---|
+| I | Impairment, disability and handicap; aetiology; intellectual disability, learning disability, autism |
+| II | Principles and types of assessment; WISC, VSMS, ISAA, BASIC-MR; severity and certification |
+| III | Behaviour modification, techniques for skills and problem behaviours, applied behaviour analysis |
+| IV | Habilitation vs rehabilitation; individual, group and family intervention; vocational counselling |
+| V | Settings, agencies, schemes; RPWD Act 2016, National Trust Act 1999, RCI Act 1992; ethics |
+
+**Health Psychology (MPY26-E303)**
+
+| Unit | Topics |
+|---|---|
+| I | Health, mind-body relationship, biopsychosocial model |
+| II | Cardiovascular, digestive and immune systems; psychoneuroimmunology |
+| III | Health behaviours; health belief model, theory of planned behaviour, self-determination theory, stages of change |
+| IV | Exercise, sleep, diet; health-compromising behaviours; smoking and its reduction |
+| V | Coronary heart disease, hypertension, type 2 diabetes |
+
+**Stress Management (MPY26-E304)**
+
+| Unit | Topics |
+|---|---|
+| I | Stress, health and wellbeing; General Adaptation Syndrome; fight or flight; stress and illness |
+| II | Coping, social support, emotion regulation, resilience and optimism; assessment tools |
+| III | Biofeedback (GSR, pulse, respiration, thermal); relaxation and meditation |
+| IV | Psychoeducation, problem solving, solution-focused therapy, mindfulness-based stress reduction |
+| V | Coping skills and stress inoculation, self-monitoring, self-instruction, guided imagery, psychological immunity, grounding, psychological first aid |
+
+### Semesters 2 and 4 (placeholders)
+
+Every paper in Semesters 2 and 4, plus Semester 3's Indian Psychology, Western Thoughts and Psychology and Practical, and the Semester 1 practical, is listed with its code and unit headings and marked **Coming soon**.
 
 ## Each guide includes
 
