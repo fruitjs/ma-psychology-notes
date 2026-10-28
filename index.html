@@ -7837,6 +7837,15 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 </section>
 
 <section class="view" id="pprofile" data-label="Profile" hidden></section>
+<style>
+.pdl { margin: 0; display: grid; gap: 10px; }
+.pdl dt { font-family: var(--display); font-weight: 700; color: var(--ink); margin: 0; }
+.pdl dd { margin: 0 0 2px; padding-left: 12px; border-left: 3px solid var(--c3-soft); }
+.pstudy { border: 1px solid var(--line); border-left: 4px solid var(--c3); border-radius: 8px; padding: 12px 14px; display: grid; gap: 6px; margin-top: 10px; }
+.pstudy h4 { margin: 0; font-family: var(--display); font-size: 1rem; }
+.pstudy p { margin: 0; font-size: 0.95rem; }
+.pstudy p b { font-family: var(--mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: .06em; color: var(--c3); }
+</style>
 <script>
 window.PSY = window.PSY || [];
 /* [name, surname, life, born(sort), category, field, tagline, early life, theory, works, impact, criticism, legacy, {ph: photo alt name, k: syllabus-search regex}] */
@@ -8813,6 +8822,607 @@ wilber:[`Wilber's integral theory maps reality with four quadrants (inner and ou
 {t:`axes`,x:[`Interior`,`Exterior`],y:[`Individual`,`Collective`],q:[`I|inner experience`,`It|behaviour and brain`,`We|culture and shared meaning`,`Its|systems and society`],cap:`Wilber's four quadrants`}],
 paranjpe:[`Paranjpe compares Indian ideas of self, such as the jivatman and the layers of self, with Western ones, and argues that Indian psychology draws on texts and on practice.`,
 `Self and Identity in Modern Psychology and Indian Thought (1998) sets Western self theories beside Indian ideas. Exam angle: Indian versus Western concepts of self.`]
+});
+</script>
+<script>
+/* detail: key -> {c: [[concept, explanation]...], s: [[title, what was done, what it showed, evaluation]...]} */
+window.PSYD = window.PSYD || {};
+Object.assign(window.PSYD, {
+hobbes:{c:[
+[`Mechanism and materialism`,`Everything that exists is matter in motion, including the mind. An object presses on a sense organ, the motion travels to the brain, and a sensation results. Imagination is a fading sensation, and memory is the same fading viewed as time passes. Hobbes rejected a separate immaterial soul.`],
+[`Trains of thought`,`Ideas follow one another in an order set by earlier experience: thinking of a key leads to the door, then the house. Directed thought is guided by desire toward a goal. This is an early statement of association, later built on by Locke, Hume and Hartley.`],
+[`Egoism and the fear of death`,`Voluntary action is driven by appetite (moving toward things) and aversion (moving away). Each person seeks self-preservation and power. In a state of nature this produces a war of all against all, so people accept a ruler to gain security.`]],
+s:[[`Leviathan (1651)`,`Hobbes started from a materialist account of human nature and reasoned from it to the need for government. He argued that without a common power, life would be solitary, poor, nasty, brutish and short.`,`People are self-interested but also fear violent death, so they agree to a social contract and hand power to a sovereign. The book links psychology (desire, fear) to political theory.`,`Influential but criticised for its pessimistic view of people and its defence of strong rule. For psychology its value is the mechanical, motive-based account of mind, which anticipates later behaviourist thinking.`],
+[`Human Nature (1640)`,`An earlier short treatise setting out sensation, imagination, memory, passion and reasoning in a single naturalistic scheme.`,`Showed that mental life can be described in terms of motion, appetite and aversion without invoking a soul.`,`Largely speculative: no experiments. Its importance is as a model of how to explain mind in natural terms.`]]},
+locke:{c:[
+[`Tabula rasa`,`The mind starts as blank paper. Nothing is innate; all content is written by experience. Locke argued against innate moral and logical principles by pointing out that children and people in other cultures do not share them.`],
+[`Sensation and reflection`,`Two sources of ideas. Sensation brings ideas of external things such as colour, sound and hardness. Reflection brings ideas of our own mental operations such as doubting, believing and willing.`],
+[`Simple and complex ideas`,`Simple ideas, such as red or bitter, cannot be broken down and are received passively. The mind actively combines, compares and abstracts them to form complex ideas such as beauty or number. This is why knowledge can grow from limited raw material.`],
+[`Primary and secondary qualities`,`Primary qualities (size, shape, motion) belong to objects themselves. Secondary qualities (colour, taste, smell) depend on how objects affect the perceiver. The distinction made the role of the perceiver a topic for psychology.`]],
+s:[[`An Essay Concerning Human Understanding (1689)`,`Locke spent about twenty years on a systematic enquiry into the origin, extent and certainty of human knowledge, beginning with a critique of innate ideas.`,`All knowledge comes from experience. The mind builds complex ideas from simple ones, and we should be modest about the limits of what we can know.`,`Nativists (Leibniz, later Chomsky) argue that some structure is inborn, and modern infant research supports some built-in biases. Still, the Essay founded empiricism and the argument that education and environment shape the person.`],
+[`Some Thoughts Concerning Education (1693)`,`Practical advice to a friend on raising a child, based on his empiricist view of the mind.`,`Habits and early experience shape character; learning should use example, kindness and the child's interests rather than harsh punishment.`,`A forerunner of child-centred education and of later learning theories about habit formation.`]]},
+berkeley:{c:[
+[`Esse est percipi`,`To be is to be perceived. Berkeley said we never experience matter itself, only ideas in the mind, so there is no good reason to assume unperceived matter exists. This is subjective idealism.`],
+[`Learned perception of distance`,`The retina receives a flat two-dimensional image, so distance cannot be seen directly. We learn to read cues such as blur, effort of focusing and the feel of movement because they have gone together with touch in the past.`],
+[`Visual and tactile worlds are separate`,`Sight and touch give different ideas. We associate them through experience, so that a visual look comes to stand for what an object will feel like. This was an early theory of perceptual learning.`]],
+s:[[`An Essay Towards a New Theory of Vision (1709)`,`Berkeley examined how we judge the distance, size and position of objects, and argued from everyday observation and optics that these judgements must be acquired.`,`Distance is a learned inference based on cues, not a direct perception. Cases of people given sight after being born blind were later used to test this idea.`,`Later evidence shows some depth perception is present in infancy, so the strong learned view is too extreme. The essay remains a foundational account of how experience shapes perception.`],
+[`A Treatise Concerning the Principles of Human Knowledge (1710)`,`A philosophical work arguing that the physical world consists of ideas in minds and of God as the cause of our perceptions.`,`Matter as an independent substance is unnecessary and incoherent; what exists is minds and their ideas.`,`Seen as untestable and hard to square with the shared, stable character of the world, but it raised the key question of how perception relates to reality.`]]},
+hume:{c:[
+[`Impressions and ideas`,`Impressions are vivid immediate experiences (a pain, the sight of red). Ideas are faint copies of these, such as memories and imaginings. Every idea must trace back to some impression, which gives a test for meaningful concepts.`],
+[`Laws of association`,`Ideas connect by three principles: resemblance (a portrait recalls its subject), contiguity in time or place (thinking of a room recalls what was in it) and cause and effect (a wound recalls the pain). Hume called these a kind of gravitation in the mind.`],
+[`Causation as habit`,`We never observe a causal power, only one event regularly following another. The idea of cause comes from habit: after repeated pairing, the mind expects the second event. This anticipates learning theory.`],
+[`The bundle theory of self`,`Looking inward, Hume found only perceptions, never a fixed self. The self is a bundle of changing perceptions held together by memory and association.`]],
+s:[[`A Treatise of Human Nature (1739–40)`,`Hume set out to build a science of human nature using the experimental method, in three books on the understanding, the passions and morals.`,`The mind works through association, habit and feeling more than pure reason. Reason, he wrote, is the slave of the passions.`,`The book was ignored on publication, and Hume later said it fell dead-born from the press. Critics note that bundle theory cannot explain why experience feels unified. Its association laws became central to learning theory.`],
+[`An Enquiry Concerning Human Understanding (1748)`,`A shorter, more readable restatement of the first book of the Treatise.`,`Distinguishes matters of fact from relations of ideas and presses scepticism about causation and miracles.`,`Widely read and shaped later philosophy of science. In psychology, it supports the idea that learning rests on repeated association.`]]},
+hartley:{c:[
+[`Vibrations`,`Outside objects set the nerves vibrating, and the vibrations travel to the brain. Stronger or repeated vibrations leave traces called vibratiuncles, which are small copies of the original vibration.`],
+[`Association by contiguity`,`When two sensations occur together often enough, their traces become linked. After that, one sensation can set off the other. Hartley treated this as the only principle needed to explain memory and thought.`],
+[`From simple to complex ideas`,`Simple sensations combine into complex ideas, which in turn make up thought, language, emotion and moral feelings. Even moral sense, he argued, is learned through association.`]],
+s:[[`Observations on Man, His Frame, His Duty, and His Expectations (1749)`,`Hartley, a physician, combined Newton's physics, Locke's empiricism and Christian belief into a systematic psychology with a physical basis.`,`Mental life can be explained by sensation and association, and associations can be shaped by education.`,`The vibration mechanism has no support, but the idea that learning links stimuli and has a brain basis was ahead of its time. Joseph Priestley later republished the work and helped spread it.`]]},
+mill:{c:[
+[`Association and mental chemistry`,`Earlier associationists treated ideas like billiard balls that only link. Mill said that ideas can combine to produce something new, just as water has properties neither hydrogen nor oxygen has. The product can be quite unlike its parts.`],
+[`A science of the mind`,`Mill argued that psychology should seek laws of mental association and that a further science, ethology, should study how character forms from those laws and circumstances. Character, he argued, is shaped by environment.`],
+[`Utilitarianism and freedom`,`Actions are right when they promote happiness. Mill added that pleasures differ in quality, and that individuals should be free to act unless they harm others.`]],
+s:[[`A System of Logic (1843)`,`A major treatise on scientific reasoning. Its last book considers how the methods of natural science can be applied to human behaviour.`,`The moral sciences can be studied by observation and induction. Human actions follow regular laws even though people feel free.`,`Influential for the case that psychology could be a science. Critics, including later Gestalt psychologists, said mental chemistry stayed vague.`],
+[`The Subjection of Women (1869)`,`Mill argued against legal and social restrictions on women.`,`Differences between the sexes cannot be known until both are free to develop; claims about women's nature largely reflect upbringing.`,`An early statement that social conditions, not just biology, shape psychological differences.`]]},
+darwin:{c:[
+[`Natural selection`,`Members of a species vary, and more offspring are born than can survive. Individuals with traits that help them survive and reproduce pass those traits on, so the population changes over generations.`],
+[`Continuity of mind`,`Mental life evolved gradually, so animals and humans differ in degree, not kind. Darwin collected observations on animal intelligence, instinct and emotion to support this.`],
+[`Evolution of emotional expression`,`Expressions such as a snarl or a smile began as useful actions, were kept by habit and became signals. He proposed three principles: serviceable habits, antithesis (opposite feelings give opposite movements) and the direct action of the nervous system.`],
+[`Individual differences`,`Variation in traits, including behaviour, is the raw material of selection. This idea led his cousin Francis Galton to study mental differences.`]],
+s:[[`On the Origin of Species (1859)`,`Darwin presented decades of observations from the Beagle voyage and from breeding, with the argument for natural selection.`,`Species change over time through natural selection, and all life shares common ancestry.`,`Initially resisted on religious grounds; later confirmed by genetics. It gave psychology the functional question of what behaviour is for.`],
+[`The Expression of the Emotions in Man and Animals (1872)`,`He observed infants, animals and people of different cultures, sent questionnaires to missionaries and travellers, and used photographs of faces.`,`Many expressions are shared across cultures and species, indicating a common evolutionary origin.`,`Method was informal by modern standards, but it directly inspired Ekman's later cross-cultural experiments.`]]},
+wundt:{c:[
+[`Immediate experience`,`Psychology studies the contents of consciousness as they appear, without interpretation. Wundt separated this from physics, which studies the objects we experience, and from physiology.`],
+[`Controlled introspection`,`Observers were trained to report sensations under standard conditions, with the same stimulus, instructions and timing for every person. The method was experimental, with repeated trials, not casual self-reflection.`],
+[`Creative synthesis`,`Elements of experience combine into wholes that have new properties not present in the parts. This differs from British associationism and anticipated Gestalt ideas.`],
+[`Voluntarism and Völkerpsychologie`,`Will (active organising attention) shapes experience. Higher mental processes such as language, myth and custom cannot be studied in a lab but are examined by comparing cultures.`]],
+s:[[`The Leipzig laboratory (1879)`,`Wundt and his students ran experiments on reaction time, attention, sensation and feeling. Reaction-time studies tried to measure how long mental acts take.`,`Mental processes take measurable time and can be studied systematically. The lab gave psychology a method and a training model.`,`The reliance on introspection led to disputes between labs about what observers saw. Behaviourists later rejected the method. The date 1879 still marks the start of experimental psychology.`],
+[`Principles of Physiological Psychology (1873–74)`,`A comprehensive textbook linking sensation, perception and the nervous system.`,`Argued that psychology should use experimental methods borrowed from physiology.`,`Became the manifesto of the new science and was revised through six editions.`]]},
+james:{c:[
+[`Stream of consciousness`,`Consciousness flows continuously, personal and always changing, and cannot be cut into separate elements. Attention selects from the flow.`],
+[`Functionalism`,`Mental processes should be studied for what they do in helping the organism adapt. Habit, for instance, saves effort and makes complex actions automatic.`],
+[`James–Lange theory`,`Emotion is the awareness of bodily changes: we feel sorry because we cry, not the reverse. Different bodily patterns give different emotions.`],
+[`The self`,`The self has two aspects: the I (the knower) and the Me (what is known). The Me includes the material self, social self and spiritual self.`]],
+s:[[`The Principles of Psychology (1890)`,`Twelve years in the writing, the two volumes review the brain, habit, attention, memory, emotion, will and the self, mixing lab results with philosophical argument.`,`Mind is active, selective and adaptive. Habits are the main route by which learning shapes behaviour.`,`Highly influential, still quoted for its insights on habit and the self. It lacked a research programme, and James himself later turned to philosophy.`],
+[`The Varieties of Religious Experience (1902)`,`Lectures that examine the personal religious experience of many individuals, treating mystical and conversion experiences as data.`,`Religious experience has common features and often produces lasting benefits, whatever its ultimate truth.`,`A founding work in the psychology of religion; its method is anecdotal.`]]},
+titchener:{c:[
+[`Structuralism`,`Psychology should analyse conscious experience into its basic elements and find the laws by which they combine, much as chemistry analyses substances.`],
+[`Elements of experience`,`Sensations, images and affections (feelings) were the three elements. Each has attributes such as quality, intensity, duration and clarity.`],
+[`Introspection as the method`,`Only trained observers, who avoided the stimulus error (describing the object instead of the experience), were valid. Titchener's labs ran many such observations.`],
+[`Excluding applied topics`,`He wanted a pure science, so he excluded animal, child and applied psychology. This narrowness contributed to the school's decline.`]],
+s:[[`Experimental Psychology: a Manual of Laboratory Practice (1901–05)`,`A four-volume manual describing lab exercises for students on sensation and perception, with precise instructions.`,`Laid out standard methods for studying sensation and trained cohorts of experimentalists.`,`Seen as rigid; the findings from introspection could not be checked by others. It made psychology a lab discipline in the United States.`],
+[`Cataloguing sensory qualities`,`Titchener and his students identified the elements of experience; he counted over 40,000 distinguishable sensory qualities, mostly visual and auditory.`,`Experience can be decomposed into very many elemental sensations.`,`Gestalt psychologists argued wholes are not sums of elements, and functionalists asked what mental processes are for.`]]},
+hall:{c:[
+[`Recapitulation`,`The development of the child repeats stages of human evolutionary history. Play in childhood, he said, repeats earlier cultural stages. This idea was later rejected.`],
+[`Adolescence as storm and stress`,`The teenage years are a second birth, marked by mood swings, risk-taking and conflict with parents. Hall said this is a normal, biologically based period.`],
+[`The child-study movement`,`Hall used questionnaires to collect data on the contents of children's minds and encouraged educators to base teaching on children's needs.`]],
+s:[[`Adolescence (1904)`,`A two-volume work gathering data from questionnaires, biography and literature on puberty, sex, crime, religion and education.`,`Adolescence is a distinct developmental stage with its own problems and needs.`,`Many claims were speculative and tied to recapitulation, which is discredited. The book still launched adolescent psychology.`],
+[`The 1909 Clark University conference`,`As president of Clark, Hall invited Freud and Jung to give lectures in the United States.`,`Brought psychoanalysis to American attention.`,`A key event in the spread of Freud's ideas.`]]},
+dewey:{c:[
+[`The reflex arc critique`,`Dewey argued that stimulus, central process and response are not separate steps: an organism's activity, such as reaching for a flame, is one circuit in which the response changes the stimulus.`],
+[`Functionalism`,`Mental life is part of the organism's adjustment to its environment, so psychology should ask how thinking helps solve problems.`],
+[`Learning by doing`,`Education should begin with the learner's experience and activity and let problems drive learning, not rote memory. Schools should be small democratic communities.`]],
+s:[[`The Reflex Arc Concept in Psychology (1896)`,`A short paper in Psychological Review criticising the dominant stimulus–response model.`,`Behaviour is a whole, purposive act and cannot be cut into sensory, central and motor parts.`,`Considered the founding paper of functionalism and an influence on later cognitive thinking.`],
+[`Democracy and Education (1916)`,`His major book on education, combining philosophy and psychology.`,`Education is growth, learning occurs through experience, and schools should model democratic life.`,`Shaped progressive education worldwide. Critics say some later reforms drifted from his emphasis on rigour.`]]},
+angell:{c:[
+[`The three questions of functionalism`,`What do mental processes do, how do they do it, and why do they do it? Answers should focus on their usefulness for the organism.`],
+[`Mind as mediator`,`Consciousness helps the organism adjust to new situations, such as when habits fail. It is a tool of adaptation.`],
+[`Broad methods`,`Functionalists welcomed studies of animals, children and individual differences in addition to introspection.`]],
+s:[[`The Province of Functional Psychology (1907)`,`Angell's address to the APA as president (given 1906 and published 1907) set out functionalism as a school.`,`Functionalism studies mental operations, serves as a bridge to biology, and focuses on adaptive value.`,`A clear statement of the school's goals; it did not offer a distinct method, so functionalism blended into behaviourism and applied psychology.`],
+[`Training at Chicago`,`Angell chaired the department where John B. Watson and Harvey Carr worked.`,`Produced a generation of functional psychologists.`,`Showed the school's influence on American psychology.`]]},
+watson:{c:[
+[`Behaviourism`,`Psychology should be a natural science that predicts and controls behaviour. Mental states and consciousness are not observable and should be excluded.`],
+[`Conditioning of emotions`,`Fear, rage and love are not innate; they are learned reactions that can be conditioned to new stimuli. Watson proposed only three innate emotions: fear, rage and love.`],
+[`Environmentalism`,`He claimed that heredity is of little importance and that training can produce any kind of person, as in his famous dozen healthy infants quote.`],
+[`Stimulus generalisation`,`Once an emotion is conditioned to one stimulus, similar stimuli also set it off. This is a model for phobias.`]],
+s:[[`Psychology as the Behaviorist Views It (1913)`,`Watson gave a lecture at Columbia University that became the behaviourist manifesto.`,`Psychology's goal is the prediction and control of behaviour; introspection has no place.`,`Led to decades of behaviourist dominance, though later cognitive psychology restored the study of mental processes.`],
+[`Little Albert (Watson and Rayner, 1920)`,`A nine-month-old boy was shown a white rat. Each time he reached for it, a loud steel bar was struck behind him. After several pairings the rat alone made him cry and crawl away.`,`The fear generalised to a rabbit, a dog, a fur coat and a Santa Claus mask.`,`Ethically unacceptable by modern standards: no removal of the fear was attempted, the sample was one child, and the details have been disputed by later researchers. It remains the classic demonstration of a conditioned emotional response.`]]},
+wertheimer:{c:[
+[`The whole is more than the sum of its parts`,`A melody is not a collection of notes: the same notes in another key are the same tune. Experience has structure that cannot be found by analysing elements.`],
+[`Phi phenomenon`,`Two lights flashing in succession at the right interval look like a single light moving. The motion is seen even though nothing moves, so perception is more than registering stimuli.`],
+[`Laws of organisation`,`We group stimuli by proximity, similarity, closure, continuity and common fate, tending toward the simplest, best form (Prägnanz).`],
+[`Productive thinking`,`Real understanding comes from seeing the structure of a problem, not from memorised rules or blind trial and error.`]],
+s:[[`Experimental Studies on the Perception of Movement (1912)`,`In Frankfurt, with Köhler and Koffka as subjects, Wertheimer flashed two lines in quick succession on a screen and varied the timing.`,`At the right interval, observers saw one line moving smoothly: the phi phenomenon. Too short gave simultaneity; too long gave two separate flashes.`,`Shows that perceived movement is a property of the whole pattern. It began Gestalt psychology and challenged structuralism.`],
+[`Productive Thinking (1945)`,`Wertheimer examined how children and others solve problems such as finding the area of a parallelogram.`,`Understanding the structure (cut off a triangle and move it) beats rote formulas.`,`Posthumous and influential in education; the case studies are informal.`]]},
+koffka:{c:[
+[`Geographical vs behavioural environment`,`The physical world (geographical environment) is not what directs behaviour. The behavioural environment is the world as the person perceives it, and behaviour follows that.`],
+[`Isomorphism`,`Perceptual experience has the same structure as the brain events that cause it. This remained a hypothesis.`],
+[`Development as organisation`,`Infants perceive organised wholes from the start; learning means reorganising the field, not adding connections.`]],
+s:[[`The Growth of the Mind (1921)`,`An introduction to child psychology and animal learning from a Gestalt point of view.`,`Development involves structural change, and animals show insight, not mere trial and error.`,`Introduced the Gestalt approach to English readers.`],
+[`Principles of Gestalt Psychology (1935)`,`A large systematic work reviewing perception, memory, learning and action.`,`Argued that field forces organise experience in a consistent way.`,`Dense and difficult, and tied to the brain-field theory that failed, but it laid out the laws of organisation for a wide readership.`]]},
+kohler:{c:[
+[`Insight learning`,`Problems are solved by suddenly seeing the relations among elements of the situation. Insight solutions appear abruptly, are smooth, and can be repeated and transferred.`],
+[`Isomorphism and brain fields`,`Köhler proposed that perception matches electrical field patterns in the brain. Later experiments with implanted metal foils refuted this.`],
+[`Gestalt against trial and error`,`Thorndike's cats had to learn by blind trial because their puzzle boxes hid the relations. Where relations are visible, solutions can come at once.`]],
+s:[[`The Mentality of Apes (1917)`,`At the Tenerife station, Köhler set chimpanzees tasks such as reaching bananas out of reach. Sultan first failed with a stick, then fitted two sticks together, and later stacked boxes.`,`After a pause, solutions appeared suddenly rather than gradually, which Köhler called insight.`,`Critics say earlier experience with sticks and boxes may have contributed. The study still anchors Gestalt learning theory.`],
+[`Gestalt Psychology (1929)`,`A general introduction to the school for English-language readers.`,`Outlined Gestalt ideas on perception, learning and the brain.`,`Made the school widely known in the United States.`]]},
+lewin:{c:[
+[`Field theory`,`Behaviour is determined by the totality of coexisting facts, the field. In the formula B = f(P, E), the person and the environment are interdependent.`],
+[`Life space`,`The psychological world of the person, containing goals (with positive or negative valence), barriers and regions. Conflicts arise when forces in the life space compete.`],
+[`Group dynamics`,`A group is more than its individuals. Its climate, leadership and norms affect members, and group decisions help change habits.`],
+[`Unfreeze–change–refreeze`,`Social change requires loosening existing habits, moving to a new state and then stabilising it. Action research combines investigation with practical change.`]],
+s:[[`Leadership climate study (Lewin, Lippitt and White, 1939)`,`Groups of ten-year-old boys in after-school clubs were led by adults using an autocratic, democratic or laissez-faire style, and observed.`,`Autocratic groups were either aggressive or apathetic and the boys became hostile and scapegoated one another; democratic groups were friendlier and more cooperative; laissez-faire groups were less organised.`,`The sample was small and the adult leaders were trained to play each role, but it demonstrated how leadership style shapes group behaviour and influenced research on groups and management.`],
+[`Food habits and group decision research (1940s)`,`During World War II he compared lectures and group discussion for persuading housewives to use unpopular cuts of meat.`,`Group discussion with a decision produced much greater change than lectures.`,`A key source of the claim that people change more when they take part in a decision.`]]}
+});
+</script>
+<script>
+Object.assign(window.PSYD, {
+freud:{c:[
+[`Levels of mind and the structure of personality`,`The mind has conscious, preconscious and unconscious levels. Personality has three parts: the id (inborn drives, works on the pleasure principle), the ego (reality principle, balances demands) and the superego (internalised moral standards). Conflict among them produces anxiety.`],
+[`Psychosexual stages`,`Libido focuses on different body zones as the child grows: oral (0–1), anal (1–3), phallic (3–6, including the Oedipus complex), latency (6–puberty) and genital (puberty on). Too much or too little gratification can cause fixation, leaving traces in adult personality.`],
+[`Defence mechanisms`,`Unconscious ways the ego reduces anxiety: repression (pushing thoughts out of awareness), denial, projection, displacement, reaction formation, regression, rationalisation and sublimation.`],
+[`Psychoanalytic method`,`Free association, dream analysis (manifest and latent content), analysis of slips and transference are used to bring unconscious material into awareness.`]],
+s:[[`Studies on Hysteria (Breuer and Freud, 1895)`,`Case histories of patients with physical symptoms without physical cause, such as Anna O., treated by talking about past events.`,`Symptoms symbolised repressed memories, and talking about them (the cathartic method) reduced symptoms.`,`Rests on a few cases with no controls and recollections written afterwards. It began psychoanalysis and the talking cure.`],
+[`The Interpretation of Dreams (1899/1900)`,`Freud analysed his own dreams and those of patients, looking at what dream images stood for.`,`Dreams are disguised wish fulfilment. Dream work (condensation, displacement, symbolism) hides latent content in the manifest dream.`,`Dream symbols are subjective and unfalsifiable, and later sleep research challenges the wish theory. It remains a landmark text.`],
+[`Little Hans (1909)`,`Freud advised the father of a five-year-old boy afraid of horses and interpreted the phobia.`,`He saw the fear as displaced fear of the father linked to the Oedipus complex.`,`Data came through the father, so bias was likely; behaviourists offered a conditioning explanation.`]]},
+jung:{c:[
+[`Personal and collective unconscious`,`The personal unconscious holds forgotten or repressed experiences and complexes. The collective unconscious holds inherited patterns common to all humans, shown in myths, dreams and religion.`],
+[`Archetypes`,`Universal images and patterns: persona (the social mask), shadow (disowned traits), anima and animus (inner opposite-sex image), the wise old man, the great mother and the self (the centre of the whole psyche).`],
+[`Psychological types`,`Two attitudes (introversion, extraversion) combine with four functions (thinking, feeling, sensing, intuition); in each person one function dominates.`],
+[`Individuation`,`The lifelong process of integrating conscious and unconscious parts into a unified self, more important in the second half of life.`]],
+s:[[`Word association experiments (1900s)`,`At the Burghölzli clinic, Jung read stimulus words to patients and timed their responses.`,`Long delays or odd answers pointed to emotionally charged groups of ideas, which he called complexes.`,`The technique was an early lie-detection and diagnostic tool. It supported the idea of unconscious conflict independently of Freud.`],
+[`Psychological Types (1921)`,`A large theoretical work that describes eight types from attitude and function combinations.`,`People differ in their habitual ways of perceiving and judging.`,`Types are dimensions, not boxes. It underpins the Myers–Briggs Type Indicator, whose reliability is debated.`],
+[`Symbols of Transformation (1912)`,`Jung's analysis of a patient's fantasies and myths led him to differ from Freud's libido theory.`,`Libido is general psychic energy, not only sexual.`,`The book led to his break with Freud.`]]},
+adler:{c:[
+[`Inferiority and compensation`,`All children feel small and dependent. Striving to overcome this drives development. Excess leads to an inferiority complex or overcompensation.`],
+[`Striving for superiority`,`A basic drive to move from minus to plus, later renamed striving for perfection or completion. In healthy people it serves social ends; in neurotic people it becomes self-centred.`],
+[`Social interest`,`Gemeinschaftsgefühl: feeling of connection and concern for others. Adler treated it as the measure of mental health.`],
+[`Lifestyle and birth order`,`By about age 5 each child forms a characteristic life plan. Birth position (first, middle, youngest, only) shapes it: first-borns may be conscientious but anxious about losing position; youngest may be pampered.`]],
+s:[[`Understanding Human Nature (1927)`,`A popular book that applies Individual Psychology to everyday life, character types and education.`,`Character reflects the person's goals and sense of community.`,`Easy to read but rests on clinical impressions. It influenced humanistic and family therapies.`],
+[`Child guidance clinics (1920s)`,`Adler set up clinics in Vienna schools where teachers and parents discussed cases openly.`,`Encouragement and cooperation help children change.`,`An early community mental health model, closed after 1934 political events.`]]},
+horney:{c:[
+[`Basic anxiety`,`A child's feeling of isolation and helplessness in a potentially hostile world, arising from cold, inconsistent or controlling parents.`],
+[`Three neurotic trends`,`Moving toward people (compliance, need for love), against people (aggression, need for power) and away from people (detachment, need for independence). Healthy people can use all three flexibly.`],
+[`Idealised self`,`To cope, people create an idealised self-image, producing the tyranny of the shoulds and self-hatred when they fail to meet it.`],
+[`Culture and feminine psychology`,`Horney questioned penis envy and argued women's problems reflect social inequality. She proposed womb envy as a counter-example.`]],
+s:[[`The Neurotic Personality of Our Time (1937)`,`Horney drew on clinical cases and her observations of American culture.`,`Neurosis is shaped by competition and insecurity in the culture, not simply by instinct.`,`Observational data only, but it moved psychoanalysis toward social explanations.`],
+[`Our Inner Conflicts (1945)`,`A systematic account of the three coping trends and their conflicts.`,`Neurotics become rigid, using only one trend.`,`The scheme informed later personality tests such as the CAD.`]]},
+erikson:{c:[
+[`Eight psychosocial stages`,`Each stage poses a crisis between two poles: trust vs mistrust, autonomy vs shame and doubt, initiative vs guilt, industry vs inferiority, identity vs role confusion, intimacy vs isolation, generativity vs stagnation, integrity vs despair.`],
+[`Virtues`,`Healthy resolution gives a strength: hope, will, purpose, competence, fidelity, love, care and wisdom.`],
+[`Identity crisis`,`In adolescence the person must build a coherent sense of self. Marcia later extended this to identity statuses such as moratorium and achievement.`],
+[`Epigenetic principle`,`Each stage builds on earlier ones and has its own time. Society adds its own demands, so culture shapes each crisis.`]],
+s:[[`Childhood and Society (1950)`,`Combined clinical cases, studies of the Sioux and Yurok peoples, and play observations of children into a lifespan theory.`,`Development continues through life and is shaped by society as well as drives.`,`Stages are broad and cannot be tested precisely, and the model reflects Western male norms. It remains the most used lifespan model.`],
+[`Gandhi's Truth (1969)`,`A psychobiography analysing the identity development of Mahatma Gandhi.`,`Showed how personal conflicts and historical events link in a leader.`,`Won the Pulitzer Prize; critics say it is speculative.`]]},
+allport:{c:[
+[`Traits as real and individual`,`Traits are neuropsychic structures that lead a person to respond similarly across situations. Allport insisted each person's pattern is unique.`],
+[`Cardinal, central and secondary traits`,`Cardinal traits dominate a whole life (rare, e.g. Gandhi's nonviolence). Central traits are the five to ten that describe a person. Secondary traits are narrow tastes and attitudes.`],
+[`Functional autonomy`,`Motives can become independent of their origin: a sailor may love the sea long after leaving the navy. Adult motives are not simply childhood drives.`],
+[`Idiographic and nomothetic`,`Idiographic study examines the individual in depth (e.g. letters); nomothetic study finds general laws across people. Allport favoured the first.`]],
+s:[[`Trait names: a psycho-lexical study (Allport and Odbert, 1936)`,`The authors went through an unabridged dictionary and picked words that distinguish one person's behaviour from another's.`,`They found nearly 18,000 terms, grouped into traits, states, evaluations and others, beginning the lexical hypothesis.`,`The list was too long to use directly, but later reductions by Cattell and others gave the Big Five.`],
+[`The Nature of Prejudice (1954)`,`A comprehensive review of prejudice, from stereotypes to discrimination.`,`Contact between groups reduces prejudice when it involves equal status, common goals, cooperation and institutional support (the contact hypothesis).`,`Still a standard text; later studies largely support contact effects.`]]},
+cattell:{c:[
+[`Factor analysis of personality`,`A statistical method that finds clusters of correlated variables. Cattell used it to identify the basic dimensions of personality from large amounts of data.`],
+[`Surface and source traits`,`Surface traits are clusters visible in behaviour; source traits are the underlying factors that cause them. He found 16 source traits.`],
+[`L, Q and T data`,`Personality is measured from life records (L), questionnaires (Q) and objective tests (T) that the person cannot easily fake.`],
+[`Fluid and crystallised intelligence`,`Fluid intelligence is reasoning that is independent of learning and peaks early; crystallised intelligence is accumulated knowledge that grows with age.`]],
+s:[[`The 16PF Questionnaire (1949)`,`Built by testing thousands of items and using factor analysis to select scales for 16 factors such as warmth, reasoning, dominance and emotional stability.`,`People differ along 16 broad dimensions, with five global factors at a higher level.`,`The 16PF is widely used in selection and counselling, but independent factor analyses often fail to recover all 16 factors.`],
+[`The Description and Measurement of Personality (1946)`,`The book describes his factor analytic method and the first set of personality factors.`,`Personality can be described mathematically.`,`A foundation for trait research; his later views on group differences were controversial.`]]},
+eysenck:{c:[
+[`Three super-traits`,`Extraversion–introversion (E), neuroticism–stability (N) and psychoticism (P). They sit at the top of a hierarchy of habits and traits.`],
+[`Biological basis`,`Introverts have higher baseline cortical arousal (via the reticular system) so they seek less stimulation. High-N people have a more reactive limbic system and autonomic nervous system.`],
+[`Four temperaments`,`Crossing E and N gives the ancient Greek temperaments: stable extravert (sanguine), unstable extravert (choleric), stable introvert (phlegmatic) and unstable introvert (melancholic).`],
+[`Conditioning`,`Introverts condition more easily and so develop stronger conscience; extraverts condition more slowly. Eysenck used this to explain criminality.`]],
+s:[[`Dimensions of Personality (1947)`,`He gave questionnaires and rating scales to about 700 soldiers with neurotic symptoms and used factor analysis.`,`Two main dimensions appeared: neuroticism and introversion–extraversion.`,`Statistical decisions affected the result, but later studies replicate E and N well.`],
+[`The Effects of Psychotherapy (1952)`,`A review of outcome studies of therapy.`,`Claimed that about two-thirds of neurotic patients improve with or without treatment.`,`Heavily criticised for his method, which led to better outcome research; later meta-analyses show therapy works.`]]},
+costa:{c:[
+[`Five-Factor Model`,`Personality is described by five broad domains: Openness to experience, Conscientiousness, Extraversion, Agreeableness and Neuroticism, each with six facets in the NEO-PI-R.`],
+[`Stability in adulthood`,`After about age 30, trait scores change slowly; this is called the plaster hypothesis, as personality sets like plaster.`],
+[`Cross-cultural generality`,`The five factors have been found in many languages and cultures, supporting a biological basis.`]],
+s:[[`NEO Personality Inventory (Costa and McCrae, 1985; revised 1992)`,`The team developed a self-report inventory beginning with three domains and adding the other two, validated on adult samples.`,`Scores are reliable, predict outcomes such as health and job performance, and match peer ratings.`,`Critics say five factors are descriptive, not explanatory, and that the model misses some personality aspects. It is the standard trait measure.`],
+[`Baltimore Longitudinal Study of Aging`,`Costa and McCrae retested adults over many years.`,`Traits remained stable over decades.`,`A major source of evidence for adult stability.`]]},
+mccrae:{c:[
+[`Five-Factor Theory`,`Extends the descriptive model into a theory: basic tendencies (the five traits) are biological and cannot be changed by the environment, while characteristic adaptations (habits, skills, attitudes) arise from interaction.`],
+[`Facets`,`Each factor is made up of six facets. For example, Neuroticism includes anxiety, angry hostility, depression, self-consciousness, impulsiveness and vulnerability.`],
+[`Maturation`,`In adulthood, average levels of Neuroticism, Extraversion and Openness decline slightly, while Agreeableness and Conscientiousness increase.`]],
+s:[[`Personality in Adulthood (McCrae and Costa, 1990)`,`A summary of longitudinal and cross-sectional research on traits across the adult years.`,`Traits show high stability and heritability.`,`Strong evidence; critics note that people can and do change.`],
+[`Cross-cultural trait study (McCrae et al., 2000)`,`Data from many nations compared age and sex differences.`,`Age trends were similar worldwide.`,`Suggests maturation is biological.`]]},
+sheldon:{c:[
+[`Somatotypes`,`Three body builds from embryonic layers: endomorphy (soft, round), mesomorphy (muscular) and ectomorphy (thin, fragile). Each person gets a three-number rating from 1 to 7.`],
+[`Temperament types`,`Viscerotonia (relaxed, sociable, loves food), somatotonia (assertive, active, risk-taking) and cerebrotonia (restrained, private, anxious) correspond to the three builds.`],
+[`Constitutional psychology`,`Personality is based on inherited body structure, so physique can predict temperament.`]],
+s:[[`The Varieties of Human Physique (1940)`,`Sheldon photographed several thousand male college students in standard poses and rated their physiques.`,`Most people can be rated on three components and fall into recognisable types.`,`Ratings were subjective and the photographs raised ethical issues. The classification still gets used in sports science.`],
+[`The Varieties of Temperament (1942)`,`He rated 200 young men on 60 temperament traits and compared with physique.`,`Reported high correlations (about .8) between build and temperament.`,`Raters knew the physiques, so bias inflated correlations. Later studies find much weaker links.`]]},
+kretschmer:{c:[
+[`Body types`,`Pyknic (short, round), asthenic or leptosomatic (thin) and athletic (muscular) builds, plus dysplastic types.`],
+[`Temperament and illness`,`Pyknic physique was linked to cyclothymic temperament and manic-depressive illness. Asthenic and athletic builds were linked to schizothymic temperament and schizophrenia.`],
+[`Continuum`,`Normal temperaments and disorders lie on one continuum, so normal and ill differ in degree.`]],
+s:[[`Physique and Character (1921)`,`Kretschmer measured the bodies of several hundred psychiatric patients and compared them across diagnoses.`,`Pyknic types were more common among manic-depressive patients; asthenic and athletic among schizophrenic patients.`,`The sample came from hospitals and diagnoses were not blind, so the associations are not reliable. It influenced Sheldon.`]]},
+murray:{c:[
+[`Psychogenic needs`,`About 20 needs such as achievement, affiliation, autonomy, dominance, nurturance and succorance. A need is a readiness to respond in a certain way and may be aroused by internal or external events.`],
+[`Press`,`Environmental forces that help or hinder needs: alpha press (real) and beta press (as perceived). Behaviour results from need and press together.`],
+[`Personology`,`The study of the whole person over time, in depth, using life histories and many methods.`]],
+s:[[`Explorations in Personality (1938)`,`At the Harvard clinic 50 young men were studied by a team using interviews, tests and experiments.`,`Personality is a pattern of needs; measuring them in many ways gives a rounded portrait.`,`Intensive but small and all male students. It produced the need system and the TAT.`],
+[`Thematic Apperception Test (Morgan and Murray, 1935)`,`People view ambiguous pictures and make up stories about them; the story themes are scored for needs and press.`,`Stories reveal the storyteller's motives, often without awareness.`,`Scoring reliability varies, but the TAT remains in use and led to McClelland's achievement measures.`]]},
+rotter:{c:[
+[`Social learning theory`,`Behaviour potential in a situation depends on the expectancy that the behaviour will lead to a reinforcement and the value of that reinforcement.`],
+[`Locus of control`,`A generalised expectancy that outcomes depend on the person (internal) or on luck, fate or powerful others (external).`],
+[`Psychological situation`,`People respond to the situation as they perceive it, so the same event means different things to different people.`]],
+s:[[`Generalised expectancies for internal versus external control (1966)`,`Rotter published the 29-item forced-choice I-E scale (internal–external) and reviewed the evidence.`,`Internals seek more information, resist manipulation and cope better with health problems; externals are more passive.`,`The scale measures a general attitude; later domain-specific scales (e.g. health locus of control) are more predictive.`],
+[`Social Learning and Clinical Psychology (1954)`,`The book systematically presents his theory with clinical examples.`,`Therapy should change expectancies and values.`,`A bridge between learning theory and cognition.`]]},
+mischel:{c:[
+[`Person–situation debate`,`Mischel found that correlations between trait scores and behaviour across situations seldom exceed about .30 (the personality coefficient), so traits poorly predict specific behaviour.`],
+[`CAPS`,`The Cognitive-Affective Personality System: people differ in encodings, expectancies, affects, goals and competencies, which activate in response to situation features.`],
+[`If–then signatures`,`Stable individual patterns of the form: if situation X, then the person does Y. Consistency lies in these patterns, not in average trait levels.`],
+[`Delay of gratification`,`Self-control can be learned by changing how one thinks about the reward, for example imagining it as a picture instead of the real thing.`]],
+s:[[`Personality and Assessment (1968)`,`A review of research on trait consistency showing weak cross-situational correlations.`,`Situation, not just trait, strongly affects behaviour.`,`Provoked years of debate; the resolution is interactionism: both matter, with stable if–then patterns.`],
+[`Marshmallow test (Mischel and others, from the late 1960s)`,`Preschool children at Stanford chose between one treat now or two if they waited alone. Researchers recorded waiting times and later followed some children.`,`Children who waited longer were rated later as more competent and scored higher on tests in adolescence, in small samples.`,`A 2018 replication with a larger, more diverse sample found a smaller link that shrank after controlling for family background.`]]},
+kelly:{c:[
+[`Man the scientist`,`Everyone forms hypotheses about the world, tests them and revises them. Personality is a person's way of anticipating events.`],
+[`Personal constructs`,`Constructs are bipolar ways of construing events (kind–cruel, safe–dangerous). Each person has a unique system, ordered with core constructs at the centre.`],
+[`Fundamental postulate and corollaries`,`A person's processes are channelised by the way they anticipate events. Eleven corollaries describe how constructs form, relate and change, such as individuality, range and choice.`],
+[`Anxiety and threat`,`Anxiety is recognising events lie outside the range of one's construct system; threat is the prospect of a comprehensive change in core constructs.`]],
+s:[[`The Psychology of Personal Constructs (1955)`,`Two volumes written from years of clinical work in Kansas schools and clinics.`,`Understanding someone means understanding how they construe their world. Therapy helps clients test and loosen constructs.`,`Rich and original but hard to test; it influenced constructivist and cognitive therapy.`],
+[`Role Construct Repertory (Rep) Grid`,`A person lists significant people, compares them in threes, and names how two are alike and different from the third, then rates all people on these constructs.`,`The grid reveals the dimensions the person uses to judge others.`,`Flexible and used in clinical, education and market research; interpretation is complex.`]]},
+maslow:{c:[
+[`Hierarchy of needs`,`Five levels: physiological, safety, love and belonging, esteem and self-actualisation. Lower needs dominate until satisfied; higher needs then emerge. Needs are not all-or-nothing.`],
+[`Deficiency and growth motivation`,`The first four levels are deficiency needs (driven by lack). Self-actualisation is a growth need that is never fully satisfied.`],
+[`Self-actualisation and peak experiences`,`Self-actualisers accept themselves, are spontaneous and creative, have deep relationships and few close friends. Peak experiences are moments of intense joy and meaning.`],
+[`Humanistic psychology`,`The third force, after psychoanalysis and behaviourism, focuses on healthy people and potential.`]],
+s:[[`A Theory of Human Motivation (1943)`,`A paper setting out the hierarchy, based on clinical observation and theory.`,`Behaviour is motivated by multiple needs arranged in a loose hierarchy.`,`Reviews (e.g. Wahba and Bridwell, 1976) found little support for a strict order. Cross-cultural work shows needs can be pursued together.`],
+[`Study of self-actualising people`,`Maslow selected people (including historical figures and acquaintances) he judged as self-actualised and listed shared traits.`,`Common traits included acceptance, autonomy, democratic values and peak experiences.`,`The sample was small and selected by his own judgement, so the findings are anecdotal.`]]},
+may:{c:[
+[`Existential anxiety`,`Anxiety is the response to threat to existence or values, and is a normal part of freedom. Neurotic anxiety is out of proportion and avoids facing it.`],
+[`Freedom and responsibility`,`Humans can choose and so must take responsibility for their choices. Loss of meaning is a key modern problem.`],
+[`Love and will`,`Love (care for another) and will (the capacity to organise oneself for a goal) are linked. Their loss is behind apathy and emptiness.`],
+[`The daimonic`,`Any natural function with the power to take over the whole person, like sex or anger. It can be creative or destructive when integrated or denied.`]],
+s:[[`The Meaning of Anxiety (1950)`,`May's doctoral work reviews theories of anxiety from philosophers and psychologists.`,`Anxiety can be a path to growth when faced.`,`Helped introduce existential ideas to the US.`],
+[`Love and Will (1969)`,`A cultural and clinical analysis of the loss of intimacy and purpose in modern America.`,`Apathy and violence stem from the failure of love and will.`,`A bestseller; descriptive and not testable.`]]},
+pavlov:{c:[
+[`Classical conditioning`,`A neutral stimulus (NS) paired repeatedly with an unconditioned stimulus (UCS) that triggers an unconditioned response (UCR) becomes a conditioned stimulus (CS) that triggers a conditioned response (CR).`],
+[`Acquisition, extinction and spontaneous recovery`,`The CR strengthens over pairings, fades when the CS is presented without the UCS (extinction), and can reappear after a rest (spontaneous recovery).`],
+[`Generalisation and discrimination`,`Similar stimuli trigger the CR; with training animals respond only to the CS, discriminating it from others.`],
+[`Second-order conditioning`,`A CS can serve as a UCS for a new stimulus, building chains of learning.`]],
+s:[[`Conditioned reflexes (1903 onward; Conditioned Reflexes, 1927)`,`Pavlov's team studied salivation in dogs, with a surgical fistula to measure drops of saliva. A ticking metronome or bell was sounded just before food.`,`After several pairings the dogs salivated at the sound alone. Varying the timing and stimuli mapped acquisition, extinction, generalisation and discrimination.`,`Precise but ignored thought processes, and only dogs were studied. It became the basis for models of phobias, addiction and aversion therapy.`],
+[`Experimental neurosis`,`When dogs were asked to discriminate a circle from an increasingly similar ellipse, they showed distress.`,`Impossible discrimination can produce breakdown.`,`An early model of stress-induced disorders.`]]},
+thorndike:{c:[
+[`Connectionism`,`Learning is the formation of connections between situations (stimuli) and responses, strengthened by use and by satisfying effects.`],
+[`Law of Effect`,`Responses followed by satisfaction become more likely in that situation; those followed by discomfort become less likely.`],
+[`Laws of exercise and readiness`,`Use strengthens connections; disuse weakens them (later dropped). Readiness is that conduction units are prepared to act.`],
+[`Transfer of training`,`Learning in one area helps another only to the extent that they share identical elements. This challenged the idea of mental discipline.`]],
+s:[[`Animal Intelligence (1898)`,`Hungry cats were placed in puzzle boxes and could escape and reach food by pulling a loop or pressing a lever. Times were recorded across trials.`,`Escape time fell gradually with repeated trials; there was no sudden insight. Thorndike took this as trial-and-error learning.`,`The boxes hid how the mechanism worked, so insight was impossible; Köhler later showed insight in apes. It still founded the study of instrumental learning.`],
+[`Transfer experiments (Woodworth and Thorndike, 1901)`,`Participants practised judging areas or lengths and were tested on similar tasks.`,`Training transferred little to different tasks.`,`Weakened the case for formal discipline in schools.`]]},
+skinner:{c:[
+[`Operant conditioning`,`Behaviour operates on the environment and is controlled by its consequences. Reinforcers increase it; punishers decrease it.`],
+[`Reinforcement and punishment`,`Positive reinforcement adds something pleasant; negative reinforcement removes something unpleasant (both increase behaviour). Positive punishment adds something unpleasant; negative punishment removes something pleasant (both decrease behaviour).`],
+[`Schedules of reinforcement`,`Fixed ratio, variable ratio, fixed interval and variable interval. Variable ratio gives high, steady rates and the most resistance to extinction, like gambling.`],
+[`Shaping and radical behaviourism`,`Complex behaviour is built by reinforcing successive approximations. Skinner held that inner states are behaviours to be explained, not causes.`]],
+s:[[`The Behavior of Organisms (1938)`,`Rats in the operant chamber pressed a lever for food pellets while a cumulative recorder drew response rates over time.`,`Response rate depends on the reinforcement schedule and shows orderly patterns across individuals.`,`Highly controlled but generalised from rats and pigeons. It founded the experimental analysis of behaviour.`],
+[`Verbal Behavior (1957) and the Chomsky review (1959)`,`Skinner argued language is learned operant behaviour. Chomsky's review countered that this cannot explain how children produce novel sentences.`,`The review undermined behaviourist accounts of language.`,`Part of the shift toward cognitive psychology.`],
+[`Walden Two (1948)`,`A novel describing a community designed through behavioural principles.`,`Social engineering through reinforcement could produce happiness.`,`Controversial for being controlling.`]]},
+bandura:{c:[
+[`Observational learning`,`People learn by watching models, with no direct reinforcement needed. Four processes: attention, retention, reproduction and motivation. Vicarious reinforcement increases imitation.`],
+[`Self-efficacy`,`Belief in one's ability to carry out a task. It comes from mastery experiences, vicarious experience, persuasion and physiological state, and it affects effort and persistence.`],
+[`Reciprocal determinism`,`Personal factors, behaviour and the environment influence one another continuously.`],
+[`Self-regulation`,`People set goals, monitor progress and reward themselves, acting as agents of their behaviour.`]],
+s:[[`Bobo doll experiments (Bandura, Ross and Ross, 1961, 1963)`,`Nursery children watched an adult hit, kick and shout at an inflatable doll, or play quietly. Later each child was left in a room with the doll and toys.`,`Children who saw the aggression imitated it, including exact acts and words; boys were more aggressive; filmed and cartoon models also had effects. Models that were punished produced less imitation, but children could show the learning when rewarded.`,`Artificial setting, doll is meant to be hit, and ethical concerns. It shaped media violence research and showed learning without direct reinforcement.`],
+[`Self-efficacy in snake phobia (1970s)`,`Participants with snake phobias were treated with modelling and guided participation.`,`Increased self-efficacy predicted approach behaviour.`,`Supported the role of efficacy in therapy and health behaviour.`]]},
+tolman:{c:[
+[`Purposive behaviourism`,`Behaviour is goal-directed and guided by expectancies, not just chains of stimulus and response.`],
+[`Cognitive maps`,`Rats learn the layout of a maze and use it flexibly, such as taking a shortcut when the usual path is blocked.`],
+[`Latent learning`,`Learning can occur without reinforcement and show up only when a reason to perform appears.`],
+[`Intervening variables`,`Unobserved factors such as expectancy and need link stimulus to response.`]],
+s:[[`Latent learning (Tolman and Honzik, 1930)`,`Three groups of rats ran a maze: one always rewarded, one never rewarded, and one rewarded only from day 11.`,`The delayed-reward group improved sharply once rewarded, performing as well as the always-rewarded group.`,`Showed that learning occurred earlier without reward, contradicting strict reinforcement theory.`],
+[`Cognitive maps in rats and men (1948)`,`Rats learned a maze, then faced a blocked path and had to choose among radial paths.`,`Many chose a path pointing toward the goal, implying a map-like representation.`,`Became a foundation for later work on spatial memory and the hippocampus.`]]},
+mowrer:{c:[
+[`Two-factor theory of avoidance`,`Fear is first conditioned by classical conditioning to a warning cue. The animal then learns an avoidance response, which is maintained by operant reinforcement through fear reduction.`],
+[`Why avoidance persists`,`Because the person avoids the feared cue, they never learn that it is safe, so the avoidance continues.`],
+[`Conditioning treatments`,`Applied conditioning to child problems such as bed-wetting.`]],
+s:[[`Enuresis alarm (Mowrer and Mowrer, 1938)`,`A pad under the sleeping child sounded a bell when moisture closed a circuit.`,`Over weeks, the child woke to the feeling of a full bladder before wetting.`,`Success rates were high and the method remains a first-line treatment.`],
+[`Learning Theory and Behavior (1960)`,`A review of learning theories, including his two-factor view.`,`Emotion plays a central role in learning.`,`Later cognitive models revised the account of avoidance.`]]},
+wolpe:{c:[
+[`Reciprocal inhibition`,`If a response incompatible with anxiety, such as relaxation, occurs when an anxiety cue is present, the bond between cue and anxiety weakens.`],
+[`Systematic desensitisation`,`Three steps: learn deep muscle relaxation; build a hierarchy of feared situations from mild to severe; imagine each item while relaxed, moving up only when anxiety is gone.`],
+[`SUDS`,`Subjective Units of Distress Scale (0–100) used to rate fear for each hierarchy item.`],
+[`Assertiveness training`,`Assertive behaviour inhibits anxiety in social situations, so training in it treats social fear.`]],
+s:[[`Psychotherapy by Reciprocal Inhibition (1958)`,`Wolpe developed his method from experiments with cats that were conditioned to fear, then fed in the same cage.`,`Eating inhibited fear, and gradual exposure reduced it. He applied the principle to phobic patients.`,`Reported very high success rates. Later studies show the effect works through exposure rather than relaxation, but the approach began modern behaviour therapy.`]]},
+ebbinghaus:{c:[
+[`Nonsense syllables`,`Meaningless consonant-vowel-consonant items (e.g. BAF) were used to remove prior associations so memory could be measured cleanly.`],
+[`Forgetting curve`,`Forgetting is rapid soon after learning and then slows, so most loss occurs in the first hours.`],
+[`Savings method`,`Memory is measured by how much less time or repetition is needed to relearn material. Savings can show memory even when recall fails.`],
+[`Spacing and overlearning`,`Spreading practice over time gives better retention than massed practice, and extra repetition slows forgetting.`]],
+s:[[`Über das Gedächtnis (1885)`,`Ebbinghaus served as his own subject, learning lists of syllables and relearning them after intervals from 20 minutes to 31 days.`,`Savings dropped steeply (about 58% after 20 minutes, about 34% after a day) and then levelled off (about 21% after 31 days).`,`One subject, nonsense material and artificial. Still replicated in later work, and the curve is basic to the psychology of memory.`]]},
+miller:{c:[
+[`Magical number seven`,`Immediate memory span is limited to about 7 ± 2 items, whether digits, letters or words.`],
+[`Chunking`,`Grouping items into larger meaningful units increases the amount held. The limit is in chunks, not bits of information.`],
+[`Information processing`,`The mind is treated as a system that takes in, codes and transmits information, which inspired the cognitive revolution.`]],
+s:[[`The Magical Number Seven, Plus or Minus Two (1956)`,`Miller reviewed tests of absolute judgement and memory span from several labs.`,`Capacity for absolute judgement and span seemed to be near seven items regardless of the type of material.`,`Later work (Cowan, 2001) puts capacity nearer four chunks. The paper's real impact was framing memory as limited capacity processing.`],
+[`Plans and the Structure of Behavior (1960)`,`Written with Galanter and Pribram, it proposed TOTE units (Test–Operate–Test–Exit).`,`Behaviour is organised by plans that compare current state with goals.`,`Helped replace stimulus–response with cognitive models.`]]},
+broadbent:{c:[
+[`Selective attention`,`We cannot process everything at once; attention selects some inputs and ignores others.`],
+[`Filter model`,`Sensory input is held briefly, a filter selects one channel on physical features such as location or pitch, and only the selected input gets full analysis.`],
+[`Limited capacity channel`,`After the filter, information passes through a single channel of limited capacity, like a bottleneck.`]],
+s:[[`Dichotic listening studies (Broadbent, 1954)`,`Participants heard three digits in one ear and three in the other at the same time and had to repeat them.`,`They preferred to report ear by ear, not in the order of arrival, and did better that way.`,`The model predicts ignored messages are not processed, but people notice their own name (Moray, 1959). Treisman then proposed attenuation.`],
+[`Perception and Communication (1958)`,`A book that put attention in information-processing terms.`,`Human performance can be analysed like a communication channel.`,`A cornerstone of the cognitive revolution in Britain.`]]},
+neisser:{c:[
+[`Cognition defined`,`All the processes by which sensory input is transformed, reduced, elaborated, stored, recovered and used.`],
+[`Constructive memory`,`Remembering is rebuilding from fragments using schemas, so memories can be distorted.`],
+[`Ecological validity`,`Studies should reflect how perception and memory work in real life, using natural settings.`]],
+s:[[`Cognitive Psychology (1967)`,`A textbook that organised work on perception, attention, pattern recognition and memory around an information-processing view.`,`Mental processes are active and can be studied scientifically.`,`Defined the field. Neisser later said it was too narrow.`],
+[`Flashbulb memories and the Challenger study (Neisser and Harsch, 1992)`,`Students described how they heard of the Challenger explosion the next day and again two and a half years later.`,`Many gave different accounts later while feeling certain.`,`Showed confident memories can be inaccurate.`]]},
+kahneman:{c:[
+[`Heuristics and biases`,`Mental shortcuts such as availability (judging by ease of recall), representativeness (judging by similarity) and anchoring (relying on a first number) are useful but cause systematic errors.`],
+[`Prospect theory`,`People judge outcomes as gains or losses relative to a reference point. Losses loom larger than gains (loss aversion) and small probabilities are overweighted.`],
+[`System 1 and System 2`,`System 1 is fast, automatic and associative; System 2 is slow, effortful and rule-based. Errors occur when System 2 does not check System 1.`],
+[`Framing`,`The same choice described in terms of gains or losses leads to different decisions.`]],
+s:[[`Prospect Theory (Kahneman and Tversky, 1979)`,`Participants chose between gambles: for example a sure 3,000 vs an 80% chance of 4,000, then the same in losses.`,`People preferred sure gains but gambled to avoid sure losses.`,`Replicated widely; it won the 2002 Nobel Memorial Prize in Economic Sciences (Kahneman).`],
+[`Asian disease problem (Tversky and Kahneman, 1981)`,`Participants chose between programmes to save lives, worded as lives saved or lives lost.`,`Most chose the sure option when framed as saved and the gamble when framed as lost.`,`A classic demonstration of framing effects.`]]},
+kabatzinn:{c:[
+[`Mindfulness`,`Paying attention in a particular way: on purpose, in the present moment and non-judgementally.`],
+[`MBSR`,`An eight-week programme with weekly group sessions, daily home practice and a day of silence, based on body scan, sitting meditation and mindful yoga.`],
+[`Attitudes of mindfulness`,`Non-judging, patience, beginner's mind, trust, non-striving, acceptance and letting go.`]],
+s:[[`Stress Reduction Clinic study (Kabat-Zinn, 1982)`,`Chronic pain patients attended the eight-week programme at UMass Medical School and rated their pain and mood.`,`Many reported decreases in pain, anxiety and mood problems.`,`No control group, so improvement may reflect expectation. Later randomised trials show moderate benefits.`],
+[`Full Catastrophe Living (1990)`,`A book describing the programme for the general public.`,`Mindfulness can help people cope with stress, pain and illness.`,`Became the standard guide, though critics warn of commercial overuse.`]]},
+ekman:{c:[
+[`Universal basic emotions`,`Six emotions (happiness, sadness, anger, fear, disgust, surprise) are shown by facial expressions that are recognised across cultures. Contempt was added later.`],
+[`Display rules`,`Culture-specific rules decide when and how to show emotion, e.g. masking sadness in public in some cultures.`],
+[`FACS`,`The Facial Action Coding System (with Friesen, 1978) scores facial movements by muscle action units, giving an objective measure.`],
+[`Microexpressions`,`Brief involuntary expressions (a fraction of a second) may leak concealed emotion.`]],
+s:[[`Cross-cultural recognition studies (Ekman and Friesen, 1971)`,`Members of the Fore people of Papua New Guinea, who had little contact with the West, were told a story and shown three photographs to pick the face matching it.`,`They chose the expected face at high rates, and their own posed expressions were recognised by Americans.`,`Forced-choice methods may inflate agreement, and critics such as Barrett argue emotions are less universal. It is the main evidence for universality.`],
+[`Unmasking the Face (1975)`,`A guide to reading emotion in faces, with Friesen.`,`Facial cues can help detect emotion and deception.`,`Popular and applied, though lie-detection accuracy is limited.`]]}
+});
+</script>
+<script>
+Object.assign(window.PSYD, {
+milgram:{c:[
+[`Agentic state`,`When people obey authority they see themselves as agents carrying out another's wishes, so they feel less personally responsible for the consequences.`],
+[`Situational factors in obedience`,`Obedience was highest when the experimenter was physically present, the setting was prestigious, the victim was far away and no one else dissented.`],
+[`Moral strain`,`Participants showed stress (sweating, laughing nervously, protesting) but many still continued, showing that conscience and obedience conflict.`]],
+s:[[`Behavioral Study of Obedience (1963)`,`At Yale, 40 men answered an advertisement for a memory study. A confederate played the learner in another room and the participant, as teacher, gave electric shocks of rising voltage for wrong answers, urged on by a lab-coated experimenter with four set prompts.`,`All went to 300 volts and 65% went to the maximum 450 volts. Variations changed this: about 40% when the learner was in the same room; about 30% when the participant had to press the learner's hand onto a shock plate; only about 10% when two peers rebelled.`,`Deception and distress raised ethical alarm; some analyses of archives suggest participants did not all believe the shocks. Still the most famous demonstration of the power of authority, and it led to stricter ethics review.`],
+[`Small-world study (1967)`,`Participants in Nebraska and Kansas were asked to forward a letter to a target in Boston through acquaintances.`,`Completed chains took about six steps on average, the origin of six degrees of separation.`,`Many chains were not completed, but the study began social network research.`]]},
+asch:{c:[
+[`Normative social influence`,`People conform to be accepted and avoid disapproval, even when they privately know the group is wrong.`],
+[`Factors affecting conformity`,`Conformity increases with group size up to three or four, drops sharply if one other person dissents, and is higher when the task is hard.`],
+[`Configural impression formation`,`People form impressions of others as wholes in which some central traits (warm–cold) change the meaning of others.`]],
+s:[[`Line judgement studies (Asch, 1951, 1956)`,`College men judged which of three lines matched a standard line in groups of seven to nine, where all but one were confederates who gave wrong answers on 12 of 18 trials.`,`About 75% of participants conformed at least once and 37% of the wrong-majority answers followed the group. Control participants alone made fewer than 1% errors. With one dissenter, conformity dropped to about a quarter.`,`American male students in the 1950s, so results may not generalise (later studies find lower conformity in the 1970s). Still a model of group pressure experiments.`],
+[`Forming impressions of personality (Asch, 1946)`,`Participants heard a list of traits for an imagined person, identical except that one list had warm and the other cold.`,`The warm and cold lists produced very different overall impressions, and other traits were interpreted accordingly.`,`Showed that traits are not simply added up.`]]},
+festinger:{c:[
+[`Cognitive dissonance`,`Two cognitions that conflict, or behaviour that conflicts with belief, create an unpleasant tension that motivates change.`],
+[`Ways to reduce dissonance`,`Change a cognition, add consonant cognitions, or trivialise the conflict. Forced compliance with little justification leads to attitude change.`],
+[`Social comparison`,`When objective standards are missing, people judge their abilities and opinions by comparing with similar others.`]],
+s:[[`Cognitive consequences of forced compliance (Festinger and Carlsmith, 1959)`,`Students did dull tasks for an hour, then were paid $1 or $20 to tell the next participant it was interesting. Later they rated how enjoyable the task had been.`,`The $1 group rated the task as more enjoyable than the $20 group, who had a good external reason for lying.`,`Alternative explanations include self-perception (Bem) and impression management. It remains the standard dissonance demonstration.`],
+[`When Prophecy Fails (1956)`,`Researchers joined a small group that predicted a flood and rescue by aliens on a certain date.`,`After the prophecy failed, members became more committed and began to proselytise.`,`Observation by participant researchers is open to bias; it is a classic case of dissonance reduction.`]]},
+heider:{c:[
+[`Naive psychology`,`Everyday people analyse behaviour like scientists, looking for stable causes. We ask whether someone acted from inner dispositions or outer forces.`],
+[`Attribution`,`Internal attributions credit traits and intentions; external attributions credit the situation. Biases follow, such as the fundamental attribution error.`],
+[`Balance theory`,`In a triad of person, other and object, a balanced state has all positive links or two negatives and a positive. Imbalance creates tension that leads to change in attitudes.`]],
+s:[[`The Psychology of Interpersonal Relations (1958)`,`Heider laid out ordinary people's ideas about perception, action and relationships with examples.`,`People explain social events in terms of intentions and causes, and seek balance.`,`Not experimental but inspired much research (Kelley, Jones, Weiner).`],
+[`Heider and Simmel (1944) film`,`Participants watched a short animation of two triangles and a circle moving around a box and described it.`,`Nearly everyone described the shapes as characters with motives, such as bullying and escaping.`,`Showed that we perceive intention even in simple movements.`]]},
+kelley:{c:[
+[`Covariation model`,`To find the cause of behaviour, people check three kinds of information: consensus (do others do it?), distinctiveness (does the person do it only here?) and consistency (does it happen over time?).`],
+[`Attribution patterns`,`Low consensus, low distinctiveness and high consistency point to the person. High on all three points to the stimulus. Low consistency points to circumstances.`],
+[`Interdependence theory`,`Relationships are maintained by comparing rewards and costs against what is expected (comparison level) and what is available elsewhere (comparison level for alternatives).`]],
+s:[[`Attribution theory in social psychology (Kelley, 1967)`,`Kelley extended Heider's ideas with an analysis-of-variance model of how people use information from many observations.`,`People treat behaviour like an effect and look for what it covaries with.`,`Tests (McArthur, 1972) show people use distinctiveness and consistency more than consensus.`],
+[`The Social Psychology of Groups (Thibaut and Kelley, 1959)`,`Used matrices of outcomes to analyse how two people's choices affect each other.`,`Partners depend on each other and stay when outcomes beat alternatives.`,`The model is still used in relationships research.`]]},
+latane:{c:[
+[`Bystander effect`,`The presence of others reduces the chance that any single person helps in an emergency. Reasons include diffusion of responsibility, audience inhibition and social influence (pluralistic ignorance).`],
+[`Five steps to helping`,`Notice the event, interpret it as an emergency, take responsibility, decide how to help and act. Failure at any step prevents helping.`],
+[`Social impact theory`,`The influence of others on a person grows with their strength, immediacy and number, but each additional source adds less.`],
+[`Social loafing`,`People exert less effort in a group when individual contributions cannot be identified (Latané, Williams and Harkins, 1979, with shouting and clapping).`]],
+s:[[`Group inhibition of bystander intervention (Darley and Latané, 1968)`,`Students in separate rooms discussed personal problems over an intercom. One (a recording) had a seizure. Participants thought they were alone, with one other person or with four others.`,`Alone, 85% reported the seizure before it ended; with four others, only 31%. The students were not callous: they were often upset and were unsure.`,`Lab emergency was artificial, but similar results were found in field studies. Modern analyses find that bystanders often help in real emergencies, especially when situation is clear.`],
+[`The Genovese case`,`The 1964 killing of Kitty Genovese in New York was reported as having 38 passive witnesses.`,`The case triggered research, though later investigations found the number of witnesses and their inaction were exaggerated.`,`A reminder to check claims about famous cases.`]]},
+batson:{c:[
+[`Empathy–altruism hypothesis`,`Empathic concern for a person in need creates a motive to help for that person's sake, not for one's own relief.`],
+[`Personal distress vs empathic concern`,`Personal distress (alarm, upset) leads to egoistic helping or escape; empathic concern (sympathy, compassion) leads to altruistic helping.`],
+[`Egoistic alternatives`,`Rival explanations: people help to relieve their own negative mood (Cialdini), to gain rewards or avoid guilt. Batson designed experiments to separate them.`]],
+s:[[`From Jerusalem to Jericho (Darley and Batson, 1973)`,`Princeton seminary students were asked to give a talk, some on the Good Samaritan, and were sent to another building under high, medium or low time pressure. On the way they passed a slumped, coughing man.`,`Helping was 63% under low hurry, 45% medium and 10% high. The topic of the talk made little difference.`,`Small sample, but a strong demonstration that situational pressure can outweigh dispositions and religious thinking.`],
+[`Empathy and escape experiments (1981 onward)`,`Participants watched a person receive shocks, with or without an easy exit and with high or low empathy.`,`High-empathy people helped even when escape was easy, as altruism predicts.`,`Debate with egoistic theorists continues.`]]},
+tajfel:{c:[
+[`Social categorisation`,`People divide the world into us and them, even on trivial grounds.`],
+[`Social identity theory`,`Part of the self-concept comes from group membership. People seek positive distinctiveness by comparing their group favourably with others, which builds in-group favouritism.`],
+[`Status and mobility`,`When group boundaries are impermeable and status is unstable, groups use social creativity or competition to improve position.`]],
+s:[[`Minimal group experiments (Tajfel et al., 1971)`,`Schoolboys were told they were assigned to groups based on a preference for paintings by Klee or Kandinsky (actually random) and then allocated points to others in anonymous matrices.`,`Boys gave more to members of their own group and preferred a bigger difference over a bigger shared total.`,`Demand characteristics may play a part. The study showed that categorisation alone can trigger bias and is the basis of social identity theory.`],
+[`An integrative theory of intergroup conflict (Tajfel and Turner, 1979)`,`Set out social identity theory as an explanation of prejudice and group conflict.`,`Conflict can arise from identity and status, not only competition for resources.`,`Foundation for decades of intergroup research.`]]},
+sherif:{c:[
+[`Group norms`,`In ambiguous situations people form shared standards and then follow them.`],
+[`Realistic conflict theory`,`Competition for scarce resources produces hostility between groups, with in-group solidarity and negative stereotypes.`],
+[`Superordinate goals`,`Goals that both groups want but neither can reach alone reduce hostility and promote cooperation.`]],
+s:[[`Autokinetic effect study (1935)`,`In a dark room, a stationary point of light appears to move. Participants estimated the movement alone, then in groups, then alone again.`,`In groups their estimates converged on a group norm, which lasted even when alone.`,`Showed norm formation under uncertainty, and influenced Asch.`],
+[`Robbers Cave experiment (Sherif et al., 1954, published 1961)`,`Twenty-two eleven-year-old boys at a camp in Oklahoma formed two groups (Eagles and Rattlers), then competed in tournaments, then faced shared problems such as a broken water supply.`,`Competition produced name-calling, raids and strong prejudice. Contact alone did not help but joint tasks did.`,`Participants were all white, Protestant, middle-class boys and the researchers staged events, so generalisation is limited. Strong evidence for realistic conflict theory.`]]},
+janis:{c:[
+[`Groupthink`,`A mode of thinking in cohesive groups in which striving for unanimity overrides realistic appraisal of alternatives.`],
+[`Symptoms`,`Illusion of invulnerability, rationalisation, belief in the group's morality, stereotypes of outsiders, pressure on dissenters, self-censorship, illusion of unanimity and self-appointed mindguards.`],
+[`Prevention`,`Leaders should be impartial, encourage criticism, use outside experts, assign a devil's advocate and hold second-chance meetings.`]],
+s:[[`Victims of Groupthink (1972)`,`Janis analysed historical records of decisions such as the Bay of Pigs invasion (1961), Pearl Harbor and the escalation of the Vietnam War, comparing them with successes such as the Cuban missile crisis.`,`Failed decisions showed the symptoms and flawed decision processes; successes had open debate.`,`Case studies chosen after the fact and experiments give mixed support. Still a popular model of faulty group decisions.`]]},
+schachter:{c:[
+[`Two-factor theory of emotion`,`Emotion depends on physiological arousal plus a cognitive explanation of that arousal taken from the situation.`],
+[`Misattribution`,`Arousal from one source can be mistaken for emotion toward another, which explains effects such as arousal on a rope bridge being read as attraction.`],
+[`Affiliation under stress`,`People under threat prefer to be with others in the same situation, partly to compare feelings.`]],
+s:[[`Cognitive, social and physiological determinants of emotional state (Schachter and Singer, 1962)`,`Participants were injected with adrenaline or placebo, and told correctly, incorrectly or nothing of the effects. Then each waited with a confederate who acted euphoric or angry.`,`Those given no explanation or wrong information tended to take on the confederate's mood, while those who knew the cause did not.`,`Replications were mixed, and the result for anger was weak. Still very influential in linking cognition and emotion.`],
+[`The Psychology of Affiliation (1959)`,`Women expecting painful shocks chose to wait alone or with others.`,`Those facing high fear preferred to wait with others.`,`Showed that fear increases the need for affiliation (misery loves miserable company).`]]},
+cannon:{c:[
+[`Fight-or-flight`,`The sympathetic nervous system and adrenal gland prepare the body for emergencies: heart rate, blood sugar and blood flow to muscles increase.`],
+[`Homeostasis`,`The body keeps internal conditions steady through automatic regulation, such as temperature and blood sugar.`],
+[`Cannon–Bard theory`,`The thalamus sends signals at once to the cortex (the experience of emotion) and to the body (arousal). The body response does not cause the emotion, and body changes are too slow and similar across emotions.`]],
+s:[[`Critique of the James–Lange theory (1927)`,`Cannon argued from animal experiments: cats with the sympathetic nervous system removed still showed emotion, and artificial arousal does not produce emotion.`,`Five objections included that bodily changes are too slow and non-specific.`,`The critique was partly right, but later studies support some bodily feedback. It prompted decades of research.`],
+[`Bodily Changes in Pain, Hunger, Fear and Rage (1915)`,`A book describing work on digestion, adrenaline and emotion.`,`The body prepares for emergencies in organised ways.`,`Source of the term fight-or-flight.`]]},
+bard:{c:[
+[`Hypothalamus and rage`,`Removing the cortex of cats produced sham rage, an angry display that was poorly directed. This showed lower brain regions can organise emotional expression.`],
+[`Cannon–Bard theory`,`Emotional feelings and bodily changes arise at the same time because the thalamus and hypothalamus send out signals together.`]],
+s:[[`Hypothalamic control of rage (1928)`,`Bard cut various parts of cats' brains and observed the animals' reactions to mild stimuli.`,`Sham rage occurred when the hypothalamus was intact, even with the cortex gone.`,`Pointed to the hypothalamus as a key emotion centre. The thalamus part of the theory was later revised.`]]},
+selye:{c:[
+[`General Adaptation Syndrome`,`The body's response to any prolonged stressor has three stages. Alarm: shock then counter-shock with adrenaline release. Resistance: the body adapts and holds out. Exhaustion: resources run out and illness may follow.`],
+[`Eustress and distress`,`Eustress is positive, motivating stress (such as a challenge); distress is harmful stress.`],
+[`Diseases of adaptation`,`Long-term stress can contribute to ulcers, high blood pressure and heart disease through the hormones involved.`]],
+s:[[`A syndrome produced by diverse nocuous agents (1936)`,`Selye injected rats with ovarian extracts, then other irritants such as cold, formaldehyde and hormones, and examined their organs.`,`Whatever the agent, rats showed enlarged adrenal glands, shrunken thymus and spleen, and gastric ulcers.`,`Rats are not humans, and the response is not the same for all stressors. Still the base model of physiological stress.`],
+[`The Stress of Life (1956)`,`A popular book that explained stress to the public.`,`Stress affects health through a general adaptation.`,`Introduced the term to everyday language.`]]},
+lazarus:{c:[
+[`Cognitive appraisal`,`Stress arises from how a person judges an event. In primary appraisal an event is judged irrelevant, benign or stressful (harm, threat or challenge). In secondary appraisal the person evaluates coping resources.`],
+[`Transactional model`,`Stress is a relationship between person and environment in which demands are judged to exceed resources.`],
+[`Coping`,`Problem-focused coping changes the situation; emotion-focused coping manages the feelings. Reappraisal is a key coping strategy.`]],
+s:[[`Stress, Appraisal, and Coping (Lazarus and Folkman, 1984)`,`A theoretical synthesis supported by studies of adults using the Ways of Coping checklist and daily hassles scales.`,`People use both coping styles, and the mix depends on appraisal of controllability.`,`Appraisal and coping measures overlap with personality, but the model is the dominant psychological view of stress.`],
+[`Stress and film studies (1960s)`,`Viewers watched a stressful film with different soundtracks that either denied or stressed the danger.`,`Denial commentary reduced physiological stress.`,`Showed that thinking about an event changes the reaction.`]]},
+gross:{c:[
+[`Process model`,`Emotion regulation can intervene at five points in the emotion generative process, from before the emotion to after it.`],
+[`Antecedent vs response-focused`,`Situation selection, modification, attention deployment and cognitive change come before the response; response modulation (suppression) comes after.`],
+[`Reappraisal vs suppression`,`Reappraisal changes the meaning early, lowering feelings and expression. Suppression hides expression only, leaves the feeling and costs memory.`]],
+s:[[`Antecedent- and response-focused emotion regulation (Gross, 1998)`,`Participants watched disgusting films while told to watch naturally, to reappraise, or to suppress, with expressions, self-reports and physiology recorded.`,`Reappraisal reduced both experience and expression; suppression reduced expression but not feeling and increased physiological arousal.`,`Tested mostly in labs and in Western samples. Suppression may be less costly in some cultures.`]]},
+engel:{c:[
+[`Biopsychosocial model`,`Health and disease result from interacting biological (genes, pathogens), psychological (thoughts, emotions, behaviour) and social (family, culture, economy) factors.`],
+[`Critique of the biomedical model`,`The older model treats disease as deviation from biological norms and ignores the patient's mind and context.`],
+[`Patient-centred care`,`Doctors should consider the whole person and the patient-doctor relationship.`]],
+s:[[`The need for a new medical model: a challenge for biomedicine (Science, 1977)`,`Engel argued, using examples of diabetes and schizophrenia, that diseases cannot be understood from biology alone.`,`Care must include psychological and social factors.`,`Critics find the model vague and say it lacks specific tests, but it shaped health psychology and medical education.`]]},
+ajzen:{c:[
+[`Theory of Planned Behaviour`,`Behaviour is determined by intention. Intention is shaped by attitude, subjective norm and perceived behavioural control, which also affects behaviour directly.`],
+[`Attitude`,`Evaluation of the behaviour based on beliefs about outcomes.`],
+[`Subjective norm and control`,`Subjective norm is perceived social pressure; perceived control is beliefs about how easy or hard the action is.`]],
+s:[[`The Theory of Planned Behavior (1991)`,`Ajzen extended the Theory of Reasoned Action (with Fishbein) by adding perceived control and tested it on many behaviours.`,`Reviews show the model explains about 39% of the variance in intention and 27% in behaviour.`,`The gap between intention and action is large and habits and emotions are ignored. It is among the most used models in health research.`]]},
+friedman:{c:[
+[`Type A behaviour pattern`,`Time urgency, competitiveness, hostility and ambition, with Type B being the opposite relaxed pattern.`],
+[`Hostility as the toxic part`,`Later work found that anger and hostility are the main components linked to heart disease.`],
+[`Reactivity`,`Type A people show stronger blood pressure and hormone responses to challenge.`]],
+s:[[`Western Collaborative Group Study (Rosenman, Friedman et al., 1960–69)`,`More than 3,000 healthy men aged 39–59 in California were classified as Type A or B by interview and followed for about eight and a half years.`,`Type A men had about twice the rate of coronary heart disease.`,`Later studies, such as MRFIT, did not all confirm the link, and tobacco industry funding complicated findings. Hostility is now seen as key.`]]},
+rosenstock:{c:[
+[`Perceived susceptibility and severity`,`People act when they believe they are at risk and that the illness would be serious.`],
+[`Benefits and barriers`,`Action depends on weighing perceived benefits against barriers such as cost, pain or inconvenience.`],
+[`Cues to action and self-efficacy`,`A trigger, such as symptoms or a reminder, prompts action; self-efficacy was added later.`]],
+s:[[`Origins of the Health Belief Model (1950s)`,`US Public Health Service social psychologists asked why many adults skipped free TB X-ray screening and examined beliefs.`,`People who felt susceptible and saw benefits were more likely to be screened.`,`The model describes predictors but not how they combine. Widely used in health promotion.`]]},
+prochaska:{c:[
+[`Stages of change`,`Precontemplation (not planning), contemplation (thinking), preparation (planning), action (doing), maintenance (keeping it up).`],
+[`Processes of change`,`Methods used to move between stages, such as consciousness raising, self-liberation and reinforcement management.`],
+[`Decisional balance and self-efficacy`,`Pros of changing rise and cons fall as people progress; confidence rises.`]],
+s:[[`In search of how people change (Prochaska, DiClemente and Norcross, 1992)`,`Researchers studied how people quit smoking by themselves and with help, and derived stages.`,`The same stages and processes appeared across smoking and other problems.`,`Stage-matched interventions show mixed results and stage boundaries are fuzzy, but the model is widely used in addiction and health programmes.`]]},
+jacobson:{c:[
+[`Progressive relaxation`,`Systematically tensing, then releasing muscle groups teaches the person to recognise and lower tension.`],
+[`Tension and anxiety`,`Anxious people show muscle tension; relaxed muscles are incompatible with anxiety.`],
+[`Abbreviated forms`,`Later versions group muscles into fewer sets and finally use relaxation on cue (Bernstein and Borkovec).`]],
+s:[[`Progressive Relaxation (1929)`,`Jacobson used lab recording of muscle activity and trained people over many sessions to relax one muscle group at a time.`,`Learning to relax reduced the startle response and tension-related symptoms.`,`Original training was long and early methods were crude. The technique is now standard in anxiety and stress treatment.`]]},
+beck:{c:[
+[`Cognitive triad`,`Depressed people hold negative views of themselves, the world and the future.`],
+[`Automatic thoughts and schemas`,`Quick, unplanned negative thoughts arise from deeper schemas built in childhood and triggered by stress.`],
+[`Cognitive distortions`,`Systematic errors such as all-or-nothing thinking, overgeneralisation, catastrophising and selective abstraction.`],
+[`Collaborative empiricism`,`In therapy the client and therapist test thoughts as hypotheses with behavioural experiments and records.`]],
+s:[[`Beck Depression Inventory (Beck et al., 1961)`,`A 21-item self-report scale based on symptoms patients reported in interviews.`,`Scores distinguish levels of depression and track changes during treatment.`,`Widely used; relies on self-report. Revised as BDI-II.`],
+[`Cognitive Therapy of Depression (Beck, Rush, Shaw and Emery, 1979)`,`A treatment manual describing the structured, time-limited therapy.`,`Cognitive therapy was at least as effective as antidepressants in early trials.`,`Large trials confirm effectiveness; whether thinking causes depression remains debated.`]]},
+ellis:{c:[
+[`ABC model`,`A is the activating event, B the belief about it and C the emotional and behavioural consequence. B, not A, causes C.`],
+[`Irrational beliefs`,`Rigid demands such as musts and shoulds, awfulising, low frustration tolerance and global self-condemnation.`],
+[`Disputing`,`The therapist actively challenges irrational beliefs (D) with logic, evidence and humour to produce a new effect (E).`],
+[`Unconditional self-acceptance`,`People are not rated as wholes; only behaviours are judged.`]],
+s:[[`Reason and Emotion in Psychotherapy (1962)`,`Ellis described REBT, drawing on Stoic philosophy and his clinical practice, listing common irrational beliefs.`,`Changing belief systems changes emotional disturbance.`,`Early evidence was thin, but later trials support REBT and it fed into CBT. The directive style suits some clients and not others.`]]},
+meichenbaum:{c:[
+[`Self-instructional training`,`People learn to guide their own behaviour with self-talk, first aloud, then whispered, then silent.`],
+[`Stress inoculation`,`Teaches coping skills in phases so clients can handle stress, like a vaccine builds resistance.`],
+[`Cognitive behaviour modification`,`Thoughts, feelings and behaviour interact, so all can be targets for change.`]],
+s:[[`Training impulsive children to talk to themselves (Meichenbaum and Goodman, 1971)`,`Impulsive second-grade children were trained by a model who first did tasks aloud while talking through them, then faded to silent self-instruction.`,`Trained children made fewer errors and were less impulsive than controls.`,`Small effects over time, but began cognitive behaviour therapy for children.`],
+[`Stress Inoculation Training (1985)`,`A three-phase programme: conceptualisation, skills acquisition and rehearsal, and application.`,`Used for anxiety, anger, pain and trauma.`,`Meta-analyses show moderate benefit.`]]},
+seligman:{c:[
+[`Learned helplessness`,`After exposure to uncontrollable events, animals and people expect that nothing they do matters and stop trying, even when control is possible.`],
+[`Explanatory style`,`Pessimists explain bad events as permanent, pervasive and personal; optimists see them as temporary, specific and external.`],
+[`Positive psychology and PERMA`,`The study of what makes life good. PERMA: Positive emotion, Engagement, Relationships, Meaning, Accomplishment.`]],
+s:[[`Failure to escape traumatic shock (Seligman and Maier, 1967)`,`Dogs in harnesses received inescapable shocks, then were put in a shuttle box where they could easily jump a barrier to escape.`,`Most dogs that had earlier received uncontrollable shocks failed to try to escape; control dogs escaped readily.`,`Later work showed passivity is the default and control must be learned. Ethical issues. The model of depression was reformulated to include attributions.`],
+[`Learned Optimism (1990)`,`Seligman reviewed research on explanatory style and its links to success and health.`,`Optimism can be learned through cognitive skills.`,`Widely applied in schools and workplaces; some claims have been questioned.`]]},
+rosenhan:{c:[
+[`Labelling`,`Once a person is labelled mentally ill, staff interpret ordinary behaviour as symptoms and the label sticks.`],
+[`Depersonalisation`,`Patients in hospitals were largely ignored, with brief contact and little respect.`],
+[`Validity of diagnosis`,`Rosenhan questioned whether psychiatrists could reliably tell the sane from the insane.`]],
+s:[[`On Being Sane in Insane Places (1973)`,`Eight sane people (pseudopatients) called hospitals complaining of hearing voices saying empty, hollow and thud. Once admitted they acted normally and told staff they felt fine.`,`All were admitted, seven with schizophrenia, and stayed 7 to 52 days (average 19). Real patients often suspected the fakes. In a follow-up, a hospital that expected pseudopatients judged many genuine new patients to be fakes, though none had been sent.`,`Journalist Susannah Cahalan (2019) raised doubts about the data. The study pushed DSM-III reforms.`]]},
+kraepelin:{c:[
+[`Classification by course`,`Illnesses should be grouped by pattern of symptoms and outcome over time, not just by symptom at one point.`],
+[`Dementia praecox vs manic-depressive insanity`,`Dementia praecox began early and tended toward decline; manic-depressive illness was episodic with recovery.`],
+[`Biological psychiatry`,`Mental illnesses are brain diseases with a biological cause, to be studied by observation and research.`]],
+s:[[`Psychiatrie textbook (from 1883)`,`Kraepelin recorded thousands of patient histories on cards, followed them for years, and revised the textbook through nine editions.`,`The sixth edition (1899) formalised the dementia praecox and manic-depressive division.`,`Many patients do not fit the two categories (schizoaffective), but modern diagnostic manuals descend from his system.`]]},
+bleuler:{c:[
+[`Schizophrenia`,`A group of disorders marked by splitting of psychic functions, not necessarily leading to dementia.`],
+[`Four A's`,`Fundamental symptoms: blunted or inappropriate affect, loosened associations, ambivalence and autism (withdrawal into inner life).`],
+[`Fundamental vs accessory symptoms`,`Hallucinations and delusions are accessory; the four A's are fundamental.`]],
+s:[[`Dementia Praecox or the Group of Schizophrenias (1911)`,`Bleuler drew on cases at the Burghölzli hospital, influenced by Freud's ideas about unconscious processes.`,`Proposed a group of illnesses with psychological mechanisms and a variable course, including recovery.`,`Fundamental symptoms are hard to rate. His broader concept influenced later diagnostic use.`]]},
+alzheimer:{c:[
+[`Plaques and tangles`,`Amyloid plaques outside neurons and neurofibrillary tangles inside them, with loss of neurons.`],
+[`Early-onset dementia`,`The disease was first described in a woman in her fifties, showing dementia is not only a feature of old age.`],
+[`Clinical–pathological link`,`Alzheimer matched symptoms during life with brain changes after death.`]],
+s:[[`Auguste Deter case (1906–07)`,`In 1901 Alzheimer began observing a 51-year-old woman with memory loss, disorientation and hallucinations. After she died in 1906 he examined her brain with new staining methods.`,`He found shrunken cortex, plaques and tangles. He presented the case in 1906 and published it in 1907.`,`A single case; later work showed the changes are common in older people too. Kraepelin named it Alzheimer's disease in 1910.`]]},
+kanner:{c:[
+[`Early infantile autism`,`A condition present from early life with extreme aloneness (failure to relate to others) and an obsessive desire for sameness.`],
+[`Language and objects`,`Delayed or unusual language, such as echolalia and pronoun reversal, and skilled handling of objects.`],
+[`Parenting hypothesis`,`Kanner first noted parents were often cold and intellectual, an idea later rejected (refrigerator mother).`]],
+s:[[`Autistic disturbances of affective contact (1943)`,`Kanner described 11 children (eight boys and three girls) seen at Johns Hopkins, noting common features from early life.`,`Proposed a distinct syndrome with inborn difficulty in affective contact.`,`Small sample. Later work widened the concept to the autism spectrum and rejected parental blame.`]]},
+dzurilla:{c:[
+[`Social problem solving`,`The process by which people find effective ways of coping with everyday problems.`],
+[`Five components`,`Problem orientation, problem definition and formulation, generation of alternatives, decision making, and solution implementation and verification.`],
+[`Orientation`,`A positive orientation (seeing problems as solvable) is the most important for coping.`]],
+s:[[`Problem-solving and behavior modification (D'Zurilla and Goldfried, 1971)`,`The authors adapted problem-solving research from creativity and decision-making studies to clinical training.`,`People can be taught a general method for coping with daily problems.`,`Meta-analyses show benefit for depression and stress, though less for severe disorders.`]]},
+deshazer:{c:[
+[`Solution focus`,`Work on what the client wants and what already works, not on the history of the problem.`],
+[`Miracle question`,`If a miracle occurred overnight and the problem was solved, what would be different tomorrow?`],
+[`Exceptions and scaling`,`Look for times the problem is absent, and rate progress on a scale from 0 to 10.`]],
+s:[[`Brief Family Therapy Center research (1980s)`,`Therapists observed sessions through one-way mirrors in Milwaukee and noted which questions led to change.`,`Questions about solutions and exceptions moved clients faster than problem talk.`,`Outcome evidence is modest but growing. Therapy is short, often four to six sessions.`]]},
+kanfer:{c:[
+[`Self-regulation`,`People guide their own behaviour using internal standards and consequences.`],
+[`Three stages`,`Self-monitoring (observing behaviour), self-evaluation (comparing with a standard) and self-reinforcement (rewarding or punishing oneself).`],
+[`Self-management`,`Clients are taught to apply these steps to change habits, including diet and smoking.`]],
+s:[[`Self-monitoring: methodological limitations and clinical applications (1970)`,`Kanfer proposed self-monitoring as both a way to measure and a way to change behaviour.`,`Recording a behaviour often changes it, as in recording cigarettes smoked.`,`Reactivity effects fade over time. It underlies many self-help techniques.`]]},
+vygotsky:{c:[
+[`Zone of proximal development`,`The distance between what a child can do alone and what they can do with the help of a more capable person.`],
+[`Scaffolding`,`Temporary support from adults or peers that is removed as the child gains skill (the term was coined by Wood, Bruner and Ross).`],
+[`Language and thought`,`Private speech, talking to oneself, guides behaviour and later becomes silent inner speech.`],
+[`Culture and mediation`,`Higher mental functions begin as social activity and are mediated by tools and signs such as language.`]],
+s:[[`Mind in Society (1978)`,`A collection of Vygotsky's writings edited by Cole and others, including studies where children solved tasks with and without adult help.`,`Children could do more with guidance than alone, and guided success predicts later independent ability.`,`The ideas are rich but loosely tested; Soviet suppression delayed their spread. They support collaborative learning.`],
+[`Thought and Language (1934)`,`Experiments on how children use speech while solving problems.`,`Egocentric speech increases with difficulty and becomes inner speech.`,`Contrasted with Piaget's view that such speech disappears.`]]},
+bowlby:{c:[
+[`Attachment`,`An innate bond between infant and caregiver that provides protection. Infants signal and adults respond.`],
+[`Secure base and internal working model`,`A responsive caregiver allows the child to explore safely. The child builds expectations about relationships that guide later life.`],
+[`Maternal deprivation`,`Prolonged early separation can harm emotional and cognitive development (the 1951 WHO report), especially in a critical period.`],
+[`Monotropy`,`Infants form one special attachment first, usually with the mother; later research shows many attachments are possible.`]],
+s:[[`Forty-four Juvenile Thieves (1944)`,`Bowlby interviewed 44 young thieves at a London guidance clinic and compared them with 44 other children.`,`Many thieves, especially the affectionless ones, had been separated from their mothers in early life.`,`Retrospective, with Bowlby as sole assessor, and correlation not causation. Still it began attachment research.`],
+[`Maternal Care and Mental Health (1951)`,`A report for the World Health Organization reviewing studies of children in institutions.`,`Warm, continuous care is as essential as food.`,`Led to changes in hospital and childcare policy; Rutter later argued effects depend on the quality of care.`]]},
+wechsler:{c:[
+[`Definition of intelligence`,`The aggregate or global capacity of the individual to act purposefully, think rationally and deal effectively with the environment.`],
+[`Verbal and performance scales`,`Subtests of vocabulary, similarities and arithmetic (verbal), and block design, picture arrangement and object assembly (performance), giving separate scores.`],
+[`Deviation IQ`,`Scores compare a person with others of the same age: mean 100 and standard deviation 15.`]],
+s:[[`Wechsler–Bellevue Intelligence Scale (1939)`,`Wechsler, at Bellevue Hospital, built an adult test using subtests from earlier tests and standardised it on a New York sample.`,`Scores correlated with adult functioning and avoided the child-based mental age concept.`,`Early norms were narrow. Updated as the WAIS (adult), WISC (children) and WPPSI (preschool), now the most used IQ tests.`]]},
+mcclelland:{c:[
+[`Need for achievement`,`The drive to do better against a standard of excellence. High nAch people choose moderate risks, want feedback and take personal responsibility.`],
+[`Need for affiliation and power`,`Wanting warm relations; wanting impact and influence. Effective managers tend to have high socialised power, not personal power.`],
+[`Measuring motives`,`Needs are inferred from the themes in imaginative stories, such as the TAT.`]],
+s:[[`The Achieving Society (1961)`,`McClelland scored children's stories and folk tales from many societies for achievement themes and compared them with economic growth.`,`Societies with more achievement imagery later grew faster.`,`Correlation, not proof of cause, and scoring is subjective. Led to achievement-motivation training in India and elsewhere.`],
+[`The Achievement Motive (1953)`,`Experiments in which hunger or arousal conditions affected story themes.`,`Motives can be measured and linked to performance.`,`Foundation of motivation research.`]]},
+deci:{c:[
+[`Intrinsic and extrinsic motivation`,`Intrinsic motivation is doing something for its own interest; extrinsic is doing it for outside rewards or pressure.`],
+[`Basic needs`,`Autonomy (choice), competence (effectiveness) and relatedness (connection) must be met for well-being and motivation.`],
+[`Overjustification effect`,`Giving expected rewards for an activity people already enjoy can reduce their interest in it.`],
+[`Continuum of regulation`,`Motivation ranges from amotivation through external, introjected and identified regulation to integrated and intrinsic.`]],
+s:[[`Effects of externally mediated rewards on intrinsic motivation (Deci, 1971)`,`Students worked on Soma puzzles in three sessions. One group was paid in the second session. In a break, the students could keep playing with the puzzles.`,`The paid group spent less free time on the puzzles after rewards stopped.`,`Some meta-analyses find small effects and that rewards matter less for tasks that are not interesting. Still the basis of self-determination theory.`]]},
+aurobindo:{c:[
+[`Integral yoga`,`Aims at the transformation of the whole nature (body, life, mind) by surrender to the divine and the descent of a higher force.`],
+[`Evolution of consciousness`,`Matter, life and mind emerged in turn, and a higher supramental consciousness is the next stage.`],
+[`Levels of mind`,`Above ordinary mind: higher mind, illumined mind, intuitive mind, overmind and supermind.`],
+[`Psychic being`,`A soul-element behind the surface personality that grows through lives and guides inner growth.`]],
+s:[[`The Life Divine (1939–40)`,`A philosophical work, first published in the journal Arya, on the nature of existence, consciousness and evolution.`,`The universe is evolving toward a divine life, with humans as a transitional stage.`,`The claims are metaphysical and cannot be tested, but they shaped integral psychology and Indian thought.`],
+[`The Synthesis of Yoga`,`Describes the yogas of works, knowledge and devotion and combines them.`,`Different paths can be unified in an integral practice.`,`A major text for Indian psychology courses.`]]},
+buddha:{c:[
+[`Four Noble Truths`,`Life involves suffering (dukkha); its cause is craving; it can end (nirvana); the way is the Eightfold Path.`],
+[`Three marks of existence`,`All things are impermanent (anicca), unsatisfactory (dukkha) and without a fixed self (anatta).`],
+[`Dependent origination`,`Mental and physical states arise in chains of conditions, so suffering can be traced and interrupted.`],
+[`Mindfulness`,`Sati, careful attention to body, feelings, mind and mental objects, is the basis of meditation training.`]],
+s:[[`Dhammacakkappavattana Sutta (first sermon at Sarnath)`,`The Buddha taught five ascetics the middle way between indulgence and severe austerity, and the Four Noble Truths.`,`Suffering arises from craving and ends when craving ends, by following the Eightfold Path.`,`Recorded in the Pali Canon later. Modern therapies (MBSR, MBCT, ACT, DBT) adapt the practices.`]]},
+patanjali:{c:[
+[`Yoga as cessation of mental fluctuations`,`Yoga chitta vritti nirodhah: yoga is the stilling of the modifications of mind.`],
+[`Five vrittis`,`Right knowledge, error, imagination, sleep and memory are the types of mental activity.`],
+[`Ashtanga (eight limbs)`,`Yama (restraints), niyama (observances), asana (posture), pranayama (breath control), pratyahara (withdrawal of senses), dharana (concentration), dhyana (meditation) and samadhi (absorption).`],
+[`Kleshas`,`Five afflictions that cause suffering: ignorance, ego, attachment, aversion and fear of death.`]],
+s:[[`The Yoga Sutras`,`A compact text of 196 aphorisms in four chapters on samadhi, practice (sadhana), powers (vibhuti) and liberation (kaivalya).`,`A systematic path for training attention, ethics and mind, leading to freedom from suffering.`,`Authorship and date are debated. The text is a basis for yoga therapy, meditation and Indian psychology.`]]},
+vivekananda:{c:[
+[`Divinity of the soul`,`Each person is potentially divine, and the goal of life is to manifest this by controlling nature within and without.`],
+[`Four yogas`,`Karma yoga (selfless action), bhakti yoga (devotion), jnana yoga (knowledge) and raja yoga (mind control).`],
+[`Man-making education`,`Education should build character, strength and self-reliance, not only information.`],
+[`Concentration`,`The power of the mind increases with concentration, and meditation is its method.`]],
+s:[[`Address at the Parliament of the World's Religions (Chicago, 1893)`,`Vivekananda introduced himself to the audience as brothers and sisters of America and spoke about Hinduism and tolerance.`,`Religions are paths to the same goal, and tolerance and acceptance should replace sectarianism.`,`Made him internationally known and began the spread of Vedanta in the West.`],
+[`Raja Yoga (1896)`,`Lectures in New York discussing Patanjali's Yoga Sutras for a Western audience.`,`Mind control can be studied as a science of the inner world.`,`Introduced yoga psychology to the West.`]]},
+wilber:{c:[
+[`AQAL`,`All Quadrants, All Levels, all lines, states and types. A map that places every aspect of experience in one framework.`],
+[`Four quadrants`,`Interior-individual (I), exterior-individual (It), interior-collective (We) and exterior-collective (Its).`],
+[`Levels and lines`,`Levels are stages of growth (body, mind, soul, spirit); lines are developmental streams such as cognitive, moral and emotional.`],
+[`Pre/trans fallacy`,`Confusing pre-rational states with trans-rational ones, because both are non-rational.`]],
+s:[[`The Spectrum of Consciousness (1977)`,`Wilber, then in his twenties, compared Western psychotherapies with Eastern spiritual paths.`,`Proposed a spectrum from persona to ego to biosocial band to transpersonal levels, with each therapy suited to a level.`,`Broad and speculative, with limited empirical testing. Founded modern transpersonal theory.`],
+[`A Brief History of Everything (1996)`,`A popular dialogue introducing the integral framework.`,`Reality has outer and inner dimensions that evolve.`,`Admired and criticised for its sweeping scope.`]]},
+paranjpe:{c:[
+[`Indian psychology`,`A psychology grounded in Indian concepts and practices such as the layers of self, yoga and meditation, as an alternative or complement to Western models.`],
+[`Self in Indian thought`,`Views of the self (atman, jiva, ahamkara) differ from the Western individual self and stress relatedness and self-realisation.`],
+[`East–West dialogue`,`Western and Indian approaches can be compared and combined.`]],
+s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe compares Western theorists such as James, Freud and Erikson with concepts from the Upanishads, Buddhism and the Gita.`,`Indian traditions offer rich and different theories of self.`,`Interpretive rather than experimental, but a main source for Indian psychology courses.`],
+[`Theoretical Psychology: The Meeting of East and West (1984)`,`A comparison of theory building in Western and Indian psychology.`,`Psychology needs perspectives from different cultures.`,`Helped begin comparative theoretical studies.`]]}
 });
 </script>
 
@@ -11937,7 +12547,8 @@ paranjpe:[`Paranjpe compares Indian ideas of self, such as the jivatman and the 
     o.subjects = {};
     o.units.forEach(function (u) { o.subjects[u.dataset.subject] = true; });
     o.px = (window.PSYX || {})[norm(a[1]).replace(/[^a-z]/g, '')] || null;
-    o.hay = norm([a[0], a[2], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12]].concat(o.px ? [o.px[0], o.px[1]] : []).join(' | '));
+    o.pd = (window.PSYD || {})[norm(a[1]).replace(/[^a-z]/g, '')] || null;
+    o.hay = norm([a[0], a[2], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12]].concat(o.px ? [o.px[0], o.px[1]] : [], o.pd ? o.pd.c.concat(o.pd.s).map(function (z) { return z.join(' '); }) : []).join(' | '));
     o.ini = a[0].replace(/\b(Jr\.|Dr\.)/g, '').split(/\s+/).filter(Boolean).map(function (w) { return w.charAt(0); });
     o.ini = (o.ini[0] + (o.ini.length > 1 ? o.ini[o.ini.length - 1] : '')).toUpperCase();
     o.first = norm(a[1]).replace(/[^a-z]/g, '').charAt(0).toUpperCase();
@@ -12118,9 +12729,13 @@ paranjpe:[`Paranjpe compares Indian ideas of self, such as the jivatman and the 
     function bullets(t, re) {
       return '<ul>' + t.split(re).map(function (x) { return x.replace(/\.\s*$/, '').trim(); }).filter(Boolean).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
     }
-    var x = p.px || [];
-    var key = '<div class="block psec"><div><h3>Core ideas &amp; theory</h3>' + (x[0] ? '<p>' + esc(x[0]) + '</p>' : '') + bullets(p.theory, /;\s+|\.\s+(?=[A-Z][a-z])/) + '</div>' + diagramFor(x[2]) + '</div>' +
-      '<div class="block psec"><div><h3>Key studies &amp; works</h3>' + (x[1] ? '<p>' + esc(x[1]) + '</p>' : '') + bullets(p.works, /;\s+/) + '</div></div>';
+    var x = p.px || [], dt = p.pd;
+    var concepts = dt ? '<dl class="pdl">' + dt.c.map(function (c) { return '<dt>' + esc(c[0]) + '</dt><dd>' + esc(c[1]) + '</dd>'; }).join('') + '</dl>' : bullets(p.theory, /;\s+|\.\s+(?=[A-Z][a-z])/);
+    var studies = dt ? dt.s.map(function (s) {
+      return '<div class="pstudy"><h4>' + esc(s[0]) + '</h4><p><b>What was done.</b> ' + esc(s[1]) + '</p><p><b>What it showed.</b> ' + esc(s[2]) + '</p><p><b>Evaluation.</b> ' + esc(s[3]) + '</p></div>';
+    }).join('') : bullets(p.works, /;\s+/);
+    var key = '<div class="block psec"><div><h3>Core ideas &amp; theory</h3>' + (x[0] ? '<p>' + esc(x[0]) + '</p>' : '') + concepts + '</div>' + diagramFor(x[2]) + '</div>' +
+      '<div class="block psec"><div><h3>Key studies &amp; works</h3>' + (x[1] ? '<p>' + esc(x[1]) + '</p>' : '') + studies + (dt ? '<p class="pcredit">Other works: ' + esc(p.works) + '</p>' : '') + '</div></div>';
     var html = '<div class="eyebrow">' + esc(p.cat) + '</div><div class="phead">' + avatar(p, 'pbig') +
       '<div class="ptxt"><h1>' + esc(p.name) + '</h1><div class="pmeta"><b>' + esc(p.life) + '</b> · ' + esc(p.field) + '</div><p class="lede" style="margin:0">' + esc(p.tag) + '</p></div></div>' +
       key + '<div class="block psec">' + secs.map(function (s) { return '<div><h3>' + s[0] + '</h3><p>' + esc(s[1]) + '</p></div>'; }).join('') + '</div>';
