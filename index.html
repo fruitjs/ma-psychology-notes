@@ -7802,8 +7802,10 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 .psec > div { display: grid; gap: 4px; }
 .psec h3 { margin: 0; font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--c3); }
 .psec p { margin: 0; }
-.pappear { display: flex; flex-wrap: wrap; gap: 6px; }
-.pappear button { all: unset; cursor: pointer; font-family: var(--display); font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); }
+.pappear { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 8px; }
+.psec ul { margin: 0; padding-left: 1.2em; display: flex; flex-direction: column; gap: 4px; }
+.pappear button { all: unset; cursor: pointer; font-family: var(--display); font-size: 0.9rem; font-weight: 700; padding: 8px 12px; border-radius: 8px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); }
+.pappear button small { display: block; font-family: var(--mono); font-weight: 400; font-size: 0.7rem; color: var(--muted); }
 .pappear button:hover { border-color: var(--ink); }
 .pappear button:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
 .pcredit { font-size: 0.78rem; color: var(--muted); margin: 0; }
@@ -11711,14 +11713,19 @@ window.PSY.push(
   });
 
   function renderProfile(p) {
-    var secs = [['Early life & foundations', p.early], ['Core ideas & theory', p.theory], ['Key studies & works', p.works], ['Positions & recognition', p.impact], ['Criticism & debates', p.crit], ['Legacy & modern use', p.legacy]];
+    var secs = [['Early life & foundations', p.early], ['Positions & recognition', p.impact], ['Criticism & debates', p.crit], ['Legacy & modern use', p.legacy]];
+    function bullets(t, re) {
+      return '<ul>' + t.split(re).map(function (x) { return x.replace(/\.\s*$/, '').trim(); }).filter(Boolean).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    }
+    var key = '<div class="block psec"><div><h3>Main theories &amp; ideas in psychology</h3>' + bullets(p.theory, /;\s+|\.\s+(?=[A-Z][a-z])/) + '</div>' +
+      '<div><h3>Major works &amp; studies</h3>' + bullets(p.works, /;\s+/) + '</div></div>';
     var html = '<div class="eyebrow">' + esc(p.cat) + '</div><div class="phead">' + avatar(p, 'pbig') +
       '<div class="ptxt"><h1>' + esc(p.name) + '</h1><div class="pmeta"><b>' + esc(p.life) + '</b> · ' + esc(p.field) + '</div><p class="lede" style="margin:0">' + esc(p.tag) + '</p></div></div>' +
-      '<div class="block psec">' + secs.map(function (s) { return '<div><h3>' + s[0] + '</h3><p>' + esc(s[1]) + '</p></div>'; }).join('') + '</div>';
+      key + '<div class="block psec">' + secs.map(function (s) { return '<div><h3>' + s[0] + '</h3><p>' + esc(s[1]) + '</p></div>'; }).join('') + '</div>';
     if (p.units.length) {
-      html += '<div class="block psec"><h3>Where this appears in your syllabus</h3><div class="pappear">' + p.units.map(function (u) {
-        var s = byId(subjects, u.dataset.subject);
-        return '<button type="button" data-go="' + u.id + '">' + esc((s ? s.dataset.short : '') + ' · ' + u.dataset.num) + '</button>';
+      html += '<div class="block psec"><h3>Where this appears in your syllabus (semester › paper › unit)</h3><div class="pappear">' + p.units.map(function (u) {
+        var s = byId(subjects, u.dataset.subject), sem = s ? byId(semesters, s.dataset.sem) : null;
+        return '<button type="button" data-go="' + u.id + '"><small>' + esc((sem ? sem.dataset.name : '') + ' › ' + (s ? s.dataset.name : '')) + '</small>' + esc(u.dataset.num + ': ' + u.dataset.short) + '</button>';
       }).join('') + '</div></div>';
     }
     if (p.photo) html += '<p class="pcredit">Photo credits and licences are listed in the project CREDITS.md file.</p>';
