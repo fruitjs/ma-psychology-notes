@@ -7761,6 +7761,29 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
     </div>
   </div>
 </section>
+<section class="view" id="aboutme" data-label="Vineet Kumar" hidden>
+  <div class="eyebrow">About the author</div>
+  <h1>Vineet Kumar</h1>
+  <p class="lede">MA Psychology student at Gurukula Kangri (Deemed to be University), learning the subject from the ground up.</p>
+  <div class="block">
+    <h3>About me</h3>
+    <p>I am Vineet Kumar, a first-time student of psychology on the MA Psychology programme (NEP curriculum, 2026–27). I started this programme new to the subject, and my first unit test came within days, so I needed notes that were quick to understand: plain language, pictures of the people behind the theories, diagrams, memory tricks and short answer outlines.</p>
+    <p>This site is what I built to study from. I am sharing it free and open source in case it helps other students who are starting out the same way. It grows one paper at a time as I work through the syllabus.</p>
+  </div>
+  <div class="block">
+    <h3>About this guide</h3>
+    <ul>
+      <li><b>Covers now:</b> <span id="aboutstat">the papers listed under Semesters</span>.</li>
+      <li><b>Famous Psychologists:</b> short biographies, key ideas and studies, and where each person appears in the syllabus.</li>
+      <li><b>Built with AI help:</b> I put the guide together with Claude, an AI assistant, working from the topics in my syllabus. It can contain mistakes, so please check important facts, dates and figures against your class notes and textbooks.</li>
+      <li><b>Photos:</b> portraits are free-licence images from Wikimedia Commons, credited in the project's CREDITS file.</li>
+    </ul>
+  </div>
+  <div class="block">
+    <h3>Source and feedback</h3>
+    <p>The full source is on GitHub: <a href="https://github.com/fruitjs/ma-psychology-notes" target="_blank" rel="noopener">github.com/fruitjs/ma-psychology-notes</a>. If you spot an error or want a topic added, please open an issue there.</p>
+  </div>
+</section>
 <style>
 .maintabs { display: flex; gap: 4px; padding-top: 6px; border-bottom: 1px solid rgba(255,255,255,.12); }
 .maintabs button { all: unset; cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.92rem; padding: 6px 14px 8px; color: var(--nav-muted); border-bottom: 3px solid transparent; }
@@ -12770,7 +12793,11 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     return token;
   }
 
-  [['home', 'Semesters'], ['psychologists', 'Famous Psychologists']].forEach(function (t) {
+  var aboutView = document.getElementById('aboutme');
+  var aboutStat = document.getElementById('aboutstat');
+  if (aboutStat) aboutStat.textContent = all('.paper', document).filter(function (p) { return p.tagName === 'BUTTON'; }).length + ' papers ready across Semesters 1 and 3, ' + units.length + ' units and ' + PEOPLE.length + ' psychologist profiles';
+
+  [['home', 'Semesters'], ['psychologists', 'Famous Psychologists'], ['vineet', 'Vineet Kumar']].forEach(function (t) {
     var b = document.createElement('button');
     b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.go = t[0]; b.textContent = t[1];
     maintabs.appendChild(b);
@@ -12778,9 +12805,20 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 
   function show(token, scroll) {
     token = token || 'home';
-    psyView.hidden = true; profView.hidden = true;
-    var isPsy = token === 'psychologists' || token.indexOf('who_') === 0;
-    all('button', maintabs).forEach(function (b) { b.setAttribute('aria-selected', (b.dataset.go === 'psychologists') === isPsy ? 'true' : 'false'); });
+    psyView.hidden = true; profView.hidden = true; aboutView.hidden = true;
+    var isPsy = token === 'psychologists' || token.indexOf('who_') === 0, isAbout = token === 'vineet';
+    all('button', maintabs).forEach(function (b) { b.setAttribute('aria-selected', (b.dataset.go === 'vineet' ? isAbout : b.dataset.go === 'psychologists' ? isPsy : !isPsy && !isAbout) ? 'true' : 'false'); });
+    if (isAbout) {
+      home.hidden = true;
+      semesters.concat(subjects, units).forEach(function (x) { x.hidden = true; });
+      subtabs.innerHTML = ''; utabs.innerHTML = ''; utabs.hidden = true;
+      aboutView.hidden = false;
+      crumbs.innerHTML = crumb('MA Psychology', 'home') + crumb('Vineet Kumar');
+      try { history.replaceState(null, '', '#vineet'); } catch (e) {}
+      try { localStorage.setItem('tp-last', 'vineet'); } catch (e) {}
+      if (scroll) window.scrollTo(0, 0);
+      return;
+    }
     if (isPsy) {
       token = showPsy(token);
       try { history.replaceState(null, '', '#' + token); } catch (e) {}
