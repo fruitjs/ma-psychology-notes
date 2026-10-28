@@ -118,6 +118,8 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 
 A second tab beside Semesters lists 95 researchers, theorists and scientists named in the guides. Each has a short profile (life, core ideas, key studies, recognition, criticism, legacy), a portrait where a free-licence photo exists, a plain-language explanation of the core ideas and the key study, a diagram or chart for most people (hierarchies, flow charts, result bar charts, curves), and links to the units where the person appears, labelled by semester, paper and unit. The list can be searched, sorted (name, birth year, field), and filtered by field, paper or first letter of the surname.
 
+Other tools: a **search box** at the top that searches every paper, unit and profile; **Revise**, which turns all 420 self-test questions into flashcards (known cards are remembered in the browser); a **Mark unit as done** checklist with progress bars; **Print or save as PDF** for any unit; and a **Timeline** and **Compare two theorists** view inside Famous Psychologists. Progress is stored only in the visitor's browser.
+
 ### Semesters 2 and 4 (placeholders)
 
 Every paper in Semesters 2 and 4 and the Semester 1 practical is listed with its code and unit headings and marked **Coming soon**.

@@ -54,6 +54,16 @@ All photographs are embedded in `index.html` as small, face-cropped versions of 
 | Wolfgang Köhler | Swarthmore College Historical Library | CC BY-SA 2.5 | [Commons](https://commons.wikimedia.org/wiki/File:Wolfgang_K%C3%B6hler.jpg) |
 | Sri Aurobindo | Rudolf (1922) | Public domain | [Commons](https://commons.wikimedia.org/wiki/File:Sri_aurobindo.jpg) |
 | Buddha statue (Sarnath Museum) | Photographer credited on Commons | CC BY-SA 3.0 | [Commons](https://commons.wikimedia.org/wiki/File:Buddha_in_Sarnath_Museum_(Dhammajak_Mutra).jpg) |
+| James Rowland Angell | Los Angeles Times, CC BY 4.0 | [Commons](https://commons.wikimedia.org/wiki/File:James_Rowland_Angell,_President_of_Yale_University.jpg) |
+| Charles Darwin | Henry Maull, public domain | [Commons](https://commons.wikimedia.org/wiki/File:Charles_Darwin_seated_crop.jpg) |
+| John Dewey | Underwood & Underwood, public domain | [Commons](https://commons.wikimedia.org/wiki/File:John_Dewey_cph.3a51565.jpg) |
+| Albert Ellis | Unknown (1966 book jacket), public domain | [Commons](https://commons.wikimedia.org/wiki/File:Photo_of_Albert_Ellis_on_dust_jacket.jpg) |
+| Edmund Jacobson | Richard Gordon Matzene, public domain | [Commons](https://commons.wikimedia.org/wiki/File:Edmund_Jacobson_(1888%E2%80%931983).png) |
+| Martin Seligman | US Department of Defense, photo by D. Myles Cullen, public domain | [Commons](https://commons.wikimedia.org/wiki/File:Martin_Seligman_Philadelphia_2009.jpg) |
+| Muzafer Sherif | Unknown (1967 author photo), public domain | [Commons](https://commons.wikimedia.org/wiki/File:Muzafer_Sherif_author_photo_(1967).png) |
+| Edward Tolman | Free Art License | [Commons](https://commons.wikimedia.org/wiki/File:Tolman,_E.C._portrait.jpg) |
+| Swami Vivekananda | 1893 photograph, public domain | [Commons](https://commons.wikimedia.org/wiki/File:Swami_Vivekananda-1893-09-signed.jpg) |
+| Lev Vygotsky | Unknown, public domain | [Commons](https://commons.wikimedia.org/wiki/File:Lev-Semyonovich-Vygotsky-1896-1934.jpg) |
 
 ## Illustrations and initials
 
@@ -62,3 +72,5 @@ No freely licensed photographs were found for **William Sheldon, Henry Murray, R
 Semester 3 people shown with initials because no freely licensed portrait photograph was found: the National Institute researchers behind BASIC-MR (Peshawaria and Venkatesan), George Engel, Irwin Rosenstock, Icek Ajzen, James Prochaska, Meyer Friedman, Richard Lazarus, James Gross, Edmund Jacobson, Thomas D'Zurilla, Steve de Shazer and Frederick Kanfer.
 
 Semester 3 (Indian Psychology, Western Thoughts) people shown with initials because no suitable freely licensed portrait was found: Anand Paranjpe, Patanjali (no known likeness), Ken Wilber, and others without a free photo.
+
+These ten portraits appear on the Famous Psychologists profiles only. The photo of the site author on the Vineet Kumar tab is the author's own.
