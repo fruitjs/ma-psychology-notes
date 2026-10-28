@@ -114,6 +114,10 @@ Everything is in one self-contained file, [`index.html`](index.html). You can al
 
 **Practical, Semester 3 (MPY26-C351)**: a lab and viva guide covering the test protocol, ethics, scoring and norms, the report format, and each listed practical (biofeedback, anxiety, depression, mental health, medico-psychological questionnaire, neuropsychological tests, stress, coping, social support, quality of life, optimism, self-efficacy, hopelessness, emotional regulation, Vedic personality, job anxiety, job satisfaction, leadership and occupational stress), with the common tools, scoring and viva questions. Follow the manual your lab provides.
 
+### Famous Psychologists tab
+
+A second tab beside Semesters lists 95 researchers, theorists and scientists named in the guides. Each has a short profile (life, core ideas, key studies, recognition, criticism, legacy), a portrait where a free-licence photo exists, and links to the units where the person appears. The list can be searched, sorted (name, birth year, field), and filtered by field, paper or first letter of the surname.
+
 ### Semesters 2 and 4 (placeholders)
 
 Every paper in Semesters 2 and 4 and the Semester 1 practical is listed with its code and unit headings and marked **Coming soon**.

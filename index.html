@@ -284,6 +284,7 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 <body>
 <header class="topbar">
   <div class="gutter"><div class="inner">
+    <div class="maintabs" id="maintabs" role="tablist" aria-label="Sections"></div>
     <ol class="crumbs" id="crumbs" aria-label="Breadcrumb"></ol>
     <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
     <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
@@ -7760,6 +7761,776 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
     </div>
   </div>
 </section>
+<style>
+.maintabs { display: flex; gap: 4px; padding-top: 6px; border-bottom: 1px solid rgba(255,255,255,.12); }
+.maintabs button { all: unset; cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.92rem; padding: 6px 14px 8px; color: var(--nav-muted); border-bottom: 3px solid transparent; }
+.maintabs button:hover { color: var(--nav-fg); }
+.maintabs button[aria-selected="true"] { color: var(--nav-fg); border-bottom-color: var(--hl-bg); }
+.maintabs button:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: -2px; }
+
+.pfilters { display: flex; flex-direction: column; gap: 10px; margin: 18px 0 14px; }
+.prow { display: flex; flex-wrap: wrap; gap: 8px; align-items: end; }
+.prow label { display: flex; flex-direction: column; gap: 3px; font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); flex: 1 1 150px; min-width: 0; }
+.prow input, .prow select { font: inherit; font-family: var(--display); font-size: 0.95rem; color: var(--ink); background: var(--paper); border: 1.5px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 100%; text-transform: none; letter-spacing: 0; }
+.prow input:focus-visible, .prow select:focus-visible { outline: 3px solid var(--c3); outline-offset: 1px; }
+.prow .grow { flex: 3 1 240px; }
+.prow .reset { all: unset; cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.88rem; padding: 9px 14px; border: 1.5px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); }
+.prow .reset:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
+.letters { display: flex; flex-wrap: wrap; gap: 4px; }
+.letters button { all: unset; cursor: pointer; min-width: 30px; text-align: center; padding: 4px 6px; border-radius: 6px; font-family: var(--mono); font-size: 0.8rem; border: 1px solid var(--line); background: var(--paper); color: var(--ink); }
+.letters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.letters button:disabled { opacity: .35; cursor: default; }
+.letters button:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
+.pcount { font-family: var(--mono); font-size: 0.8rem; color: var(--muted); margin: 0 0 10px; }
+.pgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+.pcard { all: unset; box-sizing: border-box; cursor: pointer; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; padding: 14px; display: flex; gap: 12px; min-width: 0; }
+.pcard:hover { border-color: var(--ink); }
+.pcard:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
+.pcard .pimg { flex: none; width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 3px solid var(--c3); background: var(--c3-soft); }
+.pcard .pimg.ini, .pbig.ini { display: flex; align-items: center; justify-content: center; font-family: var(--display); font-weight: 800; color: var(--c3); font-size: 1.2rem; }
+.pcard h3 { font-size: 1.05rem; margin: 0; line-height: 1.2; }
+.pcard .pmeta { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); margin: 2px 0 4px; }
+.pcard p { margin: 0; font-size: 0.88rem; line-height: 1.4; color: var(--ink); }
+.pcard .pbody { min-width: 0; }
+.pempty { padding: 28px; text-align: center; color: var(--muted); border: 1px dashed var(--line); border-radius: 12px; }
+.phead { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; margin: 6px 0 18px; }
+.pbig { flex: none; width: 150px; height: 150px; border-radius: 50%; object-fit: cover; border: 4px solid var(--c3); background: var(--c3-soft); }
+.pbig.ini { font-size: 2.6rem; }
+.phead .ptxt { flex: 1 1 260px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.phead h1 { margin: 0; }
+.psec { display: grid; gap: 18px; }
+.psec > div { display: grid; gap: 4px; }
+.psec h3 { margin: 0; font-size: 0.8rem; font-family: var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--c3); }
+.psec p { margin: 0; }
+.pappear { display: flex; flex-wrap: wrap; gap: 6px; }
+.pappear button { all: unset; cursor: pointer; font-family: var(--display); font-size: 0.82rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink); }
+.pappear button:hover { border-color: var(--ink); }
+.pappear button:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
+.pcredit { font-size: 0.78rem; color: var(--muted); margin: 0; }
+@media (max-width: 560px) { .pbig { width: 120px; height: 120px; } .phead { gap: 14px; } }
+</style>
+
+<section class="view" id="psychologists" data-label="Famous Psychologists" hidden>
+  <div class="eyebrow">Biographies · <span id="pstat">0 psychologists</span></div>
+  <h1>Famous Psychologists</h1>
+  <p class="lede">Every researcher, theorist and scientist named in your study guides, each with a short profile: life, ideas, key studies, recognition, criticism and legacy. Search, sort, or filter by name, field or paper.</p>
+  <div class="pfilters">
+    <div class="prow">
+      <label class="grow">Search<input type="search" id="psearch" placeholder="Name, theory, study, country…" autocomplete="off"></label>
+      <label>Sort by<select id="psort">
+        <option value="az">Name A–Z</option>
+        <option value="za">Name Z–A</option>
+        <option value="old">Born: oldest first</option>
+        <option value="new">Born: newest first</option>
+        <option value="field">Field</option>
+      </select></label>
+      <label>Field<select id="pcat"><option value="">All fields</option></select></label>
+      <label>Paper<select id="ppaper"><option value="">All papers</option></select></label>
+      <button type="button" class="reset" id="preset">Reset</button>
+    </div>
+    <div class="letters" id="pletters" role="group" aria-label="Filter by first letter of surname"></div>
+  </div>
+  <p class="pcount" id="pcount" aria-live="polite"></p>
+  <div class="pgrid" id="pgrid"></div>
+</section>
+
+<section class="view" id="pprofile" data-label="Profile" hidden></section>
+<script>
+window.PSY = window.PSY || [];
+/* [name, surname, life, born(sort), category, field, tagline, early life, theory, works, impact, criticism, legacy, {ph: photo alt name, k: syllabus-search regex}] */
+window.PSY.push(
+[`Thomas Hobbes`,`Hobbes`,`1588–1679`,1588,`Roots & philosophy`,`Materialist philosophy`,`Argued that all mental life is matter in motion, an early mechanical view of the mind.`,
+`Born in Westport, Wiltshire, England. Studied at Magdalen Hall, Oxford, then tutored the Cavendish family and travelled Europe, meeting Galileo's circle.`,
+`Materialism and mechanism: sensation is motion pressed on the sense organs; thought is a train of linked images; people act from self-interest and fear.`,
+`Human Nature (1640); Leviathan (1651).`,
+`Wrote the first English-language system tying mind, body and society together; tutor to the future Charles II.`,
+`Pessimistic egoism and strict determinism left little room for free will; religious critics attacked the materialism.`,
+`Set the mechanistic, empiricist agenda that later associationists (Locke, Hume, Hartley) built on.`],
+[`John Locke`,`Locke`,`1632–1704`,1632,`Roots & philosophy`,`Empiricism`,`Proposed the mind starts as a blank slate (tabula rasa) written on by experience.`,
+`Born in Wrington, Somerset. Studied at Christ Church, Oxford, and trained in medicine; worked as physician and secretary to Lord Shaftesbury.`,
+`All ideas come from sensation (outer experience) and reflection (inner experience); simple ideas combine into complex ones. Primary and secondary qualities.`,
+`An Essay Concerning Human Understanding (1689); Some Thoughts Concerning Education (1693).`,
+`Fellow of the Royal Society; a founder of liberal political thought as well as empiricism.`,
+`Nativists (Leibniz, later Chomsky) argue the mind has innate structure; modern studies show strong inborn biases.`,
+`The nurture side of nature versus nurture; foundation of British empiricism and learning-based psychology.`],
+[`George Berkeley`,`Berkeley`,`1685–1753`,1685,`Roots & philosophy`,`Idealism & perception`,`Argued that to exist is to be perceived, and that depth perception is learned.`,
+`Born in County Kilkenny, Ireland. Studied at Trinity College Dublin; later Anglican Bishop of Cloyne.`,
+`Subjective idealism (esse est percipi): we know only our own perceptions. In vision, distance is not seen directly but learned by associating touch with sight.`,
+`An Essay Towards a New Theory of Vision (1709); A Treatise Concerning the Principles of Human Knowledge (1710).`,
+`Held church posts in Ireland and promoted a college in Bermuda that was never funded.`,
+`Idealism is untestable; critics said it cannot explain the steady, shared character of the physical world.`,
+`His account of learned space perception anticipated later perceptual learning research.`],
+[`David Hume`,`Hume`,`1711–1776`,1711,`Roots & philosophy`,`Empiricism & association`,`Reduced the mind to impressions and ideas linked by three laws of association.`,
+`Born in Edinburgh. Studied at Edinburgh and wrote his first major work in France in his twenties.`,
+`Ideas are faint copies of vivid impressions. Association works by resemblance, contiguity in time or place, and cause and effect. The self is only a bundle of perceptions.`,
+`A Treatise of Human Nature (1739–40); An Enquiry Concerning Human Understanding (1748).`,
+`Keeper of the Advocates' Library in Edinburgh; leading figure of the Scottish Enlightenment.`,
+`The bundle theory cannot explain why experience feels unified; Hume himself said the Treatise fell dead-born from the press.`,
+`Laws of association became the engine of learning theory; scepticism about causation shaped scientific method.`],
+[`David Hartley`,`Hartley`,`1705–1757`,1705,`Roots & philosophy`,`Associationism`,`First to join association of ideas with a physiological story about nerve vibrations.`,
+`Born in Armley, Yorkshire. Studied at Jesus College, Cambridge, and practised as a physician.`,
+`Sensations cause tiny vibrations in nerves and brain; repeated vibrations leave traces, so ideas that occur together become linked.`,
+`Observations on Man, His Frame, His Duty, and His Expectations (1749).`,
+`Practising physician; his book was widely read and was revived by Joseph Priestley.`,
+`The vibration mechanism was speculation and proved wrong.`,
+`Founder of physiological associationism, a forerunner of conditioning and neural network ideas.`],
+[`John Stuart Mill`,`Mill`,`1806–1873`,1806,`Roots & philosophy`,`Associationism & logic`,`Proposed mental chemistry: combined ideas can make something new, like elements forming a compound.`,
+`Born in London. Educated at home by his father James Mill in a famously intense programme; later worked for the East India Company.`,
+`Mental chemistry: unlike simple mechanical association, ideas can fuse into wholes with new properties. Argued the human mind could be studied by scientific method.`,
+`A System of Logic (1843); Utilitarianism (1863); The Subjection of Women (1869).`,
+`Member of Parliament 1865–68; campaigned for women's suffrage and individual liberty.`,
+`Mental chemistry was loosely defined and hard to test.`,
+`Prepared the way for Wundt's idea of creative synthesis and, later, the Gestalt claim that wholes exceed parts.`,
+{k:`Mill\\b`}],
+[`Charles Darwin`,`Darwin`,`1809–1882`,1809,`Roots & philosophy`,`Evolution`,`Showed that mind and behaviour, like bodies, evolved through natural selection.`,
+`Born in Shrewsbury, England. Studied medicine at Edinburgh and then Cambridge; sailed on HMS Beagle 1831–36.`,
+`Natural selection: traits that aid survival and reproduction spread. Emotions and expressions have evolutionary roots and are shared across species.`,
+`On the Origin of Species (1859); The Descent of Man (1871); The Expression of the Emotions in Man and Animals (1872).`,
+`Fellow of the Royal Society; buried in Westminster Abbey.`,
+`Social Darwinism misused his ideas; his emotion work was long neglected until Ekman revived it.`,
+`Basis of functionalism, comparative and evolutionary psychology, and the study of universal facial expressions.`],
+[`Wilhelm Wundt`,`Wundt`,`1832–1920`,1832,`Founders & schools`,`Experimental psychology`,`Opened the first psychology laboratory (Leipzig, 1879) and made psychology an experimental science.`,
+`Born in Neckarau, Baden, Germany. Medical degree at Heidelberg (1856); assistant to Hermann von Helmholtz.`,
+`Studied conscious experience by controlled introspection of sensations and feelings; voluntarism (will organises experience); Völkerpsychologie for language, myth and custom.`,
+`Principles of Physiological Psychology (1873–74); Völkerpsychologie (10 volumes, 1900–20).`,
+`Professor at Leipzig; founded the lab (1879) and the journal Philosophische Studien; trained Titchener, Hall, Kraepelin and many others.`,
+`Introspection is private and unverifiable; behaviourists and Gestalt psychologists rejected breaking experience into elements.`,
+`1879 is the usual birth date of scientific psychology; the lab-based doctoral training model comes from Leipzig.`],
+[`William James`,`James`,`1842–1910`,1842,`Founders & schools`,`Functionalism`,`Wrote The Principles of Psychology and is called the father of American psychology.`,
+`Born in New York City into a gifted family (brother Henry James, the novelist). Medical degree at Harvard (1869) after years of illness and doubt.`,
+`Functionalism: mind exists to help the organism adapt. Stream of consciousness; the self as I and Me; the James–Lange theory that emotion is the feeling of bodily change; habit.`,
+`The Principles of Psychology (1890); The Varieties of Religious Experience (1902); Pragmatism (1907).`,
+`Harvard professor; set up a teaching demonstration lab in 1875; president of the APA (1894).`,
+`Little experimental work of his own; the James–Lange theory was challenged by Cannon (1927).`,
+`Stream of consciousness, self concept and psychology of religion all trace back to James; taught Hall and Thorndike.`,
+{k:`William James|James.Lange|W\\. James`}],
+[`Edward Titchener`,`Titchener`,`1867–1927`,1867,`Founders & schools`,`Structuralism`,`Brought Wundt's method to America and named it structuralism.`,
+`Born in Chichester, England. Studied at Oxford, then took a PhD under Wundt at Leipzig (1892) and moved to Cornell.`,
+`Structuralism: break conscious experience into basic elements (sensations, images, feelings) with trained introspection; he catalogued over 40,000 sensory qualities.`,
+`Experimental Psychology (1901–05); A Textbook of Psychology (1909–10).`,
+`Led psychology at Cornell for 35 years; founded the Experimentalists, a private society for lab psychologists.`,
+`Excluded animals, children and applied topics; introspection was open to bias; functionalism and behaviourism displaced it.`,
+`Gave structuralism its name and trained a generation of experimentalists, including E. G. Boring.`],
+[`G. Stanley Hall`,`Hall`,`1844–1924`,1844,`Founders & schools`,`Developmental psychology`,`Founded the APA and made adolescence a field of study.`,
+`Born in Ashfield, Massachusetts. Took a Harvard PhD (1878) under William James, then studied with Wundt in Leipzig.`,
+`Recapitulation theory: a child relives the evolution of the species. Adolescence is a time of storm and stress.`,
+`Adolescence (1904); Senescence (1922).`,
+`Opened an early American psychology lab at Johns Hopkins (1883); founded the American Journal of Psychology (1887); first APA president (1892); president of Clark University, which hosted Freud and Jung in 1909.`,
+`Recapitulation theory was discarded; some views reflected racial prejudice of the period.`,
+`The child-study movement and adolescent psychology.`,
+{k:`Stanley Hall|G\\. ?S\\. Hall`}],
+[`John Dewey`,`Dewey`,`1859–1952`,1859,`Founders & schools`,`Functionalism & education`,`Argued that mind is active and adaptive, and that people learn by doing.`,
+`Born in Burlington, Vermont. PhD at Johns Hopkins (1884); taught at Michigan, Chicago and Columbia.`,
+`Reflex arc concept: perception and action form one continuous act, not separate steps. Education should be grounded in experience and problem solving.`,
+`The Reflex Arc Concept in Psychology (1896); How We Think (1910); Democracy and Education (1916).`,
+`President of the APA (1899); ran the Laboratory School at Chicago.`,
+`Dense writing; many educational reforms were applied without his safeguards.`,
+`Chicago functionalism and progressive education.`],
+[`James Rowland Angell`,`Angell`,`1869–1949`,1869,`Founders & schools`,`Functionalism`,`Gave functionalism its programme at the University of Chicago.`,
+`Born in Burlington, Vermont. Studied at Michigan and Harvard under William James.`,
+`Functional psychology studies what mental processes do for the organism, not just what they contain.`,
+`Psychology (1904); the 1906 APA address The Province of Functional Psychology.`,
+`Chaired psychology at Chicago, where John B. Watson was a student; later president of Yale University (1921–37).`,
+`Lacked a distinct method; functionalism was absorbed into behaviourism and applied psychology.`,
+`Institutionalised the functionalist school that shaped American psychology.`],
+[`John B. Watson`,`Watson`,`1878–1958`,1878,`Learning & behaviour`,`Behaviourism`,`Declared that psychology should study only observable behaviour.`,
+`Born near Greenville, South Carolina. PhD at the University of Chicago (1903); professor at Johns Hopkins from 1908.`,
+`Behaviourism (1913 manifesto): psychology is the science of behaviour, shaped by conditioning, not heredity or introspection.`,
+`Psychology as the Behaviorist Views It (1913); Little Albert study with Rosalie Rayner (1920); Behaviorism (1924).`,
+`APA president (1915); later a successful advertising executive.`,
+`Little Albert was ethically poor and lacked controls; the claim of unlimited environmental shaping is extreme.`,
+`Founded behaviourism; the Little Albert study still serves as the model of how phobias are conditioned.`,
+{k:`John B\\. Watson|Watson\\b`}],
+[`Max Wertheimer`,`Wertheimer`,`1880–1943`,1880,`Founders & schools`,`Gestalt psychology`,`Launched Gestalt psychology with the 1912 study of apparent motion.`,
+`Born in Prague. PhD at Würzburg (1904); fled Nazi Germany in 1933 to the New School in New York.`,
+`The whole is different from the sum of its parts. Phi phenomenon, principles of perceptual organisation, and insight in productive thinking.`,
+`Experimental Studies on the Perception of Movement (1912); Productive Thinking (1945).`,
+`Co-founded Gestalt psychology with Koffka and Köhler; professor at Frankfurt.`,
+`Principles are descriptive and do not explain how the brain organises perception.`,
+`Perception, problem solving and design still use Gestalt principles.`],
+[`Kurt Koffka`,`Koffka`,`1886–1941`,1886,`Founders & schools`,`Gestalt psychology`,`Spread Gestalt ideas to the English-speaking world.`,
+`Born in Berlin. PhD at Berlin (1908); took part in the original phi-phenomenon experiments.`,
+`Applied Gestalt thinking to development and perception; the behavioural environment is what an organism experiences, not just the physical setting.`,
+`The Growth of the Mind (1921); Principles of Gestalt Psychology (1935).`,
+`Professor at Giessen, then Smith College (USA) from 1927.`,
+`Principles of Gestalt Psychology is dense and difficult.`,
+`Brought Gestalt psychology to America and made it part of mainstream textbooks.`],
+[`Wolfgang Köhler`,`Köhler`,`1887–1967`,1887,`Founders & schools`,`Gestalt psychology`,`Showed chimpanzees solve problems by sudden insight, not blind trial and error.`,
+`Born in Reval (Tallinn), Estonia. PhD at Berlin (1909); ran a research station on Tenerife during World War I.`,
+`Insight learning: the problem is restructured mentally and the solution appears suddenly (Sultan stacking boxes to reach a banana). Isomorphism between brain fields and experience.`,
+`The Mentality of Apes (1917); Gestalt Psychology (1929).`,
+`Directed the Berlin Psychological Institute; protested against the Nazis and left in 1935 for Swarthmore; APA president (1959).`,
+`His electrical brain field theory was refuted by experiments.`,
+`Insight learning is the standard counterpart to Thorndike's trial-and-error learning.`,
+{ph:`Wolfgang Kohler`,k:`K(ö|o)hler`}],
+[`Kurt Lewin`,`Lewin`,`1890–1947`,1890,`Social psychology`,`Social psychology & group dynamics`,`Called the father of modern social psychology; behaviour depends on person and environment.`,
+`Born in Mogilno, then in Prussia (now Poland). PhD at Berlin (1916); left Germany in 1933 for the United States.`,
+`Field theory: B = f(P, E), behaviour is a function of person and environment in a life space. Group dynamics, leadership styles and a three-step model of change (unfreeze, change, refreeze).`,
+`A Dynamic Theory of Personality (1935); leadership climate study with Lippitt and White (1939).`,
+`Worked at the University of Iowa, then founded the Research Center for Group Dynamics at MIT (1944). Coined action research.`,
+`Field theory used loose mathematics; the change model is simpler than real organisations.`,
+`Trained Festinger, Schachter and Kelley; his work shapes organisational development and group research.`]
+);
+</script>
+<script>
+window.PSY.push(
+[`Sigmund Freud`,`Freud`,`1856–1939`,1856,`Psychoanalysis`,`Psychoanalysis`,`Founded psychoanalysis and made the unconscious central to psychology.`,
+`Born in Freiberg, Moravia (now Příbor, Czech Republic); raised in Vienna. Medical degree at Vienna (1881); studied with Charcot in Paris (1885–86) and worked with Josef Breuer on hysteria.`,
+`Unconscious motives; structure of id, ego and superego; psychosexual stages; defence mechanisms; free association and dream interpretation as methods.`,
+`Studies on Hysteria (1895, with Breuer); The Interpretation of Dreams (1899/1900); Three Essays on the Theory of Sexuality (1905).`,
+`Founded the Vienna Psychoanalytic Society and an international movement; fled Nazi-occupied Vienna for London in 1938.`,
+`Karl Popper called psychoanalysis unfalsifiable; evidence rests on a few case studies; emphasis on sexuality challenged by Adler, Jung and Horney.`,
+`Talking therapy, defence mechanisms and the idea of unconscious processes shaped psychiatry, culture and nearly every later personality theory.`],
+[`Carl Jung`,`Jung`,`1875–1961`,1875,`Psychoanalysis`,`Analytical psychology`,`Proposed the collective unconscious and archetypes, and introduced introversion and extraversion.`,
+`Born in Kesswil, Switzerland. Medical studies at Basel; worked at the Burghölzli clinic under Eugen Bleuler. Close colleague of Freud until their break in 1913.`,
+`Personal and collective unconscious; archetypes (persona, shadow, anima/animus, self); psychological types; individuation as lifelong growth.`,
+`Psychological Types (1921); Symbols of Transformation (1912); Modern Man in Search of a Soul (1933).`,
+`Founded analytical psychology; the C. G. Jung Institute in Zurich opened in 1948.`,
+`Concepts are mystical and hard to test; archetypes are unfalsifiable.`,
+`The Myers–Briggs Type Indicator and the introvert-extravert dimension in personality tests derive from Jung's types; the word association test.`],
+[`Alfred Adler`,`Adler`,`1870–1937`,1870,`Psychoanalysis`,`Individual psychology`,`Argued that striving to overcome inferiority and a sense of social belonging drive personality.`,
+`Born near Vienna. Medical degree at Vienna (1895); an early member of Freud's circle until leaving in 1911.`,
+`Inferiority feeling and compensation, striving for superiority, social interest (Gemeinschaftsgefühl), lifestyle, and the influence of birth order.`,
+`The Neurotic Constitution (1912); Understanding Human Nature (1927); What Life Should Mean to You (1931).`,
+`Founded the Society for Individual Psychology; opened child guidance clinics in Vienna; moved to the United States in 1935.`,
+`Concepts are loosely defined; birth order effects are weak in modern research.`,
+`Inferiority complex entered everyday language; influenced Maslow, Ellis and humanistic and family therapy.`],
+[`Karen Horney`,`Horney`,`1885–1952`,1885,`Psychoanalysis`,`Neo-Freudian theory`,`Challenged Freud on women and put culture and basic anxiety at the centre of neurosis.`,
+`Born in Blankenese, near Hamburg. Medical degree at Berlin (1913); moved to the United States in 1932.`,
+`Basic anxiety from a cold or unsafe childhood; neurotic needs grouped as moving toward, against and away from people; the real self versus the idealised self (the tyranny of the shoulds).`,
+`The Neurotic Personality of Our Time (1937); Our Inner Conflicts (1945); Neurosis and Human Growth (1950).`,
+`Co-founded the Association for the Advancement of Psychoanalysis and the American Institute for Psychoanalysis (1941).`,
+`Theory is hard to test empirically.`,
+`Pioneer of feminist psychoanalysis and cultural approaches to personality.`],
+[`Erik Erikson`,`Erikson`,`1902–1994`,1902,`Psychoanalysis`,`Psychosocial development`,`Described eight psychosocial stages across the lifespan and coined identity crisis.`,
+`Born in Frankfurt, Germany, and had no formal university degree. Trained in psychoanalysis in Vienna under Anna Freud; moved to the United States in 1933.`,
+`Eight stages from trust vs mistrust in infancy to integrity vs despair in old age, each with a crisis shaped by society.`,
+`Childhood and Society (1950); Identity: Youth and Crisis (1968); Gandhi's Truth (1969, Pulitzer Prize).`,
+`Taught at Harvard, Berkeley and Yale.`,
+`Stages are culturally and gender biased and vague about how people move on.`,
+`Identity, the life-cycle view and adolescent identity research all stem from Erikson.`],
+[`Gordon Allport`,`Allport`,`1897–1967`,1897,`Personality`,`Trait theory`,`Founded the trait approach and the study of personality as a science.`,
+`Born in Montezuma, Indiana. PhD at Harvard (1922).`,
+`Cardinal, central and secondary traits; functional autonomy of motives; idiographic (individual) as well as nomothetic study.`,
+`Personality: A Psychological Interpretation (1937); The Nature of Prejudice (1954); The Individual and His Religion (1950).`,
+`Harvard professor; APA president (1939). With Odbert (1936) found about 18,000 trait words in English, starting the lexical approach.`,
+`The idiographic approach is hard to generalise; trait lists were unmanageably long.`,
+`Foundation of trait theory and the Big Five; contact hypothesis in prejudice research.`],
+[`Raymond Cattell`,`Cattell`,`1905–1998`,1905,`Personality`,`Factor-analytic trait theory`,`Used factor analysis to reduce personality to 16 source traits.`,
+`Born in West Bromwich, England. PhD at University College London under Charles Spearman.`,
+`Surface vs source traits; 16 Personality Factors; fluid and crystallised intelligence.`,
+`The Description and Measurement of Personality (1946); 16PF Questionnaire (1949).`,
+`Research professor at the University of Illinois.`,
+`Later work on 16PF structure often fails to replicate; his views on eugenics and group differences drew heavy criticism.`,
+`Brought factor analysis to personality; his data fed the Big Five.`],
+[`Hans Eysenck`,`Eysenck`,`1916–1997`,1916,`Personality`,`Biological trait theory`,`Proposed three biologically based super-traits: extraversion, neuroticism and psychoticism.`,
+`Born in Berlin. Left Germany as a teenager and took a PhD at the University of London (1940).`,
+`PEN model: extraversion linked to low cortical arousal, neuroticism to autonomic reactivity. Personality is mainly inherited.`,
+`Dimensions of Personality (1947); The Effects of Psychotherapy (1952); Eysenck Personality Questionnaire.`,
+`Professor at the Institute of Psychiatry, King's College London; pioneered behaviour therapy in Britain.`,
+`His claims that psychotherapy was no better than no treatment were challenged; some later papers with Grossarth-Maticek were found unreliable.`,
+`The EPQ and the idea of a few dimensions with biological roots remain influential.`],
+[`Paul Costa Jr.`,`Costa`,`b. 1942`,1942,`Personality`,`Five-Factor Model`,`Co-developed the NEO inventory and the Big Five (OCEAN) model of personality.`,
+`Studied at Clark University and took a PhD at the University of Chicago (1970).`,
+`Five broad traits: Openness, Conscientiousness, Extraversion, Agreeableness and Neuroticism, found across cultures and fairly stable in adulthood.`,
+`NEO Personality Inventory (1985, revised 1992) with Robert McCrae.`,
+`Long career at the National Institute on Aging (NIH).`,
+`Descriptive rather than explanatory; five factors cannot capture every aspect of personality.`,
+`The Five-Factor Model is now the standard trait framework.`],
+[`Robert McCrae`,`McCrae`,`b. 1949`,1949,`Personality`,`Five-Factor Model`,`Co-author of the Five-Factor Model of personality with Paul Costa.`,
+`Studied at Michigan State University and took a PhD at Boston University (1976).`,
+`Five-Factor Theory: basic tendencies are biologically based, and traits shape characteristic adaptations over a lifetime.`,
+`NEO-PI-R (1992); Personality in Adulthood (1990, with Costa).`,
+`Researcher at the National Institute on Aging (NIH).`,
+`Theory is criticised as descriptive and weak on development.`,
+`Big Five research in health, aging and cultures builds on McCrae and Costa.`],
+[`William Sheldon`,`Sheldon`,`1898–1977`,1898,`Personality`,`Constitutional psychology`,`Linked body build (somatotype) to temperament.`,
+`Born in Warwick, Rhode Island. PhD in psychology (1925) and medical degree (1933) at the University of Chicago.`,
+`Three somatotypes: endomorph (soft, sociable), mesomorph (muscular, assertive) and ectomorph (thin, restrained).`,
+`The Varieties of Human Physique (1940); The Varieties of Temperament (1942).`,
+`Taught at Harvard and Columbia.`,
+`Methods were poor; correlations between body type and temperament were exaggerated; the posture-photo project damaged his reputation.`,
+`Now mostly a historical example of type theory; body-type stereotypes persist in popular belief.`],
+[`Ernst Kretschmer`,`Kretschmer`,`1888–1964`,1888,`Personality`,`Constitutional psychology`,`Related body types to temperament and mental illness before Sheldon.`,
+`Born in Wüstenrot, Germany. Medical studies at Tübingen; later professor at Marburg.`,
+`Pyknic (round) types were linked to cyclothymic mood swings, asthenic (thin) and athletic types to schizothymic temperament.`,
+`Physique and Character (1921).`,
+`Professor of psychiatry and neurology at Marburg (1926–46) and later Tübingen.`,
+`Samples were psychiatric patients, so conclusions do not generalise.`,
+`Precursor of body-type theories, including Sheldon.`],
+[`Henry Murray`,`Murray`,`1893–1988`,1893,`Personality`,`Personology & need theory`,`Mapped human motives as needs and invented the Thematic Apperception Test.`,
+`Born in New York City. Studied at Harvard, qualified in medicine at Columbia, and took a PhD in biochemistry at Cambridge.`,
+`Need–press theory: behaviour comes from psychogenic needs (achievement, affiliation, power and others) interacting with environmental press.`,
+`Explorations in Personality (1938); the Thematic Apperception Test with Christiana Morgan (1935).`,
+`Directed the Harvard Psychological Clinic; led assessment programmes for the US wartime OSS.`,
+`The list of needs is arbitrary; TAT scoring has modest reliability.`,
+`The TAT and McClelland's achievement motivation research grew from his work.`],
+[`Julian Rotter`,`Rotter`,`1916–2014`,1916,`Personality`,`Social learning theory`,`Introduced locus of control and expectancy theory of behaviour.`,
+`Born in Brooklyn, New York. PhD at Indiana University (1941).`,
+`Behaviour potential depends on expectancy and reinforcement value. Locus of control: internals credit outcomes to themselves, externals to luck or others.`,
+`Social Learning and Clinical Psychology (1954); the I-E Scale (1966).`,
+`Professor at Ohio State, then the University of Connecticut.`,
+`Locus of control is treated as a general trait but shifts across domains; self-report scales can be biased.`,
+`Locus of control is used widely in health, education and work research.`],
+[`Walter Mischel`,`Mischel`,`1930–2018`,1930,`Personality`,`Cognitive-social personality`,`Questioned trait consistency and ran the famous marshmallow test.`,
+`Born in Vienna; fled the Nazis as a child. PhD at Ohio State (1956) under George Kelly.`,
+`Person–situation debate: behaviour varies by situation. CAPS (Cognitive-Affective Personality System) predicts stable if–then patterns, e.g. aggressive when criticised.`,
+`Personality and Assessment (1968); marshmallow studies at Stanford (1960s–70s); The Marshmallow Test (2014).`,
+`Stanford then Columbia professor; APA Distinguished Scientific Contribution Award.`,
+`A 2018 replication (Watts, Duncan and Quan) found a weaker link between delay of gratification and later success than first claimed.`,
+`Interactionism, the view that person and situation together shape behaviour, is now widely accepted.`],
+[`George Kelly`,`Kelly`,`1905–1967`,1905,`Personality`,`Personal construct theory`,`Treated every person as a scientist who tests personal theories about life.`,
+`Born in Perth, Kansas. PhD at the University of Iowa (1931).`,
+`Personal construct theory: people interpret the world through bipolar constructs and revise them when predictions fail. The Role Construct Repertory (Rep) Grid maps them.`,
+`The Psychology of Personal Constructs (1955).`,
+`Professor at Ohio State, later at Brandeis.`,
+`Seen as too cognitive and neglectful of emotion and unconscious motives.`,
+`Repertory grid technique is used in clinical work, education and market research; foundation of constructivist therapy.`],
+[`Abraham Maslow`,`Maslow`,`1908–1970`,1908,`Personality`,`Humanistic psychology`,`Created the hierarchy of needs and the idea of self-actualisation.`,
+`Born in Brooklyn, New York. PhD at the University of Wisconsin (1934) under Harry Harlow.`,
+`Needs from physiological and safety up through love, esteem and self-actualisation; peak experiences. Called humanistic psychology the third force.`,
+`Motivation and Personality (1954); Toward a Psychology of Being (1962).`,
+`Brandeis University professor; APA president (1968).`,
+`The strict ordering of needs lacks support; his self-actualiser sample was small and selective.`,
+`Hierarchy of needs is used worldwide in education, management and counselling.`],
+[`Rollo May`,`May`,`1909–1994`,1909,`Personality`,`Existential psychology`,`Introduced existential thinking to American psychology and therapy.`,
+`Born in Ada, Ohio. Studied divinity at Union Theological Seminary; PhD in clinical psychology at Columbia (1949).`,
+`Anxiety as the price of freedom; the power of the daimonic; love and will as capacities of a person living with meaning.`,
+`The Meaning of Anxiety (1950); Love and Will (1969); The Courage to Create (1975).`,
+`Taught at the New School and was active at the William Alanson White Institute.`,
+`Ideas are philosophical and hard to test.`,
+`Shaped existential-humanistic therapy in the USA.`,
+{k:`Rollo May`}],
+[`Ivan Pavlov`,`Pavlov`,`1849–1936`,1849,`Learning & behaviour`,`Classical conditioning`,`Discovered classical conditioning while studying digestion in dogs.`,
+`Born in Ryazan, Russia. Studied at St Petersburg University and the Military Medical Academy.`,
+`A neutral stimulus paired with an unconditioned stimulus becomes a conditioned stimulus that produces a conditioned response. Also acquisition, extinction, spontaneous recovery and generalisation.`,
+`Work of the Digestive Glands (1897); Conditioned Reflexes (1927).`,
+`Nobel Prize in Physiology or Medicine (1904) for digestion research; directed the Institute of Experimental Medicine in St Petersburg.`,
+`Ignored cognitive processes and treated humans like dogs.`,
+`Basis of exposure therapy, systematic desensitisation and learning accounts of phobias.`],
+[`Edward Thorndike`,`Thorndike`,`1874–1949`,1874,`Learning & behaviour`,`Connectionism`,`Showed learning by trial and error and formulated the Law of Effect.`,
+`Born in Williamsburg, Massachusetts. Studied at Harvard under William James; PhD at Columbia (1898) under James McKeen Cattell.`,
+`Puzzle-box cats learned by trial and error; responses followed by satisfaction are strengthened (Law of Effect).`,
+`Animal Intelligence (1898, 1911); The Psychology of Learning (1913).`,
+`Professor at Teachers College, Columbia; APA president (1912).`,
+`Laws of exercise and readiness were later dropped; his animal work ignored insight.`,
+`Foundation for Skinner's operant conditioning and instrumental learning research.`],
+[`B. F. Skinner`,`Skinner`,`1904–1990`,1904,`Learning & behaviour`,`Radical behaviourism`,`Developed operant conditioning and the science of reinforcement.`,
+`Born in Susquehanna, Pennsylvania. PhD at Harvard (1931).`,
+`Behaviour is shaped by its consequences: reinforcement and punishment, schedules of reinforcement, shaping. Invented the operant chamber (Skinner box).`,
+`The Behavior of Organisms (1938); Walden Two (1948); Science and Human Behavior (1953).`,
+`Harvard professor; National Medal of Science (1968); APA citation for lifetime contribution (1990).`,
+`Chomsky's 1959 review attacked his account of language; ignoring inner states was criticised; Walden Two seen as controlling.`,
+`Applied behaviour analysis, token economies, programmed learning and behaviour modification.`],
+[`Albert Bandura`,`Bandura`,`1925–2021`,1925,`Learning & behaviour`,`Social cognitive theory`,`Showed that people learn by watching others and introduced self-efficacy.`,
+`Born in Mundare, Alberta, Canada. PhD at the University of Iowa (1952).`,
+`Observational learning (attention, retention, reproduction, motivation); reciprocal determinism; self-efficacy as belief in one's ability to succeed.`,
+`Bobo doll experiments (1961, 1963); Social Learning Theory (1977); Self-Efficacy: The Exercise of Control (1997).`,
+`Stanford professor for more than 50 years; APA president (1974); US National Medal of Science (2016).`,
+`The Bobo doll was an artificial setting and the children may have been playing; exposing children to aggression raised ethical concerns.`,
+`Research on media violence, self-efficacy in health and education, and modelling in therapy.`],
+[`Edward Tolman`,`Tolman`,`1886–1959`,1886,`Learning & behaviour`,`Cognitive behaviourism`,`Showed rats learn mental maps, bridging behaviourism and cognitive psychology.`,
+`Born in Newton, Massachusetts. Studied at MIT and took a PhD at Harvard (1915).`,
+`Purposive behaviourism: cognitive maps and latent learning show learning without immediate reward.`,
+`Purposive Behavior in Animals and Men (1932); Cognitive Maps in Rats and Men (1948).`,
+`Professor at Berkeley; APA president (1937).`,
+`Theory was hard to express in precise terms.`,
+`Forerunner of cognitive psychology; cognitive map research later linked to place cells in the hippocampus.`],
+[`O. Hobart Mowrer`,`Mowrer`,`1907–1982`,1907,`Learning & behaviour`,`Two-factor learning theory`,`Explained avoidance learning with classical and operant conditioning together.`,
+`Born in Unionville, Missouri. PhD at Johns Hopkins (1932).`,
+`Two-factor theory: fear is first learned by classical conditioning, then avoidance is maintained by operant reinforcement through fear reduction.`,
+`Learning Theory and Behavior (1960); developed the bed-wetting alarm (1938, with his wife).`,
+`Taught at Harvard, Illinois and Yale; APA president (1954).`,
+`Later cognitive models showed avoidance can occur without constant fear.`,
+`Underlies exposure therapy and the conditioned-alarm treatment for enuresis.`],
+[`Joseph Wolpe`,`Wolpe`,`1915–1997`,1915,`Clinical & therapy`,`Behaviour therapy`,`Created systematic desensitisation to treat phobias.`,
+`Born in Johannesburg. Medical degree at the University of the Witwatersrand.`,
+`Reciprocal inhibition: anxiety is weakened when a response incompatible with it, such as relaxation, occurs. Uses a fear hierarchy and Subjective Units of Distress (SUDS).`,
+`Psychotherapy by Reciprocal Inhibition (1958).`,
+`Taught at Virginia, Temple and Pepperdine universities.`,
+`Later studies showed relaxation is not essential, only exposure.`,
+`Foundation of exposure therapies for phobias and anxiety disorders.`],
+[`Hermann Ebbinghaus`,`Ebbinghaus`,`1850–1909`,1850,`Cognition`,`Memory research`,`First to study memory experimentally and discovered the forgetting curve.`,
+`Born in Barmen, Germany. PhD at Bonn (1873).`,
+`Memorised lists of nonsense syllables to isolate memory. Forgetting is rapid at first, then levels off; relearning shows savings.`,
+`Über das Gedächtnis (On Memory, 1885).`,
+`Professor at Berlin, Breslau and Halle; founded a psychology journal.`,
+`Nonsense syllables are unlike real memory; he was his own only subject.`,
+`Forgetting curve and spacing effect guide revision schedules and spaced learning.`],
+[`George A. Miller`,`Miller`,`1920–2012`,1920,`Cognition`,`Cognitive psychology`,`Showed short-term memory holds about seven items and helped launch the cognitive revolution.`,
+`Born in Charleston, West Virginia. PhD at Harvard (1946).`,
+`Chunking lets people hold more information in about 7 ± 2 slots. Mind modelled as information processing.`,
+`The Magical Number Seven, Plus or Minus Two (1956); Plans and the Structure of Behavior (1960).`,
+`Co-founded Harvard's Center for Cognitive Studies with Bruner; later at Princeton; APA president (1969).`,
+`Later work estimates capacity closer to four chunks.`,
+`Memory span, chunking and the WordNet language database.`,
+{k:`George (A\\. )?Miller|Magical|G\\. ?A\\. Miller`}],
+[`Donald Broadbent`,`Broadbent`,`1926–1993`,1926,`Cognition`,`Attention`,`Proposed the filter model of attention.`,
+`Born in Birmingham, England. Studied at Cambridge.`,
+`Information passes through a limited-capacity filter that selects one channel by physical features.`,
+`Perception and Communication (1958).`,
+`Director of the MRC Applied Psychology Unit, Cambridge.`,
+`Own-name effect and cocktail-party findings suggest unattended messages are also processed.`,
+`Inspired later attenuation and late-selection models of attention.`],
+[`Ulric Neisser`,`Neisser`,`1928–2012`,1928,`Cognition`,`Cognitive psychology`,`Named and defined cognitive psychology in his 1967 book.`,
+`Born in Kiel, Germany. PhD at Harvard (1956).`,
+`Cognition is the study of how sensory input is transformed, stored and used. Later argued for ecologically valid memory research.`,
+`Cognitive Psychology (1967); Cognition and Reality (1976).`,
+`Professor at Cornell and Emory; studied flashbulb memory after the Challenger disaster.`,
+`His own later work criticised lab-bound cognitive psychology.`,
+`Textbook that defined the field and sparked everyday-memory research.`],
+[`Daniel Kahneman`,`Kahneman`,`1934–2024`,1934,`Cognition`,`Judgement & decision-making`,`Showed that human decisions follow predictable biases, and won a Nobel prize for it.`,
+`Born in Tel Aviv; spent childhood in France. PhD at UC Berkeley (1961).`,
+`Heuristics and biases; prospect theory (people weigh losses more than gains); two modes of thought: fast intuitive System 1 and slow deliberate System 2.`,
+`Prospect Theory (1979, with Amos Tversky); Thinking, Fast and Slow (2011).`,
+`Hebrew University and Princeton; Nobel Memorial Prize in Economic Sciences (2002).`,
+`Some priming studies cited in his book failed to replicate.`,
+`Founded behavioural economics with applications in policy, health and finance.`],
+[`Jon Kabat-Zinn`,`Kabat-Zinn`,`b. 1944`,1944,`Emotion, stress & health`,`Mindfulness`,`Brought mindfulness meditation into mainstream medicine.`,
+`Born in New York City. PhD in molecular biology at MIT (1971).`,
+`Mindfulness is paying attention on purpose, in the present moment, without judgement. Mindfulness-Based Stress Reduction (MBSR) uses body scan, sitting meditation and gentle yoga.`,
+`Full Catastrophe Living (1990); founded MBSR at the University of Massachusetts Medical School (1979).`,
+`Founded the Center for Mindfulness in Medicine, Health Care and Society.`,
+`Early trials were small and lacked controls; critics warn of commercialised mindfulness.`,
+`Source of MBCT and many mindfulness programmes worldwide.`],
+[`Paul Ekman`,`Ekman`,`b. 1934`,1934,`Emotion, stress & health`,`Emotion & facial expression`,`Showed that basic facial expressions of emotion are recognised across cultures.`,
+`Born in Washington, D.C. PhD at Adelphi University (1958).`,
+`Six or seven basic emotions have universal facial signals; display rules are learned. Created the Facial Action Coding System (FACS) with Wallace Friesen.`,
+`Unmasking the Face (1975); Emotions Revealed (2003).`,
+`Professor at UCSF; named by Time among the 100 most influential people (2009).`,
+`Critics (e.g. Lisa Feldman Barrett) argue emotions are not so universal or readable from faces.`,
+`Used in lie detection training, security screening and facial analysis technology.`]
+);
+</script>
+<script>
+window.PSY.push(
+[`Stanley Milgram`,`Milgram`,`1933–1984`,1933,`Social psychology`,`Obedience & social networks`,`Showed that ordinary people obey authority even when it harms others.`,
+`Born in the Bronx, New York. PhD at Harvard (1960).`,
+`Obedience study at Yale (1961–63): 65% of participants gave the maximum 450-volt shock when told to continue. Also the small-world experiment and lost-letter technique.`,
+`Behavioral Study of Obedience (1963); Obedience to Authority (1974).`,
+`Taught at Yale, Harvard, then the City University of New York Graduate Center.`,
+`Deception and participant distress raised major ethical concerns; later analyses question how closely the procedure was standardised.`,
+`Led to stricter ethics review (IRBs) and remains the best-known study of obedience.`],
+[`Solomon Asch`,`Asch`,`1907–1996`,1907,`Social psychology`,`Conformity & impression formation`,`Showed that people give wrong answers to fit in with a group.`,
+`Born in Warsaw; emigrated to the United States as a boy. PhD at Columbia (1932).`,
+`Line-judgement experiments (1951): about 75% conformed at least once and 37% of all answers followed the group. Also central traits in impression formation (warm vs cold).`,
+`Social Psychology (1952); Opinions and Social Pressure (1955).`,
+`Taught at Swarthmore College, Rutgers and the University of Pennsylvania.`,
+`Results are tied to time and culture; the lab task was artificial.`,
+`Conformity research and the Gestalt approach to impressions.`],
+[`Leon Festinger`,`Festinger`,`1919–1989`,1919,`Social psychology`,`Cognitive dissonance`,`Proposed that people change attitudes to reduce the discomfort of inconsistency.`,
+`Born in New York City. PhD at the University of Iowa (1942) under Kurt Lewin.`,
+`Cognitive dissonance (1957); social comparison theory (1954). When Prophecy Fails (1956) studied a doomsday group.`,
+`A Theory of Cognitive Dissonance (1957); Festinger and Carlsmith $1/$20 study (1959).`,
+`Professor at Minnesota, Stanford and the New School.`,
+`Bem's self-perception theory explains results without dissonance; the 1959 study has been debated.`,
+`Dissonance is a core idea in attitude change, advertising and decision regret.`],
+[`Fritz Heider`,`Heider`,`1896–1988`,1896,`Social psychology`,`Attribution & balance`,`Founder of attribution theory and balance theory.`,
+`Born in Vienna. PhD at Graz (1920); moved to the United States in 1930.`,
+`People are naive psychologists who explain behaviour as caused by the person (dispositional) or the situation. Balance theory: people prefer harmony in attitudes toward others.`,
+`The Psychology of Interpersonal Relations (1958); the Heider–Simmel animation (1944).`,
+`Taught at Smith College and the University of Kansas.`,
+`Balance theory is limited to simple triads.`,
+`Opened the field of attribution that Kelley and Weiner developed.`],
+[`Harold Kelley`,`Kelley`,`1921–2003`,1921,`Social psychology`,`Attribution & interdependence`,`Developed the covariation model of how people explain behaviour.`,
+`Born in Boston. PhD at MIT (1948).`,
+`Covariation model: judge a cause using consensus, distinctiveness and consistency. Interdependence theory (with Thibaut) explains relationships through rewards and costs.`,
+`Attribution Theory in Social Psychology (1967); The Social Psychology of Groups (1959, with Thibaut).`,
+`Professor at UCLA.`,
+`People often underuse consensus information.`,
+`Applied to relationships, group work and blame judgements.`],
+[`Bibb Latané`,`Latané`,`b. 1937`,1937,`Social psychology`,`Helping & social impact`,`With John Darley, discovered the bystander effect after the Kitty Genovese case.`,
+`American social psychologist who studied helping behaviour and group influence.`,
+`Bystander effect: more bystanders, less help, because of diffusion of responsibility. Social impact theory and social loafing (with Williams and Harkins, 1979).`,
+`Bystander Intervention (Darley and Latané, 1968); The Unresponsive Bystander (1970).`,
+`Taught at Ohio State, North Carolina and Florida Atlantic universities.`,
+`The Genovese story was exaggerated by newspapers; modern studies find real emergencies often draw help.`,
+`Shaped training in emergency response and research on groups and online behaviour.`,
+{k:`Latan|Darley`}],
+[`C. Daniel Batson`,`Batson`,`b. 1943`,1943,`Social psychology`,`Altruism & empathy`,`Proposed the empathy–altruism hypothesis: empathy can motivate truly selfless help.`,
+`American social psychologist who also studied religion and psychology.`,
+`Empathic concern produces altruistic motivation; Good Samaritan study (Darley and Batson, 1973) showed that being in a hurry reduced helping.`,
+`Altruism Question (1991); Good Samaritan study (1973).`,
+`Professor at the University of Kansas.`,
+`Egoistic alternatives (Cialdini's negative-state relief) offer rival explanations.`,
+`Empathy–altruism is the standard theory of prosocial motivation.`],
+[`Henri Tajfel`,`Tajfel`,`1919–1982`,1919,`Social psychology`,`Social identity`,`Showed that mere group membership is enough to produce in-group favouritism.`,
+`Born in Włocławek, Poland. Studied in Paris; a prisoner of war in Germany during World War II and later settled in Britain.`,
+`Minimal group paradigm (1971); Social Identity Theory (with John Turner, 1979): social categorisation, social identification and social comparison.`,
+`Human Groups and Social Categories (1981).`,
+`Professor at the University of Bristol; helped found the European Association of Social Psychology.`,
+`The self-esteem hypothesis has limited support.`,
+`Prejudice, intergroup conflict and political identity studies.`],
+[`Muzafer Sherif`,`Sherif`,`1906–1988`,1906,`Social psychology`,`Norms & intergroup conflict`,`Showed that competition breeds hostility and shared goals reduce it (Robbers Cave).`,
+`Born in Turkey. PhD at Columbia (1935).`,
+`Autokinetic effect study (1935) showed group norms form. Robbers Cave (1954): competing camp groups became hostile; superordinate goals reduced it. Realistic conflict theory.`,
+`The Psychology of Social Norms (1936); Intergroup Conflict and Group Relations (1961).`,
+`Taught at Oklahoma and Penn State.`,
+`Boys were all white and middle class; experimenters shaped events.`,
+`Core model for prejudice reduction by cooperation.`],
+[`Irving Janis`,`Janis`,`1918–1990`,1918,`Social psychology`,`Group decision-making`,`Described groupthink in policy disasters.`,
+`Born in Buffalo, New York. PhD at Columbia (1947).`,
+`Groupthink: tight groups seek agreement and ignore alternatives; symptoms include illusion of invulnerability and self-censorship. Cases: Bay of Pigs.`,
+`Victims of Groupthink (1972); Decision Making (1977).`,
+`Professor at Yale.`,
+`Support rests on case studies; experiments give mixed evidence.`,
+`Devil's advocate and group-decision guidelines in organisations.`],
+[`Stanley Schachter`,`Schachter`,`1922–1997`,1922,`Social psychology`,`Emotion & affiliation`,`Proposed the two-factor theory of emotion.`,
+`Born in New York City. PhD at the University of Michigan (1949) under Festinger.`,
+`Emotion = physiological arousal plus a cognitive label from the situation (Schachter and Singer, 1962). Also research on affiliation under fear.`,
+`The Psychology of Affiliation (1959); Schachter and Singer study (1962).`,
+`Professor at Columbia.`,
+`The adrenaline study has proved hard to replicate.`,
+`Influenced attribution research on emotion and misattribution.`],
+[`Walter Cannon`,`Cannon`,`1871–1945`,1871,`Emotion, stress & health`,`Physiology of emotion & stress`,`Coined fight-or-flight and homeostasis.`,
+`Born in Prairie du Chien, Wisconsin. Medical degree at Harvard (1900).`,
+`Fight-or-flight response of the sympathetic system; homeostasis keeps the body steady; Cannon–Bard theory: emotion and bodily response occur together via the thalamus.`,
+`Bodily Changes in Pain, Hunger, Fear and Rage (1915); The Wisdom of the Body (1932).`,
+`Chair of physiology at Harvard Medical School.`,
+`Thalamic theory of emotion was too simple; fight-or-flight ignores freezing and tend-and-befriend.`,
+`Foundation of modern stress physiology.`],
+[`Philip Bard`,`Bard`,`1898–1977`,1898,`Emotion, stress & health`,`Physiology of emotion`,`Co-author of the Cannon–Bard theory of emotion.`,
+`American physiologist who worked with Walter Cannon at Harvard before moving to Johns Hopkins.`,
+`Studied how the hypothalamus controls rage in cats; with Cannon argued emotional feeling and bodily change arise together, against James–Lange.`,
+`Cannon–Bard papers (1927–31); Medical Physiology (editor).`,
+`Professor of physiology at Johns Hopkins.`,
+`Later work showed the limbic system, not the thalamus alone, shapes emotion.`,
+`Early evidence for brain structures behind emotion.`],
+[`Hans Selye`,`Selye`,`1907–1982`,1907,`Emotion, stress & health`,`Stress physiology`,`Father of stress research; described the General Adaptation Syndrome.`,
+`Born in Vienna and raised in Komárno. Medical degree in Prague; later worked at McGill and the University of Montreal.`,
+`General Adaptation Syndrome: alarm, resistance and exhaustion in response to any stressor. Distinguished eustress from distress.`,
+`A Syndrome Produced by Diverse Nocuous Agents (1936); The Stress of Life (1956).`,
+`Founded the Institute of Experimental Medicine and Surgery at the University of Montreal.`,
+`Mostly based on rats; stress responses differ by stressor and person.`,
+`Gave the word stress its modern meaning in medicine and everyday life.`],
+[`Richard Lazarus`,`Lazarus`,`1922–2002`,1922,`Emotion, stress & health`,`Stress, appraisal & coping`,`Showed that stress depends on how a person appraises events.`,
+`Born in New York City. PhD at the University of Pittsburgh (1948).`,
+`Transactional model: primary appraisal (is it a threat?) and secondary appraisal (can I cope?) determine stress. Problem-focused vs emotion-focused coping.`,
+`Psychological Stress and the Coping Process (1966); Stress, Appraisal, and Coping (1984, with Susan Folkman).`,
+`Professor at UC Berkeley.`,
+`Appraisal may follow rather than cause emotion (Zajonc debate).`,
+`Basis of most modern coping and stress management programmes.`],
+[`James Gross`,`Gross`,`b. 1966`,1966,`Emotion, stress & health`,`Emotion regulation`,`Developed the process model of emotion regulation.`,
+`American psychologist; professor at Stanford University and director of its Psychophysiology Laboratory.`,
+`Emotions can be regulated at five points: situation selection, situation modification, attention deployment, cognitive change (reappraisal) and response modulation (suppression).`,
+`The Emerging Field of Emotion Regulation (1998); Handbook of Emotion Regulation (editor).`,
+`Leading researcher in affective science at Stanford.`,
+`Reappraisal is not always beneficial; suppression is not always harmful across cultures.`,
+`Guides stress, anxiety and mood interventions.`,
+{k:`James Gross`}],
+[`George Engel`,`Engel`,`1913–1999`,1913,`Emotion, stress & health`,`Biopsychosocial model`,`Proposed the biopsychosocial model of health and illness.`,
+`Born in New York City. Medical degree at Johns Hopkins (1938).`,
+`Illness arises from biological, psychological and social factors interacting, not just germs or organ damage.`,
+`The Need for a New Medical Model (Science, 1977).`,
+`Professor of medicine and psychiatry at the University of Rochester.`,
+`Criticised as vague, with no specific tests.`,
+`The foundation of health psychology and holistic medicine.`],
+[`Icek Ajzen`,`Ajzen`,`b. 1942`,1942,`Emotion, stress & health`,`Attitudes & behaviour`,`Created the Theory of Planned Behaviour.`,
+`PhD at the University of Illinois (1969); professor at the University of Massachusetts Amherst.`,
+`Intention depends on attitude, subjective norm and perceived behavioural control, and intention leads to behaviour.`,
+`Theory of Planned Behavior (1991); The Theory of Reasoned Action (with Martin Fishbein, 1975/1980).`,
+`Leading researcher on attitude–behaviour relations.`,
+`Ignores emotions, habits and the gap between intentions and action.`,
+`Widely used to predict health behaviours such as exercise and smoking.`],
+[`Meyer Friedman`,`Friedman`,`1910–2001`,1910,`Emotion, stress & health`,`Type A behaviour & heart disease`,`Identified Type A behaviour as a risk for heart disease with Ray Rosenman.`,
+`American cardiologist who practised in San Francisco.`,
+`Type A pattern: time urgency, competitiveness and hostility. Western Collaborative Group Study (from 1960) found Type A men had roughly double the heart disease risk.`,
+`Association of Specific Overt Behaviour Pattern with Blood and Cardiovascular Findings (1959); Type A Behavior and Your Heart (1974).`,
+`Cardiology researcher at Mount Zion Hospital, San Francisco.`,
+`Later studies found hostility, not the whole Type A pattern, is the toxic part.`,
+`Started research on personality and heart health.`,
+{k:`Friedman|Rosenman`}],
+[`Irwin Rosenstock`,`Rosenstock`,`Dates not verified`,1925,`Emotion, stress & health`,`Health Belief Model`,`Co-created the Health Belief Model.`,
+`American public health social psychologist; worked in the US Public Health Service in the 1950s.`,
+`Health Belief Model: action depends on perceived susceptibility and severity, benefits and barriers, cues to action and, later, self-efficacy.`,
+`Historical Origins of the Health Belief Model (1974); original model with Hochbaum and Kegeles.`,
+`One of the public health social psychologists who built the model.`,
+`Describes factors but does not specify how they combine.`,
+`One of the most used models in health promotion.`,
+{k:`Rosenstock|Hochbaum`}],
+[`James Prochaska`,`Prochaska`,`1942–2023`,1942,`Emotion, stress & health`,`Stages of change`,`Developed the Transtheoretical Model of behaviour change with Carlo DiClemente.`,
+`American clinical psychologist.`,
+`Stages of change: precontemplation, contemplation, preparation, action, maintenance (and termination), with processes matched to stage.`,
+`Toward a Comprehensive Model of Change (1983); Changing for Good (1994).`,
+`Founded the Cancer Prevention Research Center at the University of Rhode Island.`,
+`Evidence that stage-matched treatment works better is mixed.`,
+`Used in smoking cessation, addiction and weight-loss programmes.`,
+{k:`Prochaska|DiClemente`}],
+[`Edmund Jacobson`,`Jacobson`,`1888–1983`,1888,`Emotion, stress & health`,`Relaxation`,`Created progressive muscle relaxation.`,
+`Born in Chicago. Studied at Harvard and took a medical degree at Rush Medical College (1917).`,
+`Tensing then releasing muscle groups in turn lowers physiological arousal and anxiety.`,
+`Progressive Relaxation (1929); You Must Relax (1934).`,
+`Founded a laboratory for clinical physiology in Chicago.`,
+`Original training took many sessions; shorter versions followed.`,
+`A core tool in stress management and anxiety treatment.`],
+[`Aaron Beck`,`Beck`,`1921–2021`,1921,`Clinical & therapy`,`Cognitive therapy`,`Founded cognitive therapy and developed the Beck Depression Inventory.`,
+`Born in Providence, Rhode Island. Medical degree at Yale (1946); trained first as a psychoanalyst.`,
+`Depression comes from negative automatic thoughts, the cognitive triad (negative views of self, world and future) and schemas; therapy tests and changes them.`,
+`Depression: Clinical, Experimental, and Theoretical Aspects (1967); Cognitive Therapy of Depression (1979); Beck Depression Inventory (1961).`,
+`Professor at the University of Pennsylvania; Lasker Award (2006).`,
+`Debate over whether cognition causes depression or follows it.`,
+`Cognitive behavioural therapy is the most researched psychotherapy.`,
+{k:`Aaron Beck|Beck\\b`}],
+[`Albert Ellis`,`Ellis`,`1913–2007`,1913,`Clinical & therapy`,`Rational emotive behaviour therapy`,`Founded REBT: emotions come from beliefs, not events.`,
+`Born in Pittsburgh. PhD at Columbia (1947); trained in psychoanalysis before breaking away.`,
+`ABC model: Activating event, Belief, Consequence. Irrational beliefs such as demandingness cause distress and are disputed (D).`,
+`Reason and Emotion in Psychotherapy (1962); A Guide to Rational Living (1961).`,
+`Founded the Albert Ellis Institute in New York.`,
+`Directive and confrontational style; early evidence base was thin.`,
+`One of the roots of cognitive behavioural therapy.`,
+{k:`Albert Ellis|Ellis\\b`}],
+[`Donald Meichenbaum`,`Meichenbaum`,`b. 1940`,1940,`Clinical & therapy`,`Cognitive behaviour modification`,`Created self-instructional training and stress inoculation training.`,
+`Born in New York City. PhD at the University of Illinois (1966).`,
+`Changing self-talk changes behaviour. Stress inoculation training has three phases: conceptualisation, skills acquisition and rehearsal, and application.`,
+`Cognitive-Behavior Modification (1977); Stress Inoculation Training (1985).`,
+`Professor at the University of Waterloo.`,
+`Hard to know which components drive the benefits.`,
+`Used in trauma, anger management and coping skills programmes.`],
+[`Martin Seligman`,`Seligman`,`b. 1942`,1942,`Clinical & therapy`,`Learned helplessness & positive psychology`,`Discovered learned helplessness and launched positive psychology.`,
+`Born in Albany, New York. PhD at the University of Pennsylvania (1967).`,
+`Learned helplessness: after uncontrollable shocks, dogs stopped trying to escape. Later: learned optimism, PERMA model of wellbeing.`,
+`Learned Helplessness (Seligman and Maier, 1967); Learned Optimism (1990); Authentic Happiness (2002).`,
+`APA president (1998); professor at the University of Pennsylvania.`,
+`Positive psychology is accused of overclaiming and cultural bias.`,
+`Learned helplessness is a model of depression; positive psychology is a field in its own right.`],
+[`David Rosenhan`,`Rosenhan`,`1929–2012`,1929,`Clinical & therapy`,`Psychiatric diagnosis`,`Showed that healthy people were admitted to psychiatric hospitals in his pseudopatient study.`,
+`American psychologist; professor of psychology and law at Stanford University.`,
+`On Being Sane in Insane Places (1973): eight pseudopatients faked one symptom and were diagnosed with schizophrenia. Labels shaped how staff saw them.`,
+`On Being Sane in Insane Places (Science, 1973).`,
+`Stanford professor.`,
+`Later research (Susannah Cahalan, 2019) questioned the accuracy of his data.`,
+`Helped drive reform of diagnostic criteria in DSM-III.`],
+[`Emil Kraepelin`,`Kraepelin`,`1856–1926`,1856,`Clinical & therapy`,`Psychiatric classification`,`Father of modern psychiatric classification.`,
+`Born in Neustrelitz, Germany. Medical degree at Würzburg (1878); studied under Wundt at Leipzig.`,
+`Separated dementia praecox (later schizophrenia) from manic-depressive illness by course and outcome.`,
+`Psychiatrie textbook (many editions, from 1883).`,
+`Professor at Dorpat, Heidelberg and Munich; founded the German Research Institute of Psychiatry (1917).`,
+`Categories overlap more than he proposed.`,
+`The DSM-style diagnostic system descends from his approach.`],
+[`Eugen Bleuler`,`Bleuler`,`1857–1939`,1857,`Clinical & therapy`,`Schizophrenia`,`Coined the term schizophrenia.`,
+`Born in Zollikon, Switzerland. Medical studies in Zurich; director of the Burghölzli clinic (1898–1927).`,
+`Schizophrenia as a split of mental functions with the four A's: affect, association, ambivalence and autism.`,
+`Dementia Praecox or the Group of Schizophrenias (1911).`,
+`Taught Carl Jung and trained generations of psychiatrists.`,
+`Basic symptoms are hard to rate reliably.`,
+`Replaced a pessimistic term with a broader group concept.`],
+[`Alois Alzheimer`,`Alzheimer`,`1864–1915`,1864,`Clinical & therapy`,`Neuropathology`,`Described the brain changes of the disease that bears his name.`,
+`Born in Marktbreit, Bavaria. Medical degree at Würzburg (1887).`,
+`1906: patient Auguste Deter showed memory loss, and her brain had plaques and neurofibrillary tangles.`,
+`Presented the case in 1906 and published it in 1907.`,
+`Worked in Frankfurt and Munich with Kraepelin; professor at Breslau (1912).`,
+`The name Alzheimer's disease was given by Kraepelin in 1910.`,
+`Founded research on the pathology of dementia.`],
+[`Leo Kanner`,`Kanner`,`1894–1981`,1894,`Clinical & therapy`,`Child psychiatry & autism`,`First described early infantile autism.`,
+`Born in Klekotow, Austria-Hungary (now Ukraine). Medical degree at Berlin (1921); emigrated to the United States in 1924.`,
+`1943 paper on 11 children with extreme aloneness and insistence on sameness, which he called autism.`,
+`Autistic Disturbances of Affective Contact (1943); Child Psychiatry (1935).`,
+`Founded the first child psychiatry clinic in a US hospital at Johns Hopkins.`,
+`His early blame of cold parenting (refrigerator mother) was rejected.`,
+`Autism spectrum disorder research grew from his description.`],
+[`Thomas D'Zurilla`,`D'Zurilla`,`Dates not verified`,1936,`Clinical & therapy`,`Problem-solving therapy`,`Co-developed problem-solving therapy with Marvin Goldfried (1971).`,
+`American clinical psychologist; later professor at Stony Brook University.`,
+`Five steps: problem orientation, problem definition, generating alternatives, decision making, and implementation and verification.`,
+`Problem-Solving and Behavior Modification (1971, with Goldfried).`,
+`Developed the Social Problem-Solving Inventory.`,
+`Effects are modest for severe disorders.`,
+`Used for depression, stress and coping skills training.`,
+{k:`D.Zurilla`}],
+[`Steve de Shazer`,`de Shazer`,`Dates not verified`,1940,`Clinical & therapy`,`Solution-focused brief therapy`,`Co-founder of solution-focused brief therapy.`,
+`American psychotherapist who worked in Milwaukee.`,
+`Focus on solutions instead of problems: miracle question, exceptions and scaling questions.`,
+`Keys to Solution in Brief Therapy (1985); Clues (1988).`,
+`Co-founded the Brief Family Therapy Center in Milwaukee with Insoo Kim Berg.`,
+`Little attention to history; research support is moderate.`,
+`Short-term therapy used in counselling, schools and coaching.`,
+{k:`de Shazer`}],
+[`Frederick Kanfer`,`Kanfer`,`Dates not verified`,1925,`Clinical & therapy`,`Self-regulation & self-management`,`Created the model of self-regulation used in self-management therapy.`,
+`American clinical psychologist.`,
+`Self-regulation has three steps: self-monitoring, self-evaluation and self-reinforcement.`,
+`Self-Management Methods (1975); Kanfer's 1970 self-regulation model.`,
+`Professor at the University of Illinois.`,
+`Uses behavioural language that some find narrow.`,
+`Applied in habit change, weight control and study skills.`],
+[`Lev Vygotsky`,`Vygotsky`,`1896–1934`,1896,`Development`,`Sociocultural theory`,`Argued that thinking develops through social interaction and culture.`,
+`Born in Orsha, in the Russian Empire (now Belarus). Law degree at Moscow (1917).`,
+`Zone of Proximal Development: what a child can do with help. Scaffolding, private speech and cultural tools shape thought.`,
+`Thought and Language (1934); Mind in Society (1978).`,
+`Worked at the Moscow Institute of Psychology; died of tuberculosis aged 37.`,
+`Ideas were left underdeveloped and under-tested; his work was suppressed in the USSR for decades.`,
+`Collaborative learning, scaffolding and teaching strategies.`],
+[`John Bowlby`,`Bowlby`,`1907–1990`,1907,`Development`,`Attachment theory`,`Founded attachment theory.`,
+`Born in London. Studied at Cambridge and trained in medicine and psychoanalysis.`,
+`Infants are biologically wired to form attachments; early separation harms development (maternal deprivation).`,
+`Forty-four Juvenile Thieves (1944); Maternal Care and Mental Health (1951); Attachment and Loss (1969–80).`,
+`Worked at the Tavistock Clinic in London.`,
+`Michael Rutter argued deprivation has varied effects; monotropy was overstated.`,
+`Mary Ainsworth's Strange Situation and modern childcare policy.`],
+[`David Wechsler`,`Wechsler`,`1896–1981`,1896,`Assessment`,`Intelligence testing`,`Created the Wechsler intelligence scales.`,
+`Born in Lespezi, Romania; raised in the United States. PhD at Columbia (1925).`,
+`Intelligence is global and shown by verbal and performance abilities. Introduced the deviation IQ (mean 100, SD 15).`,
+`Wechsler-Bellevue Scale (1939); WAIS and WISC.`,
+`Chief psychologist at Bellevue Hospital in New York.`,
+`Tests can reflect cultural and educational bias.`,
+`The most widely used IQ tests worldwide.`],
+[`David McClelland`,`McClelland`,`1917–1998`,1917,`Motivation`,`Achievement motivation`,`Studied the need for achievement, affiliation and power.`,
+`Born in Mount Vernon, New York. PhD at Yale (1941).`,
+`People differ in the strength of three learned needs: achievement (nAch), affiliation and power. High-nAch people choose moderate risks.`,
+`The Achievement Motive (1953); The Achieving Society (1961).`,
+`Professor at Wesleyan, Harvard and Boston University.`,
+`TAT scoring is less reliable than questionnaires.`,
+`Applied in entrepreneurship and management training.`],
+[`Edward Deci`,`Deci`,`b. 1942`,1942,`Motivation`,`Self-determination theory`,`Co-created self-determination theory.`,
+`PhD at Carnegie Mellon (1970); professor at the University of Rochester.`,
+`Intrinsic motivation grows with autonomy, competence and relatedness; rewards can undermine interest (overjustification).`,
+`Intrinsic Motivation (1975); Intrinsic Motivation and Self-Determination in Human Behavior (1985, with Richard Ryan).`,
+`Leading figure in motivation research.`,
+`Reward effects are weaker in some meta-analyses.`,
+`Used in education, work and health behaviour change.`],
+[`Sri Aurobindo`,`Aurobindo`,`1872–1950`,1872,`Indian & transpersonal`,`Integral yoga & psychology`,`Philosopher-yogi who developed integral yoga and a theory of evolving consciousness.`,
+`Born in Calcutta. Educated in England (St Paul's, King's College Cambridge); returned to India in 1893 and worked at Baroda.`,
+`Integral yoga aims to transform all parts of the being; consciousness evolves toward a supramental level; levels of mind include higher mind, illumined mind and overmind.`,
+`The Life Divine (1939–40); The Synthesis of Yoga; Savitri.`,
+`Active in India's freedom movement; settled in Pondicherry in 1910 and founded the ashram with the Mother (1926).`,
+`Metaphysical claims are not empirically testable.`,
+`Influenced integral psychology, Ken Wilber and the Auroville community.`],
+[`Gautama Buddha`,`Buddha`,`c. 5th century BCE`,-480,`Indian & transpersonal`,`Buddhist psychology`,`Taught the Four Noble Truths and a path to end suffering.`,
+`Siddhartha Gautama, born in Lumbini (now Nepal) in the Shakya clan; left home around age 29; enlightened at Bodh Gaya; first taught at Sarnath.`,
+`Four Noble Truths, Eightfold Path, three marks of existence (impermanence, suffering, not-self) and dependent origination. Mindfulness (sati) trains attention.`,
+`Teachings recorded in the Pali Canon.`,
+`Founded the monastic community (sangha) and taught for about 45 years.`,
+`The no-self teaching is philosophically contested.`,
+`Underlies mindfulness-based therapies such as MBSR, MBCT and DBT.`,
+{ph:`a statue of the Buddha (Sarnath Museum)`,k:`Buddh`}],
+[`Patanjali`,`Patanjali`,`Dates uncertain`,-200,`Indian & transpersonal`,`Yoga psychology`,`Compiled the Yoga Sutras, the classic text on mind control.`,
+`Little is known about the life; scholars place the compiler between the 2nd century BCE and the 4th century CE.`,
+`Yoga is the stilling of the fluctuations of mind (chitta vritti nirodha). Eight limbs: yama, niyama, asana, pranayama, pratyahara, dharana, dhyana and samadhi.`,
+`Yoga Sutras (196 sutras in four chapters).`,
+`The sutras became the reference text of classical yoga.`,
+`Authorship and date are debated.`,
+`Basis of yoga therapy and meditation research.`],
+[`Swami Vivekananda`,`Vivekananda`,`1863–1902`,1863,`Indian & transpersonal`,`Practical Vedanta & Raja yoga`,`Introduced Indian philosophy and yoga to the West and stressed strength of mind.`,
+`Born Narendranath Datta in Calcutta; studied at the Scottish Church College; became a disciple of Ramakrishna.`,
+`Each soul is potentially divine; Raja yoga trains concentration; education should be man-making and build character.`,
+`Raja Yoga (1896); lectures at the Parliament of the World's Religions, Chicago (1893).`,
+`Founded the Ramakrishna Mission (1897).`,
+`Spiritual rather than experimental psychology.`,
+`An inspiration to modern Indian psychology and yoga practice.`],
+[`Ken Wilber`,`Wilber`,`b. 1949`,1949,`Indian & transpersonal`,`Integral theory`,`Created an integral map linking psychology, spirituality and science.`,
+`Born in Oklahoma City. Studied biochemistry at Duke and Nebraska before turning to writing.`,
+`AQAL (all quadrants, all levels, lines, states and types); spectrum of consciousness from ego to transpersonal levels.`,
+`The Spectrum of Consciousness (1977); A Brief History of Everything (1996); Integral Psychology (2000).`,
+`Founded the Integral Institute (2000).`,
+`Sweeping claims are hard to test; the pre/trans fallacy is contested.`,
+`Widely read in transpersonal psychology and leadership programmes.`],
+[`Anand Paranjpe`,`Paranjpe`,`Dates not verified`,1930,`Indian & transpersonal`,`Indian psychology`,`Leading scholar who linked modern psychology with Indian thought.`,
+`Indian-born psychologist, later a professor at Simon Fraser University in Canada.`,
+`Compares Western and Indian ideas of self and identity and argues for Indian psychology as a field.`,
+`Theoretical Psychology: The Meeting of East and West (1984); Self and Identity in Modern Psychology and Indian Thought (1998); Handbook of Indian Psychology (2008, co-editor).`,
+`Helped bring Indian psychology into academic curricula.`,
+`Comparative work relies on interpretation of texts more than experiments.`,
+`Shaped the study of Indian psychology as a discipline.`]
+);
+</script>
 
 <section class="view unit" id="s1" data-subject="sp" data-num="Unit I" data-short="Intro &amp; Prosocial" data-title="Introduction and Prosocial Behaviour" hidden>
   <div class="unit-head">
@@ -10852,8 +11623,147 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
     subtabs.setAttribute('aria-label', sem ? 'Subjects in ' + sem.dataset.name : 'Semesters');
   }
 
+  /* ---------- Famous Psychologists ---------- */
+  var psyView = document.getElementById('psychologists');
+  var profView = document.getElementById('pprofile');
+  var maintabs = document.getElementById('maintabs');
+  var pgrid = document.getElementById('pgrid');
+  var elSearch = document.getElementById('psearch'), elSort = document.getElementById('psort'), elCat = document.getElementById('pcat'), elPaper = document.getElementById('ppaper');
+  var elLetters = document.getElementById('pletters'), elCount = document.getElementById('pcount');
+  var letter = '', lastList = [];
+
+  function norm(s) { return String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+  function reEsc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }
+
+  var photos = {};
+  all('img.photo').forEach(function (im) {
+    var m = (im.getAttribute('alt') || '').match(/^Photograph of (.+)$/);
+    if (m && !photos[m[1]]) photos[m[1]] = im.getAttribute('src');
+  });
+  var unitText = units.map(function (u) { return u.textContent; });
+
+  var PEOPLE = (window.PSY || []).map(function (a) {
+    var x = a[13] || {};
+    var o = { name: a[0], sn: a[1], life: a[2], born: a[3], cat: a[4], field: a[5], tag: a[6], early: a[7], theory: a[8], works: a[9], impact: a[10], crit: a[11], legacy: a[12] };
+    o.id = 'who_' + norm(a[0]).replace(/[^a-z]/g, '');
+    o.photo = photos[x.ph || a[0]] || '';
+    var re = new RegExp(x.k || reEsc(a[1]));
+    o.units = units.filter(function (u, i) { return re.test(unitText[i]); });
+    o.subjects = {};
+    o.units.forEach(function (u) { o.subjects[u.dataset.subject] = true; });
+    o.hay = norm([a[0], a[2], a[4], a[5], a[6], a[7], a[8], a[9], a[10], a[11], a[12]].join(' | '));
+    o.ini = a[0].replace(/\b(Jr\.|Dr\.)/g, '').split(/\s+/).filter(Boolean).map(function (w) { return w.charAt(0); });
+    o.ini = (o.ini[0] + (o.ini.length > 1 ? o.ini[o.ini.length - 1] : '')).toUpperCase();
+    o.first = norm(a[1]).replace(/[^a-z]/g, '').charAt(0).toUpperCase();
+    return o;
+  });
+  var byPerson = {}; PEOPLE.forEach(function (p) { byPerson[p.id] = p; });
+
+  function fillOptions(sel, items) {
+    items.forEach(function (it) { var o = document.createElement('option'); o.value = it[0]; o.textContent = it[1]; sel.appendChild(o); });
+  }
+  var cats = []; PEOPLE.forEach(function (p) { if (cats.indexOf(p.cat) < 0) cats.push(p.cat); });
+  fillOptions(elCat, cats.map(function (c) { return [c, c + ' (' + PEOPLE.filter(function (p) { return p.cat === c; }).length + ')']; }));
+  fillOptions(elPaper, subjects.map(function (s) { return [s.id, s.dataset.name + ' (' + PEOPLE.filter(function (p) { return p.subjects[s.id]; }).length + ')']; }));
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(function (L) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = L; b.setAttribute('aria-pressed', 'false');
+    if (!PEOPLE.some(function (p) { return p.first === L; })) b.disabled = true;
+    b.addEventListener('click', function () { letter = letter === L ? '' : L; renderPsy(); });
+    elLetters.appendChild(b);
+  });
+  document.getElementById('pstat').textContent = PEOPLE.length + ' psychologists · ' + PEOPLE.filter(function (p) { return p.photo; }).length + ' with photos';
+
+  function avatar(p, cls) {
+    return p.photo ? '<img class="' + cls + '" src="' + p.photo + '" alt="Photograph of ' + esc(p.name) + '">' : '<div class="' + cls + ' ini" aria-hidden="true">' + esc(p.ini) + '</div>';
+  }
+
+  function filtered() {
+    var terms = norm(elSearch.value).split(/\s+/).filter(Boolean);
+    var list = PEOPLE.filter(function (p) {
+      if (elCat.value && p.cat !== elCat.value) return false;
+      if (elPaper.value && !p.subjects[elPaper.value]) return false;
+      if (letter && p.first !== letter) return false;
+      return terms.every(function (t) { return p.hay.indexOf(t) >= 0; });
+    });
+    var by = function (a, b) { return norm(a.sn + a.name).localeCompare(norm(b.sn + b.name)); };
+    var m = elSort.value;
+    list.sort(m === 'za' ? function (a, b) { return by(b, a); } :
+      m === 'old' ? function (a, b) { return a.born - b.born || by(a, b); } :
+      m === 'new' ? function (a, b) { return b.born - a.born || by(a, b); } :
+      m === 'field' ? function (a, b) { return a.cat.localeCompare(b.cat) || by(a, b); } : by);
+    return list;
+  }
+
+  function renderPsy() {
+    lastList = filtered();
+    all('button', elLetters).forEach(function (b) { b.setAttribute('aria-pressed', b.textContent === letter ? 'true' : 'false'); });
+    elCount.textContent = 'Showing ' + lastList.length + ' of ' + PEOPLE.length;
+    pgrid.innerHTML = lastList.length ? lastList.map(function (p) {
+      return '<button type="button" class="pcard" data-go="' + p.id + '">' + avatar(p, 'pimg') +
+        '<span class="pbody"><h3>' + esc(p.name) + '</h3><div class="pmeta">' + esc(p.life) + ' · ' + esc(p.field) + '</div><p>' + esc(p.tag) + '</p></span></button>';
+    }).join('') : '<div class="pempty">No psychologist matches. Try fewer words or press Reset.</div>';
+  }
+  [elSearch, elSort, elCat, elPaper].forEach(function (el) { el.addEventListener('input', renderPsy); });
+  document.getElementById('preset').addEventListener('click', function () {
+    elSearch.value = ''; elSort.value = 'az'; elCat.value = ''; elPaper.value = ''; letter = ''; renderPsy();
+  });
+
+  function renderProfile(p) {
+    var secs = [['Early life & foundations', p.early], ['Core ideas & theory', p.theory], ['Key studies & works', p.works], ['Positions & recognition', p.impact], ['Criticism & debates', p.crit], ['Legacy & modern use', p.legacy]];
+    var html = '<div class="eyebrow">' + esc(p.cat) + '</div><div class="phead">' + avatar(p, 'pbig') +
+      '<div class="ptxt"><h1>' + esc(p.name) + '</h1><div class="pmeta"><b>' + esc(p.life) + '</b> · ' + esc(p.field) + '</div><p class="lede" style="margin:0">' + esc(p.tag) + '</p></div></div>' +
+      '<div class="block psec">' + secs.map(function (s) { return '<div><h3>' + s[0] + '</h3><p>' + esc(s[1]) + '</p></div>'; }).join('') + '</div>';
+    if (p.units.length) {
+      html += '<div class="block psec"><h3>Where this appears in your syllabus</h3><div class="pappear">' + p.units.map(function (u) {
+        var s = byId(subjects, u.dataset.subject);
+        return '<button type="button" data-go="' + u.id + '">' + esc((s ? s.dataset.short : '') + ' · ' + u.dataset.num) + '</button>';
+      }).join('') + '</div></div>';
+    }
+    if (p.photo) html += '<p class="pcredit">Photo credits and licences are listed in the project CREDITS.md file.</p>';
+    var i = lastList.indexOf(p), prev = lastList[i - 1], next = lastList[i + 1];
+    html += '<nav class="pager" aria-label="Next and previous">' +
+      (prev ? '<button type="button" data-go="' + prev.id + '"><small>Previous</small>← ' + esc(prev.name) + '</button>' : '') +
+      (next ? '<button type="button" class="next" data-go="' + next.id + '"><small>Next</small>' + esc(next.name) + ' →</button>' : '') + '</nav>';
+    profView.innerHTML = html;
+  }
+
+  function showPsy(token) {
+    var p = byPerson[token];
+    home.hidden = true;
+    semesters.forEach(function (x) { x.hidden = true; });
+    subjects.forEach(function (x) { x.hidden = true; });
+    units.forEach(function (x) { x.hidden = true; });
+    subtabs.innerHTML = ''; utabs.innerHTML = ''; utabs.hidden = true;
+    if (!lastList.length) renderPsy();
+    psyView.hidden = !!p;
+    profView.hidden = !p;
+    var h = crumb('MA Psychology', 'home');
+    if (p) { renderProfile(p); h += crumb('Famous Psychologists', 'psychologists') + crumb(p.name); }
+    else { token = 'psychologists'; h += crumb('Famous Psychologists'); }
+    crumbs.innerHTML = h;
+    return token;
+  }
+
+  [['home', 'Semesters'], ['psychologists', 'Famous Psychologists']].forEach(function (t) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.go = t[0]; b.textContent = t[1];
+    maintabs.appendChild(b);
+  });
+
   function show(token, scroll) {
     token = token || 'home';
+    psyView.hidden = true; profView.hidden = true;
+    var isPsy = token === 'psychologists' || token.indexOf('who_') === 0;
+    all('button', maintabs).forEach(function (b) { b.setAttribute('aria-selected', (b.dataset.go === 'psychologists') === isPsy ? 'true' : 'false'); });
+    if (isPsy) {
+      token = showPsy(token);
+      try { history.replaceState(null, '', '#' + token); } catch (e) {}
+      try { localStorage.setItem('tp-last', token); } catch (e) {}
+      if (scroll) window.scrollTo(0, 0);
+      return;
+    }
     var parts = token.split('-');
     var u = byId(units, parts[0]);
     var s = byId(subjects, u ? u.dataset.subject : parts[0]);
