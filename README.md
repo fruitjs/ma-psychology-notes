@@ -2,7 +2,7 @@
 
 Free, visual revision guides for an **MA Psychology** programme, organised by semester and paper. They are written for students who are new to psychology and want to understand each topic quickly before a unit test.
 
-**Open it online:** https://fruitjs.github.io/theories-of-personality/
+**Open it online:** https://fruitjs.github.io/ma-psychology-notes/
 
 Everything is in one self-contained file, [`index.html`](index.html). You can also download it and open it in any web browser; it works offline with no installation.
 
