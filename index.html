@@ -12730,6 +12730,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   var crumbs = document.getElementById('crumbs');
   var semcards = document.getElementById('semcards');
 
+  function TT(w) { var t = window.TPLookup ? window.TPLookup(w) : null; return t || w; }
   function panelsOf(u) { return all(':scope > .panel', u); }
   function unitsOf(s) { return units.filter(function (u) { return u.dataset.subject === s.id; }); }
   function subjectsOf(sem) { return subjects.filter(function (s) { return s.dataset.sem === sem.id; }); }
@@ -12773,11 +12774,11 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     ps.forEach(function (p, i) {
       var pg = document.createElement('nav'); pg.className = 'pager'; pg.setAttribute('aria-label', 'Next and previous');
       var prev = ps[i - 1], next = ps[i + 1];
-      if (prev) pg.insertAdjacentHTML('beforeend', '<button type="button" data-go="' + tok(u, prev) + '"><small>Previous</small>← ' + prev.dataset.label + '</button>');
-      if (next) pg.insertAdjacentHTML('beforeend', '<button type="button" class="next" data-go="' + tok(u, next) + '"><small>Next</small>' + next.dataset.label + ' →</button>');
+      if (prev) pg.insertAdjacentHTML('beforeend', '<button type="button" data-go="' + tok(u, prev) + '"><small>' + TT('Previous') + '</small>← ' + prev.dataset.label + '</button>');
+      if (next) pg.insertAdjacentHTML('beforeend', '<button type="button" class="next" data-go="' + tok(u, next) + '"><small>' + TT('Next') + '</small>' + next.dataset.label + ' →</button>');
       else {
         var nu = sibs[sibs.indexOf(u) + 1];
-        if (nu) pg.insertAdjacentHTML('beforeend', '<button type="button" class="next" data-go="' + nu.id + '"><small>Next unit</small>' + nu.dataset.num + ': ' + nu.dataset.short + ' →</button>');
+        if (nu) pg.insertAdjacentHTML('beforeend', '<button type="button" class="next" data-go="' + nu.id + '"><small>' + TT('Next unit') + '</small>' + nu.dataset.num + ': ' + nu.dataset.short + ' →</button>');
       }
       p.appendChild(pg);
     });
@@ -13046,8 +13047,8 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     if (p.photo) html += '<p class="pcredit">' + (p.credit ? 'Photo: ' + esc(p.credit) + '. ' : '') + 'Photo credits and licences are listed in the project CREDITS.md file.</p>';
     var i = lastList.indexOf(p), prev = lastList[i - 1], next = lastList[i + 1];
     html += '<nav class="pager" aria-label="Next and previous">' +
-      (prev ? '<button type="button" data-go="' + prev.id + '"><small>Previous</small>← ' + esc(prev.name) + '</button>' : '') +
-      (next ? '<button type="button" class="next" data-go="' + next.id + '"><small>Next</small>' + esc(next.name) + ' →</button>' : '') + '</nav>';
+      (prev ? '<button type="button" data-go="' + prev.id + '"><small>' + TT('Previous') + '</small>← ' + esc(prev.name) + '</button>' : '') +
+      (next ? '<button type="button" class="next" data-go="' + next.id + '"><small>' + TT('Next') + '</small>' + esc(next.name) + ' →</button>' : '') + '</nav>';
     profView.innerHTML = html;
   }
 
