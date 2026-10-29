@@ -154,3 +154,7 @@ Photographs come from Wikimedia Commons under free licences or the public domain
 ## Licence
 
 The text, diagrams and code are licensed under [CC BY-SA 4.0](LICENSE). Each photo keeps its own licence; see [CREDITS.md](CREDITS.md).
+
+## Photos
+
+Most portraits are free-licence images from Wikimedia Commons. A few are non-free images taken from English Wikipedia and shown as small crops for education only; they are not covered by this project's licence. See [CREDITS.md](CREDITS.md), which also explains how to request removal.

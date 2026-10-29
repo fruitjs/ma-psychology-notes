@@ -64,6 +64,14 @@ All photographs are embedded in `index.html` as small, face-cropped versions of 
 | Edward Tolman | Free Art License | [Commons](https://commons.wikimedia.org/wiki/File:Tolman,_E.C._portrait.jpg) |
 | Swami Vivekananda | 1893 photograph, public domain | [Commons](https://commons.wikimedia.org/wiki/File:Swami_Vivekananda-1893-09-signed.jpg) |
 | Lev Vygotsky | Unknown, public domain | [Commons](https://commons.wikimedia.org/wiki/File:Lev-Semyonovich-Vygotsky-1896-1934.jpg) |
+| John Bowlby | Non-free image from the English Wikipedia article (file: John Bowlby.jpg); copyright held by its owner, shown small for education and identification | [Wikipedia](https://en.wikipedia.org/wiki/File:John_Bowlby.jpg) |
+| Kurt Lewin | Non-free image from the English Wikipedia article (file: Kurt Lewin Photo.jpg); copyright held by its owner, shown small for education and identification | [Wikipedia](https://en.wikipedia.org/wiki/File:Kurt_Lewin_Photo.jpg) |
+| William Sheldon | Non-free image from the English Wikipedia article (file: William Herbert Sheldon.jpg); copyright held by its owner, shown small for education and identification | [Wikipedia](https://en.wikipedia.org/wiki/File:William_Herbert_Sheldon.jpg) |
+| Solomon Asch | Non-free image from the English Wikipedia article (file: Solomon Asch.jpg); copyright held by its owner, shown small for education and identification | [Wikipedia](https://en.wikipedia.org/wiki/File:Solomon_Asch.jpg) |
+| Henry Murray | Non-free image from the English Wikipedia article (file: Henry Murray.jpg); copyright held by its owner, shown small for education and identification | [Wikipedia](https://en.wikipedia.org/wiki/File:Henry_Murray.jpg) |
+| Stanley Schachter | Non-free image from the English Wikipedia article (file: Stanley Schachter.jpg); copyright held by its owner, shown small for education and identification | [Wikipedia](https://en.wikipedia.org/wiki/File:Stanley_Schachter.jpg) |
+| Leon Festinger | Non-free image from the English Wikipedia article (file: Leon Festinger.jpg); copyright held by its owner, shown small for education and identification | [Wikipedia](https://en.wikipedia.org/wiki/File:Leon_Festinger.jpg) |
+
 
 ## Illustrations and initials
 
@@ -74,3 +82,7 @@ Semester 3 people shown with initials because no freely licensed portrait photog
 Semester 3 (Indian Psychology, Western Thoughts) people shown with initials because no suitable freely licensed portrait was found: Anand Paranjpe, Patanjali (no known likeness), Ken Wilber, and others without a free photo.
 
 These ten portraits appear on the Famous Psychologists profiles only. The photo of the site author on the Vineet Kumar tab is the author's own.
+
+## Non-free photographs
+
+The portraits marked above as non-free images come from English Wikipedia articles, where they are used under Wikipedia fair-use rules. They are **not** covered by this project's CC BY-SA licence; copyright stays with the original owners. They are shown here only as small, low-resolution crops to identify the person in an educational study guide. If you own one of these images and want it removed, open an issue and it will be taken down promptly.
