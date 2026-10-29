@@ -12689,14 +12689,27 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       var t2 = lookup(html, [], part); if (t2 !== null && t2 !== html) el.innerHTML = t2;
     }
   }
+  function walkOption(op) {
+    var ot = flat(op.textContent), cm = ot.match(/^(.*?)\s*\((\d+)\)$/), base = cm ? cm[1] : ot;
+    if (!D || !/[A-Za-z]{2}/.test(base) || /\d/.test(base)) return;
+    var ov = D[base]; if (ov !== undefined && ov !== base) op.textContent = ov + (cm ? ' (' + cm[2] + ')' : '');
+  }
   function walk(node) {
     if (!node || node.nodeType !== 1) return;
+    var tg = node.tagName.toUpperCase(), nt = node.classList && node.classList.contains('notranslate') || node.parentNode && node.parentNode.classList && node.parentNode.classList.contains('notranslate');
+    if (tg === 'OPTION' && !nt) { walkOption(node); return; }
+    if (tg === 'SELECT' && !nt) { for (var oi = 0; oi < node.options.length; oi++) walkOption(node.options[oi]); attrs(node); return; }
+    if ((tg === 'INPUT' || tg === 'TEXTAREA') && !nt) attrs(node);
     if (SKIP[node.tagName.toUpperCase()] || (node.classList && node.classList.contains('notranslate')) || node.getAttribute('translate') === 'no') return;
     attrs(node);
     if (isLeaf(node)) { segment(node); return; }
     for (var c = node.firstChild; c; c = c.nextSibling) {
       if (c.nodeType === 1) walk(c);
-      else if (c.nodeType === 3 && collect && c.nodeValue.trim() && /[A-Za-z]{3}/.test(c.nodeValue)) collect.orphan(node, c.nodeValue.trim());
+      else if (c.nodeType === 3 && c.nodeValue.trim() && /[A-Za-z]{3}/.test(c.nodeValue)) {
+        var ot = flat(c.nodeValue), ov = D && !/\d/.test(ot) ? D[ot] : undefined;
+        if (collect) collect.orphan(node, ot);
+        if (ov !== undefined && ov !== ot) { var ws = c.nodeValue.match(/^(\s*)[\s\S]*?(\s*)$/); c.nodeValue = ws[1] + ov + ws[2]; }
+      }
     }
   }
   window.TPWalk = walk;
@@ -12731,6 +12744,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   var semcards = document.getElementById('semcards');
 
   function TT(w) { var t = window.TPLookup ? window.TPLookup(w) : null; return t || w; }
+  function FT(key, args) { var i = 0; return TT(key).replace(/\{#\}/g, function () { var v = args[i++]; return v === undefined ? '' : v; }); }
   function panelsOf(u) { return all(':scope > .panel', u); }
   function unitsOf(s) { return units.filter(function (u) { return u.dataset.subject === s.id; }); }
   function subjectsOf(sem) { return subjects.filter(function (s) { return s.dataset.sem === sem.id; }); }
@@ -12868,7 +12882,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     b.addEventListener('click', function () { letter = letter === L ? '' : L; renderPsy(); });
     elLetters.appendChild(b);
   });
-  document.getElementById('pstat').textContent = PEOPLE.length + ' psychologists · ' + PEOPLE.filter(function (p) { return p.photo; }).length + ' with photos';
+  (function () { var ps = document.getElementById('pstat'); ps.parentNode.innerHTML = TT('Biographies') + ' · <span id="pstat">' + FT('{#} psychologists · {#} with photos', [PEOPLE.length, PEOPLE.filter(function (p) { return p.photo; }).length]) + '</span>'; })();
 
   function avatar(p, cls) {
     return p.photo ? '<img class="' + cls + '" src="' + p.photo + '" alt="Photograph of ' + esc(p.name) + '">' : '<div class="' + cls + ' ini" aria-hidden="true">' + esc(p.ini) + '</div>';
@@ -13104,7 +13118,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   }
   function renderSearch() {
     var terms = norm(gsearch.value).split(/\s+/).filter(Boolean), el = document.getElementById('sres'), st = document.getElementById('sstat');
-    if (terms.join('').length < 2) { st.textContent = 'Type at least two letters in the search box to search every paper, unit and psychologist profile.'; el.innerHTML = ''; return; }
+    if (terms.join('').length < 2) { st.textContent = TT('Type at least two letters in the search box to search every paper, unit and psychologist profile.'); el.innerHTML = ''; return; }
     if (!SIDX) buildIdx();
     var hits = [];
     SIDX.forEach(function (e) {
@@ -13118,7 +13132,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     });
     hits.sort(function (a, b) { return b[0] - a[0]; });
     var ppl = PEOPLE.filter(function (p) { return terms.every(function (t) { return p.hay.indexOf(t) >= 0; }); });
-    st.textContent = hits.length + ' matching sections and ' + ppl.length + ' psychologists for "' + gsearch.value.trim() + '"' + (hits.length > 40 ? ' (showing the best 40)' : '');
+    st.textContent = FT('{#} matching sections and {#} psychologists for "{#}"', [hits.length, ppl.length, gsearch.value.trim()]) + (hits.length > 40 ? ' ' + TT('(showing the best 40)') : '');
     var html = '';
     if (ppl.length) html += '<h2 class="shead">Psychologists</h2><div class="pgrid">' + ppl.slice(0, 12).map(function (p) {
       return '<button type="button" class="pcard" data-go="' + p.id + '">' + avatar(p, 'pimg') + '<span class="pbody"><h3>' + esc(p.name) + '</h3><div class="pmeta">' + esc(p.life) + ' · ' + esc(p.field) + '</div><p>' + esc(p.tag) + '</p></span></button>';
@@ -13327,7 +13341,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   }
   function personQ(type, text, p, extra) {
     var o = nameOpts(p, 3);
-    var q = { type: type, text: text, opts: o.map(function (x) { return x.name; }), ans: o.indexOf(p), key: 'p:' + p.id, label: p.name, go: p.id, p: p, why: p.name + ': ' + p.tag };
+    var q = { type: type, text: text, opts: o.map(function (x) { return x.name; }), ans: o.indexOf(p), key: 'p:' + p.id, label: p.name, go: p.id, p: p, why: p.name + ': ' + TT(p.tag) };
     if (extra) for (var k in extra) q[k] = extra[k];
     return q;
   }
@@ -13339,14 +13353,14 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     PEOPLE.forEach(function (p) {
       var first = norm(p.name.split(' ')[0]), sn = norm(p.sn);
       if (p.photo) B.face.push(function () { return personQ('face', 'Who is this?', p, { img: p.photo }); });
-      var nt = norm(p.tag); if (nt.indexOf(sn) < 0 && nt.indexOf(first) < 0 && p.tag.length < 130) B.who.push(function () { return personQ('who', 'Which psychologist fits this description? “' + p.tag + '”', p); });
+      var nt = norm(p.tag); if (nt.indexOf(sn) < 0 && nt.indexOf(first) < 0 && p.tag.length < 130) B.who.push(function () { return personQ('who', FT('Which psychologist fits this description? “{#}”', [TT(p.tag)]), p); });
       if (p.pd) p.pd.c.forEach(function (c) {
         var t = c[0]; if (t.length < 9 || termOwners[t.toLowerCase()].length > 1 || norm(t).indexOf(sn) >= 0) return;
-        B.concept.push(function () { return personQ('concept', 'Which psychologist is linked with the concept “' + t + '”?', p); });
+        B.concept.push(function () { return personQ('concept', FT('Which psychologist is linked with the concept “{#}”?', [TT(t)]), p); });
       });
       p.works.split(/;\s+/).forEach(function (w) {
         var t = cleanTitle(w); if (t.length < 8 || norm(w).indexOf(sn) >= 0 || /\bwith\b/i.test(w) || /^(Teachings|Work of)/i.test(t)) return;
-        B.work.push(function () { return personQ('work', 'Which psychologist is linked with “' + t + '”?', p); });
+        B.work.push(function () { return personQ('work', FT('Which psychologist is linked with “{#}”?', [TT(t)]), p); });
       });
     });
     var dated = PEOPLE.filter(function (p) { return p.born >= 1500 && !/verified|uncertain/i.test(p.life); });
@@ -13355,7 +13369,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
         var a = dated[Math.floor(Math.random() * dated.length)], b = dated[Math.floor(Math.random() * dated.length)];
         if (a !== b && Math.abs(a.born - b.born) >= 12) {
           var pair = shuf([a, b]), win = a.born < b.born ? a : b;
-          return { type: 'first', text: 'Who was born first?', opts: pair.map(function (x) { return x.name; }), ans: pair.indexOf(win), key: 'p:' + win.id, label: win.name, go: win.id, p: win, why: a.name + ' was born in ' + a.born + ' and ' + b.name + ' in ' + b.born + '.' };
+          return { type: 'first', text: FT('Who was born first?', []), opts: pair.map(function (x) { return x.name; }), ans: pair.indexOf(win), key: 'p:' + win.id, label: win.name, go: win.id, p: win, why: FT('{#} was born in {#} and {#} in {#}.', [a.name, a.born, b.name, b.born]) };
         }
       }
     });
@@ -13368,7 +13382,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
         near.concat(far).forEach(function (x) { if (d.length < 3 && !seen[x.a]) { seen[x.a] = 1; d.push(x.a); } });
         if (d.length < 3) return null;
         var o = shuf([c.a].concat(d));
-        return { type: 'fact', text: c.q, opts: o, ans: o.indexOf(c.a), key: 'u:' + c.u.id, label: where(c.u), go: c.u.id, why: 'Answer: ' + c.a };
+        return { type: 'fact', text: c.q, opts: o, ans: o.indexOf(c.a), key: 'u:' + c.u.id, label: where(c.u), go: c.u.id, why: FT('Answer: {#}', [c.a]) };
       });
     });
     return B;
@@ -13385,7 +13399,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     return out;
   }
   function pct(a, b) { return b ? Math.round(100 * a / b) : 0; }
-  function when(ts) { var d = new Date(ts); return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }); }
+  function when(ts) { var d = new Date(ts), lc = document.documentElement.lang === 'hi' ? 'hi-IN' : undefined; return d.toLocaleDateString(lc, { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString(lc, { hour: '2-digit', minute: '2-digit' }); }
 
   function progressChart(H) {
     var P = H.slice(-30), n = P.length;
@@ -13395,7 +13409,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     [0, 25, 50, 75, 100].forEach(function (v) { g += '<line x1="48" y1="' + Y(v) + '" x2="590" y2="' + Y(v) + '" stroke="var(--line)" stroke-width="1"/><text x="40" y="' + (Y(v) + 4) + '" text-anchor="end" font-size="11" fill="var(--muted)" font-family="var(--display)">' + v + '%</text>'; });
     var pts = P.map(function (a, k) { return X(k) + ',' + Y(pct(a.score, a.n)); }).join(' ');
     var ma = P.map(function (a, k) { var s = P.slice(Math.max(0, k - 4), k + 1), c = 0, t = 0; s.forEach(function (z) { c += z.score; t += z.n; }); return X(k) + ',' + Y(pct(c, t)); }).join(' ');
-    var dots = P.map(function (a, k) { var v = pct(a.score, a.n); return '<circle cx="' + X(k) + '" cy="' + Y(v) + '" r="5" fill="var(--c3)"><title>Attempt ' + (H.length - n + k + 1) + ' · ' + a.mode + ' · ' + a.score + '/' + a.n + ' (' + v + '%) · ' + when(a.t) + '</title></circle>'; }).join('');
+    var dots = P.map(function (a, k) { var v = pct(a.score, a.n); return '<circle cx="' + X(k) + '" cy="' + Y(v) + '" r="5" fill="var(--c3)"><title>' + FT('Attempt {#} · {#} · {#}/{#} ({#}%) · {#}', [H.length - n + k + 1, TT(a.mode), a.score, a.n, v, when(a.t)]) + '</title></circle>'; }).join('');
     var xl = P.map(function (a, k) { return (n <= 12 || k % Math.ceil(n / 12) === 0 || k === n - 1) ? '<text x="' + X(k) + '" y="202" text-anchor="middle" font-size="10.5" fill="var(--muted)" font-family="var(--display)">' + (H.length - n + k + 1) + '</text>' : ''; }).join('');
     return '<svg viewBox="0 0 600 214" role="img" aria-label="Quiz score per attempt as a line chart">' + g + (n > 1 ? '<polyline points="' + ma + '" fill="none" stroke="var(--c4)" stroke-width="2.5" stroke-dasharray="6 4"/><polyline points="' + pts + '" fill="none" stroke="var(--c3)" stroke-width="3"/>' : '') + dots + xl +
       '<text x="318" y="212" text-anchor="middle" font-size="10.5" fill="var(--muted)" font-family="var(--display)">Attempt number</text></svg>' +
@@ -13423,7 +13437,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       '<div class="qpanel"><h3>Your progress</h3><div class="qchart">' + progressChart(H) + '</div></div>';
     var tb = typeBars(totals());
     if (tb) html += '<div class="qpanel"><h3>Accuracy by question type</h3>' + tb + '</div>';
-    if (weak.length) html += '<div class="qpanel"><h3>Your weak spots (tap to study)</h3><div class="qweak">' + weak.map(function (w) { return '<button type="button" data-go="' + w[1].go + '">' + esc(w[1].label) + ' · missed ' + w[1].n + '×</button>'; }).join('') + '</div></div>';
+    if (weak.length) html += '<div class="qpanel"><h3>Your weak spots (tap to study)</h3><div class="qweak">' + weak.map(function (w) { return '<button type="button" data-go="' + w[1].go + '">' + esc(FT('{#} · missed {#}×', [w[1].label, w[1].n])) + '</button>'; }).join('') + '</div></div>';
     if (att) html += '<div class="qpanel"><h3>Recent attempts</h3><table class="qhist"><thead><tr><th>#</th><th>When</th><th>Mode</th><th>Score</th></tr></thead><tbody>' + H.slice(-8).reverse().map(function (a, k) { return '<tr><td>' + (att - k) + '</td><td>' + when(a.t) + '</td><td>' + esc(a.mode) + '</td><td>' + a.score + '/' + a.n + ' (' + pct(a.score, a.n) + '%)</td></tr>'; }).join('') + '</tbody></table><div><button type="button" class="btn" id="qclear">Clear my quiz history</button></div></div>';
     qbody.innerHTML = html;
   }
@@ -13451,12 +13465,12 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     QH.h.push({ t: Date.now(), mode: mode, n: qstate.qs.length, score: qstate.score, types: types, streak: qstate.best });
     if (QH.h.length > 200) QH.h = QH.h.slice(-200);
     store('tp-quiz', QH);
-    var p = pct(qstate.score, qstate.qs.length), msg = p >= 90 ? 'Outstanding. You are exam ready on this.' : p >= 70 ? 'Good work. A little more revision and you will own it.' : p >= 50 ? 'Getting there. Review the missed ones below.' : 'Keep going. Study the profiles and units linked below, then try again.';
+    var p = pct(qstate.score, qstate.qs.length), msg = TT(p >= 90 ? 'Outstanding. You are exam ready on this.' : p >= 70 ? 'Good work. A little more revision and you will own it.' : p >= 50 ? 'Getting there. Review the missed ones below.' : 'Keep going. Study the profiles and units linked below, then try again.');
     var missed = qstate.log.filter(function (l) { return !l.ok; });
     var prev = QH.h.slice(0, -1), pc = 0, pq = 0; prev.forEach(function (a) { pc += a.score; pq += a.n; });
-    qbody.innerHTML = '<div class="qpanel"><h3>Results · ' + esc(mode) + '</h3><div class="qbig">' + qstate.score + '/' + qstate.qs.length + ' · ' + p + '%</div><p>' + msg + (prev.length ? ' Your average before this was ' + pct(pc, pq) + '%.' : ' This is your first attempt, so there is only one point on your chart so far.') + ' Best streak: ' + qstate.best + '.</p><div class="qpanel" style="margin:0">' + typeBars(types) + '</div>' +
+    qbody.innerHTML = '<div class="qpanel"><h3>' + esc(FT('Results · {#}', [TT(mode)])) + '</h3><div class="qbig">' + qstate.score + '/' + qstate.qs.length + ' · ' + p + '%</div><p>' + msg + ' ' + (prev.length ? FT('Your average before this was {#}%.', [pct(pc, pq)]) : TT('This is your first attempt, so there is only one point on your chart so far.')) + ' ' + FT('Best streak: {#}.', [qstate.best]) + '</p><div class="qpanel" style="margin:0">' + typeBars(types) + '</div>' +
       '<div class="rvbtns"><button type="button" class="btn primary" id="qagain">Play again</button><button type="button" class="btn" id="qdash">View my progress</button></div></div>' +
-      (missed.length ? '<div class="qpanel"><h3>Review what you missed</h3><div class="qmiss">' + missed.map(function (l) { return '<div><b>' + esc(l.q.text) + '</b><br>Correct: ' + esc(l.q.opts[l.q.ans]) + '<br>' + (l.q.go ? '<button type="button" class="btn" data-go="' + l.q.go + '" style="margin-top:6px">Study this</button>' : '') + '</div>'; }).join('') + '</div></div>' : '<div class="qpanel"><h3>Perfect round</h3><p>You answered every question correctly.</p></div>');
+      (missed.length ? '<div class="qpanel"><h3>Review what you missed</h3><div class="qmiss">' + missed.map(function (l) { return '<div><b>' + esc(l.q.text) + '</b><br>' + esc(FT('Correct: {#}', [l.q.opts[l.q.ans]])) + '<br>' + (l.q.go ? '<button type="button" class="btn" data-go="' + l.q.go + '" style="margin-top:6px">Study this</button>' : '') + '</div>'; }).join('') + '</div></div>' : '<div class="qpanel"><h3>Perfect round</h3><p>You answered every question correctly.</p></div>');
     qstate.view = 'result';
   }
   function startQuiz() {
@@ -13539,7 +13553,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     var pc = window.TPSTATS.total ? Math.round(100 * window.TPSTATS.hit / window.TPSTATS.total) : 0;
     var hn = document.createElement('p');
     hn.id = 'langnote'; hn.className = 'langnote notranslate'; hn.setAttribute('translate', 'no');
-    hn.innerHTML = 'हिन्दी अनुवाद हाथ से किया जा रहा है और चरणों में पूरा हो रहा है। इस पेज का लगभग ' + pc + '% अनुवादित है; बाकी अंग्रेज़ी में है। <button type="button" id="gtrest" style="all:unset;cursor:pointer;text-decoration:underline">बाकी हिस्से का स्वचालित अनुवाद करें</button>';
+    hn.innerHTML = 'हिन्दी अनुवाद हाथ से किया गया है। मनोवैज्ञानिकों के नाम, पुस्तकों के शीर्षक और कुछ तकनीकी शब्द जानबूझकर अंग्रेज़ी में रखे गए हैं (लगभग ' + pc + '% पाठ अनुवादित)। <button type="button" id="gtrest" style="all:unset;cursor:pointer;text-decoration:underline">बाकी हिस्से का स्वचालित अनुवाद करें</button>';
     document.getElementById('content').insertAdjacentElement('afterbegin', hn);
     document.getElementById('gtrest').addEventListener('click', function () { try { localStorage.setItem('tp-gt', '1'); } catch (e) {} location.reload(); });
   }
