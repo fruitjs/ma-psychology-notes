@@ -161,4 +161,8 @@ Most portraits are free-licence images from Wikimedia Commons. A few are non-fre
 
 ## Languages
 
-The page is written in English. A language menu in the top bar (English by default) can show the whole site in Hindi, Spanish, French, German, Indonesian, Russian or Portuguese using Google Website Translator. The translator script is loaded only after a visitor picks a non-English language, and the choice is remembered in the browser. A link such as `?lang=hi` opens the site directly in a language. Translations are automatic and can be imperfect, so use English for exact wording.
+The page is written in English. A language menu in the top bar (English by default) can show the whole site in Hindi, Spanish, French, German, Indonesian, Russian or Portuguese.
+
+- **Hindi** is being translated by hand, in stages, using a dictionary file (`i18n/hi.json`) that replaces English sentences with natural Hindi, keeping English where it is the better term (names, abbreviations, test names). Parts not yet translated stay in English, and a banner offers an automatic translation of the rest. Done so far: the menus, home, semester and paper pages, search/quiz/revise/compare labels, and Psychology of Personality Unit V.
+- **Other languages** use Google Website Translator, loaded only after a visitor picks one. Translations are automatic and can be imperfect.
+- A link such as `?lang=hi` opens the site directly in a language. The choice is remembered in the browser.

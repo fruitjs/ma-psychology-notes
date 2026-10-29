@@ -12639,6 +12639,86 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 <p class="sitefoot">Found a mistake or want a topic added? <a href="https://github.com/fruitjs/ma-psychology-notes/issues/new" target="_blank" rel="noopener">Report it on GitHub</a>. Notes were written with AI help, so check important facts against your textbook. Other languages use automatic translation and can be imperfect: switch to English for the exact wording.</p>
 
 <script>
+/* Hand-written translations: a dictionary of English segment -> translation, applied to the page before the app builds its tabs.
+   Only languages listed in HANDLANGS have a dictionary (i18n/<code>.json). */
+(function () {
+  var lang = 'en';
+  try { var q = new URLSearchParams(location.search).get('lang'); lang = q || localStorage.getItem('tp-lang') || 'en'; } catch (e) {}
+  var D = null, stats = { total: 0, hit: 0 }, collect = null;
+  window.TPSTATS = stats;
+  function load(l) {
+    try { var x = new XMLHttpRequest(); x.open('GET', 'i18n/' + l + '.json', false); x.send(); if (x.status === 200) return JSON.parse(x.responseText); } catch (e) {}
+    return null;
+  }
+  if (/^(hi)$/.test(lang)) D = load(lang);
+  window.TPHAND = !!D;
+  var INLINE = { B: 1, I: 1, EM: 1, STRONG: 1, MARK: 1, SPAN: 1, A: 1, CODE: 1, SMALL: 1, SUB: 1, SUP: 1, BR: 1, KBD: 1, ABBR: 1, U: 1, S: 1, TSPAN: 1 };
+  var SKIP = { SCRIPT: 1, STYLE: 1, IMG: 1, TEXTAREA: 1, INPUT: 1, SELECT: 1, OPTION: 1, NOSCRIPT: 1 };
+  var BLOCK = 'p,div,ul,ol,li,h1,h2,h3,h4,table,figure,section,button,details,summary,dl,dt,dd';
+  var ATTRS = ['placeholder', 'aria-label', 'title', 'alt'], DATA = ['label', 'full', 'title', 'short', 'name', 'blurb', 'num'];
+  function flat(s) { return s.replace(/\s+/g, ' ').trim(); }
+  function sub(tr, nums) { var i = 0; return tr.replace(/\{#\}/g, function () { return nums[i++] || ''; }); }
+  function lookup(key, nums, part) {
+    if (collect) { collect.add(key, part, D && D[key] !== undefined); }
+    stats.total++;
+    if (D && D[key] !== undefined) { stats.hit++; return sub(D[key], nums); }
+    return null;
+  }
+  function partOf(el) { var s = el.closest && el.closest('section[id]'); if (s) return s.id; return el.closest && el.closest('header') ? 'ui' : 'ui'; }
+  function attrs(el) {
+    ATTRS.forEach(function (a) { var v = el.getAttribute && el.getAttribute(a); if (v && /[A-Za-z]{2}/.test(v) && !(a === 'alt' && /^Photograph/.test(v))) { var t = lookup(flat(v), [], 'ui'); if (t !== null) el.setAttribute(a, t); } });
+    if (el.dataset) DATA.forEach(function (k) { var v = el.dataset[k]; if (v && /[A-Za-z]{2}/.test(v)) { var t = lookup(flat(v), [], partOf(el)); if (t !== null) el.dataset[k] = t; } });
+  }
+  function isLeaf(el) {
+    var has = false;
+    for (var c = el.firstChild; c; c = c.nextSibling) {
+      if (c.nodeType === 3) { if (c.nodeValue.trim()) has = true; }
+      else if (c.nodeType === 1) { if (!INLINE[c.tagName.toUpperCase()] || (c.querySelector && c.querySelector(BLOCK))) return false; }
+    }
+    return has;
+  }
+  function segment(el) {
+    var part = partOf(el);
+    if (!el.children.length) {
+      var txt = flat(el.textContent), nums = [];
+      if (!/[A-Za-z]{2}/.test(txt)) return;
+      var key = txt.replace(/\d+(?:[.,]\d+)?/g, function (m) { nums.push(m); return '{#}'; });
+      var t = lookup(key, nums, part); if (t !== null && t !== txt) el.textContent = t;
+    } else {
+      var html = flat(el.innerHTML); if (!/[A-Za-z]{2}/.test(el.textContent)) return;
+      var t2 = lookup(html, [], part); if (t2 !== null && t2 !== html) el.innerHTML = t2;
+    }
+  }
+  function walk(node) {
+    if (!node || node.nodeType !== 1) return;
+    if (SKIP[node.tagName.toUpperCase()] || (node.classList && node.classList.contains('notranslate')) || node.getAttribute('translate') === 'no') return;
+    attrs(node);
+    if (isLeaf(node)) { segment(node); return; }
+    for (var c = node.firstChild; c; c = c.nextSibling) {
+      if (c.nodeType === 1) walk(c);
+      else if (c.nodeType === 3 && collect && c.nodeValue.trim() && /[A-Za-z]{3}/.test(c.nodeValue)) collect.orphan(node, c.nodeValue.trim());
+    }
+  }
+  window.TPWalk = walk;
+  window.TPCollect = function (c) { collect = c; };
+  window.TPLookup = function (s) { return D && D[s] !== undefined ? D[s] : null; };
+  if (D) {
+    document.documentElement.lang = lang;
+    (function () {
+      var m = document.querySelector('main'); if (m) walk(m); var h = document.querySelector('header'); if (h) walk(h);
+      var tt = D[flat(document.title)]; if (tt) document.title = tt;
+      var f = document.querySelector('.sitefoot'); if (f) walk(f);
+      new MutationObserver(function (list) {
+        list.forEach(function (r) {
+          r.addedNodes.forEach(function (n) { if (n.nodeType === 1) walk(n); else if (n.nodeType === 3) { var pe = n.parentElement; if (pe && pe !== document.body && isLeaf(pe)) walk(pe); } });
+        });
+      }).observe(document.body, { childList: true, subtree: true });
+    })();
+  }
+})();
+</script>
+
+<script>
 (function () {
   function all(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
   var home = document.getElementById('home');
@@ -13452,10 +13532,19 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   if (!LANGS.some(function (l) { return l[0] === curLang; })) curLang = 'en';
   langsel.value = curLang;
   document.documentElement.setAttribute('data-lang', curLang);
-  if (curLang !== 'en') { setTransCookie('/en/' + curLang); loadTranslator(curLang); } else setTransCookie('');
+  var gtOn = false; try { gtOn = localStorage.getItem('tp-gt') === '1'; } catch (e) {}
+  if (curLang !== 'en' && (!window.TPHAND || gtOn)) { setTransCookie('/en/' + curLang); loadTranslator(curLang); } else setTransCookie('');
+  if (window.TPHAND && !gtOn) {
+    var pc = window.TPSTATS.total ? Math.round(100 * window.TPSTATS.hit / window.TPSTATS.total) : 0;
+    var hn = document.createElement('p');
+    hn.id = 'langnote'; hn.className = 'langnote notranslate'; hn.setAttribute('translate', 'no');
+    hn.innerHTML = 'हिन्दी अनुवाद हाथ से किया जा रहा है और चरणों में पूरा हो रहा है। इस पेज का लगभग ' + pc + '% अनुवादित है; बाकी अंग्रेज़ी में है। <button type="button" id="gtrest" style="all:unset;cursor:pointer;text-decoration:underline">बाकी हिस्से का स्वचालित अनुवाद करें</button>';
+    document.getElementById('content').insertAdjacentElement('afterbegin', hn);
+    document.getElementById('gtrest').addEventListener('click', function () { try { localStorage.setItem('tp-gt', '1'); } catch (e) {} location.reload(); });
+  }
   langsel.addEventListener('change', function () {
     var c = langsel.value;
-    try { localStorage.setItem('tp-lang', c); } catch (e) {}
+    try { localStorage.setItem('tp-lang', c); localStorage.removeItem('tp-gt'); } catch (e) {}
     setTransCookie(c === 'en' ? '' : '/en/' + c);
     try { var u = new URL(location.href); u.searchParams.delete('lang'); history.replaceState(null, '', u.pathname + u.search + location.hash); } catch (e) {}
     location.reload();
