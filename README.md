@@ -158,3 +158,7 @@ The text, diagrams and code are licensed under [CC BY-SA 4.0](LICENSE). Each pho
 ## Photos
 
 Most portraits are free-licence images from Wikimedia Commons. A few are non-free images taken from English Wikipedia and shown as small crops for education only; they are not covered by this project's licence. See [CREDITS.md](CREDITS.md), which also explains how to request removal.
+
+## Languages
+
+The page is written in English. A language menu in the top bar (English by default) can show the whole site in Hindi, Spanish, French, German, Indonesian, Russian or Portuguese using Google Website Translator. The translator script is loaded only after a visitor picks a non-English language, and the choice is remembered in the browser. A link such as `?lang=hi` opens the site directly in a language. Translations are automatic and can be imperfect, so use English for exact wording.

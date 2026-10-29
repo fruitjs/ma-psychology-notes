@@ -7822,6 +7822,15 @@ murray:['data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAcFBQYFBAcGBQYI
   <div id="qbody"></div>
 </section>
 <style>
+.langsel { font: inherit; font-family: var(--display); font-size: 0.8rem; color: var(--nav-fg); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 3px 8px; align-self: center; max-width: 150px; }
+.langsel option { color: #18202b; background: #fff; }
+.langnote { background: var(--c4-soft); border: 1px solid var(--c4); border-radius: 8px; padding: 8px 12px; font-size: 0.88rem; margin: 10px 0; }
+.goog-te-banner-frame, .goog-te-banner-frame.skiptranslate, iframe.skiptranslate { display: none !important; }
+body { top: 0 !important; position: static !important; }
+#goog-gt-tt, .goog-te-balloon-frame, .goog-tooltip { display: none !important; }
+.goog-text-highlight { background: none !important; box-shadow: none !important; }
+</style>
+<style>
 .gsearch { margin-left: auto; align-self: center; font: inherit; font-family: var(--display); font-size: 0.85rem; color: var(--nav-fg); background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.25); border-radius: 999px; padding: 4px 12px; width: min(220px, 40vw); }
 .gsearch::placeholder { color: var(--nav-muted); }
 .gsearch:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 1px; }
@@ -12627,7 +12636,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 </section>
 
 </div></main>
-<p class="sitefoot">Found a mistake or want a topic added? <a href="https://github.com/fruitjs/ma-psychology-notes/issues/new" target="_blank" rel="noopener">Report it on GitHub</a>. Notes were written with AI help, so check important facts against your textbook.</p>
+<p class="sitefoot">Found a mistake or want a topic added? <a href="https://github.com/fruitjs/ma-psychology-notes/issues/new" target="_blank" rel="noopener">Report it on GitHub</a>. Notes were written with AI help, so check important facts against your textbook. Other languages use automatic translation and can be imperfect: switch to English for the exact wording.</p>
 
 <script>
 (function () {
@@ -13399,6 +13408,58 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     maintabs.appendChild(b);
   });
   maintabs.appendChild(gsearch);
+
+  /* ---------- language: Google Website Translator, loaded only when a non-English language is chosen ---------- */
+  var LANGS = [['en', 'English'], ['hi', 'हिन्दी (Hindi)'], ['es', 'Español (Spanish)'], ['fr', 'Français (French)'], ['de', 'Deutsch (German)'], ['id', 'Bahasa Indonesia (Indonesian)'], ['ru', 'Русский (Russian)'], ['pt', 'Português (Portuguese)']];
+  var PUBLIC_URL = 'https://fruitjs.github.io/ma-psychology-notes/';
+  var langsel = document.createElement('select');
+  langsel.id = 'langsel'; langsel.className = 'langsel notranslate'; langsel.setAttribute('translate', 'no'); langsel.setAttribute('aria-label', 'Language');
+  LANGS.forEach(function (l) { var o = document.createElement('option'); o.value = l[0]; o.textContent = l[1]; langsel.appendChild(o); });
+  maintabs.appendChild(langsel);
+  function setTransCookie(v) {
+    try {
+      var h = location.hostname;
+      ['', '; domain=' + h, '; domain=.' + h].forEach(function (d) { document.cookie = 'googtrans=' + (v || '') + '; path=/' + d + (v ? '' : '; expires=Thu, 01 Jan 1970 00:00:00 GMT'); });
+    } catch (e) {}
+  }
+  function langFail(code) {
+    if (document.getElementById('langnote')) return;
+    var name = LANGS.filter(function (l) { return l[0] === code; })[0][1];
+    var n = document.createElement('p');
+    n.id = 'langnote'; n.className = 'langnote notranslate'; n.setAttribute('translate', 'no');
+    n.innerHTML = 'Automatic translation could not load here. Open the public site in ' + esc(name) + ': <a href="' + PUBLIC_URL + '?lang=' + code + '" target="_blank" rel="noopener">' + PUBLIC_URL + '?lang=' + code + '</a>';
+    document.getElementById('content').insertAdjacentElement('afterbegin', n);
+  }
+  function loadTranslator(code) {
+    var holder = document.createElement('div');
+    holder.id = 'google_translate_element'; holder.className = 'notranslate'; holder.style.cssText = 'position:absolute;left:-9999px;top:0;height:0;overflow:hidden';
+    document.body.appendChild(holder);
+    window.googleTranslateElementInit = function () {
+      try { new google.translate.TranslateElement({ pageLanguage: 'en', includedLanguages: 'hi,es,fr,de,id,ru,pt', autoDisplay: false }, 'google_translate_element'); } catch (e) { langFail(code); }
+    };
+    var s = document.createElement('script');
+    s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'; s.async = true;
+    s.onerror = function () { langFail(code); };
+    document.head.appendChild(s);
+    setTimeout(function () { if (!document.querySelector('.goog-te-combo') && !/translated/.test(document.documentElement.className)) langFail(code); }, 9000);
+  }
+  var curLang = 'en';
+  try {
+    var qlang = new URLSearchParams(location.search).get('lang');
+    if (qlang && LANGS.some(function (l) { return l[0] === qlang; })) { curLang = qlang; localStorage.setItem('tp-lang', qlang); }
+    else curLang = localStorage.getItem('tp-lang') || 'en';
+  } catch (e) {}
+  if (!LANGS.some(function (l) { return l[0] === curLang; })) curLang = 'en';
+  langsel.value = curLang;
+  document.documentElement.setAttribute('data-lang', curLang);
+  if (curLang !== 'en') { setTransCookie('/en/' + curLang); loadTranslator(curLang); } else setTransCookie('');
+  langsel.addEventListener('change', function () {
+    var c = langsel.value;
+    try { localStorage.setItem('tp-lang', c); } catch (e) {}
+    setTransCookie(c === 'en' ? '' : '/en/' + c);
+    try { var u = new URL(location.href); u.searchParams.delete('lang'); history.replaceState(null, '', u.pathname + u.search + location.hash); } catch (e) {}
+    location.reload();
+  });
 
   function show(token, scroll) {
     token = token || 'home';
