@@ -12650,7 +12650,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     try { var x = new XMLHttpRequest(); x.open('GET', 'i18n/' + l + '.json', false); x.send(); if (x.status === 200) return JSON.parse(x.responseText); } catch (e) {}
     return null;
   }
-  if (/^(hi)$/.test(lang)) D = load(lang);
+  if (/^(hi|de)$/.test(lang)) D = load(lang);
   window.TPHAND = !!D;
   var INLINE = { B: 1, I: 1, EM: 1, STRONG: 1, MARK: 1, SPAN: 1, A: 1, CODE: 1, SMALL: 1, SUB: 1, SUP: 1, BR: 1, KBD: 1, ABBR: 1, U: 1, S: 1, TSPAN: 1 };
   var SKIP = { SCRIPT: 1, STYLE: 1, IMG: 1, TEXTAREA: 1, INPUT: 1, SELECT: 1, OPTION: 1, NOSCRIPT: 1 };
@@ -13079,7 +13079,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 
   var aboutView = document.getElementById('aboutme');
   var aboutStat = document.getElementById('aboutstat');
-  if (aboutStat) aboutStat.textContent = all('.paper', document).filter(function (p) { return p.tagName === 'BUTTON'; }).length + ' papers ready across Semesters 1 and 3, ' + units.length + ' units and ' + PEOPLE.length + ' psychologist profiles';
+  if (aboutStat) aboutStat.textContent = FT('{#} papers ready across Semesters 1 and 3, {#} units and {#} psychologist profiles', [all('.paper', document).filter(function (p) { return p.tagName === 'BUTTON'; }).length, units.length, PEOPLE.length]);
   var searchView = document.getElementById('searchview'), reviseView = document.getElementById('reviseview');
   var timelineView = document.getElementById('timelineview'), cmpView = document.getElementById('cmpview');
 
@@ -13230,7 +13230,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   function rvRender() {
     var c = rv.deck[0];
     var nk = CARDS.filter(function (x) { return known[x.id]; }).length;
-    rvStat.textContent = rv.deck.length + ' cards left in this deck · ' + nk + ' of ' + CARDS.length + ' marked as known in total';
+    rvStat.textContent = FT('{#} cards left in this deck · {#} of {#} marked as known in total', [rv.deck.length, nk, CARDS.length]);
     if (!c) { rvCard.innerHTML = '<div class="rvq">Deck finished.</div><div class="rvbtns"><button type="button" class="btn primary" id="rvrestart">Restart this deck</button></div>'; return; }
     rvCard.innerHTML = '<div class="rvmeta">' + esc(where(c.u)) + '</div><div class="rvq">' + esc(c.q) + '</div>' +
       (rv.shown ? '<div class="rva"><p>' + esc(c.a) + '</p></div><div class="rvbtns"><button type="button" class="btn primary" id="rvknow">I knew it</button><button type="button" class="btn" id="rvagain">Show again later</button><button type="button" class="btn" data-go="' + c.u.id + '">Open unit</button></div>' :
@@ -13399,7 +13399,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     return out;
   }
   function pct(a, b) { return b ? Math.round(100 * a / b) : 0; }
-  function when(ts) { var d = new Date(ts), lc = document.documentElement.lang === 'hi' ? 'hi-IN' : undefined; return d.toLocaleDateString(lc, { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString(lc, { hour: '2-digit', minute: '2-digit' }); }
+  function when(ts) { var d = new Date(ts), lc = { hi: 'hi-IN', de: 'de-DE' }[document.documentElement.lang]; return d.toLocaleDateString(lc, { day: 'numeric', month: 'short' }) + ' ' + d.toLocaleTimeString(lc, { hour: '2-digit', minute: '2-digit' }); }
 
   function progressChart(H) {
     var P = H.slice(-30), n = P.length;
@@ -13549,14 +13549,6 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   document.documentElement.setAttribute('data-lang', curLang);
   var gtOn = false; try { gtOn = localStorage.getItem('tp-gt') === '1'; } catch (e) {}
   if (curLang !== 'en' && (!window.TPHAND || gtOn)) { setTransCookie('/en/' + curLang); loadTranslator(curLang); } else setTransCookie('');
-  if (window.TPHAND && !gtOn) {
-    var pc = window.TPSTATS.total ? Math.round(100 * window.TPSTATS.hit / window.TPSTATS.total) : 0;
-    var hn = document.createElement('p');
-    hn.id = 'langnote'; hn.className = 'langnote notranslate'; hn.setAttribute('translate', 'no');
-    hn.innerHTML = 'हिन्दी अनुवाद हाथ से किया गया है। मनोवैज्ञानिकों के नाम, पुस्तकों के शीर्षक और कुछ तकनीकी शब्द जानबूझकर अंग्रेज़ी में रखे गए हैं (लगभग ' + pc + '% पाठ अनुवादित)। <button type="button" id="gtrest" style="all:unset;cursor:pointer;text-decoration:underline">बाकी हिस्से का स्वचालित अनुवाद करें</button>';
-    document.getElementById('content').insertAdjacentElement('afterbegin', hn);
-    document.getElementById('gtrest').addEventListener('click', function () { try { localStorage.setItem('tp-gt', '1'); } catch (e) {} location.reload(); });
-  }
   langsel.addEventListener('change', function () {
     var c = langsel.value;
     try { localStorage.setItem('tp-lang', c); localStorage.removeItem('tp-gt'); } catch (e) {}
