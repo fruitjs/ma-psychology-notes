@@ -7863,7 +7863,14 @@ body { top: 0 !important; position: static !important; }
 .btn { all: unset; cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.9rem; padding: 9px 16px; border-radius: 8px; border: 1.5px solid var(--ink); background: var(--paper); color: var(--ink); }
 .btn.primary { background: var(--ink); color: var(--paper); }
 .btn:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
-.rvcard { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; min-height: 220px; }
+.rvcard { perspective: 1200px; min-height: 220px; display: grid; }
+.rvinner { display: grid; transition: transform .6s cubic-bezier(.4,.2,.2,1); transform-style: preserve-3d; }
+.rvinner.flipped { transform: rotateY(180deg); }
+.rvface { grid-area: 1 / 1; backface-visibility: hidden; -webkit-backface-visibility: hidden; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; align-content: start; }
+.rvface.back { transform: rotateY(180deg); }
+.rvface.back .rvq { font-size: 1.05rem; color: var(--muted); }
+.rvend { background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 14px; align-content: start; }
+@media (prefers-reduced-motion: reduce) { .rvinner { transition: none; } }
 .rvmeta { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); }
 .rvq { font-family: var(--display); font-weight: 700; font-size: 1.3rem; line-height: 1.3; }
 .rva { border-left: 4px solid var(--good); padding-left: 14px; }
@@ -13704,10 +13711,18 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     var c = rv.deck[0];
     var nk = CARDS.filter(function (x) { return known[x.id]; }).length;
     rvStat.textContent = FT('{#} cards left in this deck · {#} of {#} marked as known in total', [rv.deck.length, nk, CARDS.length]);
-    if (!c) { rvCard.innerHTML = '<div class="rvq">Deck finished.</div><div class="rvbtns"><button type="button" class="btn primary" id="rvrestart">Restart this deck</button></div>'; return; }
-    rvCard.innerHTML = '<div class="rvmeta">' + esc(where(c.u)) + '</div><div class="rvq">' + esc(c.q) + '</div>' +
-      (rv.shown ? '<div class="rva"><p>' + esc(c.a) + '</p></div><div class="rvbtns"><button type="button" class="btn primary" id="rvknow">I knew it</button><button type="button" class="btn" id="rvagain">Show again later</button><button type="button" class="btn" data-go="' + c.u.id + '">Open unit</button></div>' :
-        '<div class="rvbtns"><button type="button" class="btn primary" id="rvshow">Show answer</button><button type="button" class="btn" id="rvskip">Skip</button></div>');
+    if (!c) { rvCard.innerHTML = '<div class="rvend"><div class="rvq">Deck finished.</div><div class="rvbtns"><button type="button" class="btn primary" id="rvrestart">Restart this deck</button></div></div>'; return; }
+    var head = '<div class="rvmeta">' + esc(where(c.u)) + '</div><div class="rvq">' + esc(c.q) + '</div>';
+    rvCard.innerHTML = '<div class="rvinner' + (rv.shown ? ' flipped' : '') + '">' +
+      '<div class="rvface front">' + head + '<div class="rvbtns"><button type="button" class="btn primary" id="rvshow">Show answer</button><button type="button" class="btn" id="rvskip">Skip</button></div></div>' +
+      '<div class="rvface back">' + head + '<div class="rva"><p>' + esc(c.a) + '</p></div><div class="rvbtns"><button type="button" class="btn primary" id="rvknow">I knew it</button><button type="button" class="btn" id="rvagain">Show again later</button><button type="button" class="btn" data-go="' + c.u.id + '">Open unit</button></div></div></div>';
+    rvFaces();
+  }
+  function rvFaces() {
+    var f = rvCard.querySelector('.rvface.front'), b = rvCard.querySelector('.rvface.back');
+    if (!f || !b) return;
+    f.inert = rv.shown; b.inert = !rv.shown;
+    f.setAttribute('aria-hidden', rv.shown); b.setAttribute('aria-hidden', !rv.shown);
   }
   function initRevise() {
     if (CARDS) return;
@@ -13725,7 +13740,11 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   document.getElementById('rvreset').addEventListener('click', function () { known = {}; store('tp-known', known); rvBuild(false); });
   rvCard.addEventListener('click', function (e) {
     var id = e.target.id, c = rv.deck[0];
-    if (id === 'rvshow') { rv.shown = true; rvRender(); }
+    if (id === 'rvshow') {
+      rv.shown = true; rvFaces();
+      var inner = rvCard.querySelector('.rvinner'); if (inner) inner.classList.add('flipped');
+      var kb = document.getElementById('rvknow'); if (kb) kb.focus({ preventScroll: true });
+    }
     else if (id === 'rvskip' || id === 'rvagain') { rv.deck.push(rv.deck.shift()); rv.shown = false; rvRender(); }
     else if (id === 'rvknow') { known[c.id] = 1; store('tp-known', known); rv.deck.shift(); rv.shown = false; rvRender(); }
     else if (id === 'rvrestart') rvBuild(true);
