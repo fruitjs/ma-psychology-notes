@@ -74,6 +74,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .crumbs button:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 2px; }
 .crumbs .static { color: var(--nav-muted); }
 .crumbs [aria-current] { color: var(--hl-bg); font-weight: 700; }
+.crumbs { position: relative; padding-right: 24px; }
+.crumbs::after { content: "\25BE"; position: absolute; right: 4px; top: 8px; color: var(--nav-muted); transition: transform .2s; }
+.topbar:hover .crumbs::after, .topbar:focus-within .crumbs::after, .topbar.open .crumbs::after { transform: rotate(180deg); }
+.inner:has(> .topmore) { position: relative; }
+.topmore { position: absolute; left: 0; right: 0; top: 100%; background: var(--nav); box-shadow: 0 6px 12px rgba(0,0,0,.25); border-radius: 0 0 10px 10px; padding-bottom: 6px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .18s, transform .18s, visibility 0s linear .35s; }
+.topbar:hover .topmore, .topbar:focus-within .topmore, .topbar.open .topmore { opacity: 1; visibility: visible; transform: none; transition: opacity .18s, transform .18s, visibility 0s; }
+@media (prefers-reduced-motion: reduce) { .topmore, .crumbs::after { transition: none; } }
 .utabs { display: flex; gap: 4px; overflow-x: auto; padding-block: 4px 0; scrollbar-width: none; }
 .utabs::-webkit-scrollbar { display: none; }
 .utabs button {
@@ -289,10 +296,12 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 <body>
 <header class="topbar">
   <div class="gutter"><div class="inner">
-    <div class="maintabs" id="maintabs" role="tablist" aria-label="Sections"></div>
     <ol class="crumbs" id="crumbs" aria-label="Breadcrumb"></ol>
-    <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
-    <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
+    <div class="topmore" id="topmore">
+      <div class="maintabs" id="maintabs" role="tablist" aria-label="Sections"></div>
+      <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
+      <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
+    </div>
   </div></div>
 </header>
 
@@ -13750,6 +13759,16 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     else if (id === 'rvknow') { known[c.id] = 1; store('tp-known', known); rv.deck.shift(); rv.shown = false; rvRender(); }
     else if (id === 'rvrestart') rvBuild(true);
   });
+
+  /* ---------- auto-hiding top bar: tap the breadcrumb row to open it on touch screens ---------- */
+  (function () {
+    var tb = document.querySelector('.topbar');
+    tb.addEventListener('click', function (e) {
+      if (e.target.closest('.topmore button')) { tb.classList.remove('open'); if (document.activeElement) document.activeElement.blur(); }
+      else if (!e.target.closest('button')) tb.classList.toggle('open');
+    });
+    document.addEventListener('click', function (e) { if (!e.target.closest('.topbar')) tb.classList.remove('open'); });
+  })();
 
   /* ---------- timeline ---------- */
   var catColor = function (c) { return 'hsl(' + Math.round(cats.indexOf(c) * 360 / cats.length) + ',55%,46%)'; };
