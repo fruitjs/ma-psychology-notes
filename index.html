@@ -74,13 +74,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .crumbs button:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 2px; }
 .crumbs .static { color: var(--nav-muted); }
 .crumbs [aria-current] { color: var(--hl-bg); font-weight: 700; }
-.crumbs { position: relative; padding-right: 24px; }
-.crumbs::after { content: "\25BE"; position: absolute; right: 4px; top: 8px; color: var(--nav-muted); transition: transform .2s; }
-.topbar:hover .crumbs::after, .topbar:focus-within .crumbs::after, .topbar.open .crumbs::after { transform: rotate(180deg); }
-.inner:has(> .topmore) { position: relative; }
-.topmore { position: absolute; left: 0; right: 0; top: 100%; background: var(--nav); box-shadow: 0 6px 12px rgba(0,0,0,.25); border-radius: 0 0 10px 10px; padding-bottom: 6px; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .18s, transform .18s, visibility 0s linear .35s; }
-.topbar:hover .topmore, .topbar:focus-within .topmore, .topbar.open .topmore { opacity: 1; visibility: visible; transform: none; transition: opacity .18s, transform .18s, visibility 0s; }
-@media (prefers-reduced-motion: reduce) { .topmore, .crumbs::after { transition: none; } }
+/* compact = only the breadcrumb row is visible; the bar keeps its full height so scrolling never shifts the page */
+.topmore { transition: opacity .2s, visibility 0s; }
+.crumbs { box-shadow: 0 0 0 100vmax var(--nav); clip-path: inset(0 -100vmax); background: var(--nav); }
+.topbar.compact { background: transparent; box-shadow: none; pointer-events: none; }
+.topbar.compact .crumbs { pointer-events: auto; box-shadow: 0 0 0 100vmax var(--nav), 0 2px 0 100vmax rgba(0,0,0,.2); }
+.topbar.compact .topmore { opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s linear .2s; }
+@media (prefers-reduced-motion: reduce) { .topmore { transition: none !important; } }
 .utabs { display: flex; gap: 4px; overflow-x: auto; padding-block: 4px 0; scrollbar-width: none; }
 .utabs::-webkit-scrollbar { display: none; }
 .utabs button {
@@ -13760,14 +13760,20 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     else if (id === 'rvrestart') rvBuild(true);
   });
 
-  /* ---------- auto-hiding top bar: tap the breadcrumb row to open it on touch screens ---------- */
+  /* ---------- top bar: only the breadcrumb row while scrolling down, everything again on scroll up ---------- */
   (function () {
-    var tb = document.querySelector('.topbar');
-    tb.addEventListener('click', function (e) {
-      if (e.target.closest('.topmore button')) { tb.classList.remove('open'); if (document.activeElement) document.activeElement.blur(); }
-      else if (!e.target.closest('button')) tb.classList.toggle('open');
-    });
-    document.addEventListener('click', function (e) { if (!e.target.closest('.topbar')) tb.classList.remove('open'); });
+    var tb = document.querySelector('.topbar'), last = window.scrollY, lock = 0;
+    window.addEventListener('scroll', function () {
+      var y = window.scrollY, now = Date.now();
+      if (now < lock) { last = y; return; }
+      var d = y - last, c = tb.classList.contains('compact'), want = c;
+      if (y < 80) want = false;
+      else if (d > 12) want = true;
+      else if (d < -12) want = false;
+      else return;
+      last = y;
+      if (want !== c) { tb.classList.toggle('compact', want); lock = now + 250; }
+    }, { passive: true });
   })();
 
   /* ---------- timeline ---------- */
