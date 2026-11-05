@@ -14067,13 +14067,15 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
           }).join('') + '</ol></div>';
       }).join('') + '</div>';
   }
+  /* Sessional dates, November 2026: [day, paper code, paper]. Clock time and syllabus were not announced with the dates. */
+  var SSCHED = [[3, 'MPY26-C103', 'Psychology of Personality'], [3, '', 'Practical'], [4, 'MPY26-C101', 'Foundations of Psychology'], [17, 'MPY26-C102', 'Advanced Social Psychology'], [23, 'MPY26-C104', 'Research Methodology']];
   var sessView = document.createElement('section');
   sessView.className = 'view'; sessView.id = 'sessionals'; sessView.hidden = true;
   var SESS = [['Semester 1', [['MPY26-C101', 'Foundations of Psychology'], ['MPY26-C102', 'Advanced Social Psychology'], ['MPY26-C103', 'Psychology of Personality'], ['MPY26-C104', 'Research Methodology']]],
     ['Semester 3', [['MPY26-C301', 'Psychopathology'], ['MPY26-C302', 'Disabilities & Rehabilitation'], ['MPY26-E303', 'Health Psychology'], ['MPY26-E304', 'Stress Management'], ['MPY26-E305', 'Indian Psychology'], ['MPY26-E306', 'Western Thoughts and Psychology']]]];
   sessView.innerHTML = '<div class="eyebrow">' + esc(TT('MA Psychology · Internal exams')) + '</div><h1>' + esc(TT('Sessionals')) + '</h1>' +
     '<p class="lede">' + esc(TT('Sessional exam dates and past sessional papers, paper by paper. Practise each past paper under time, then check your answers against the unit notes.')) + '</p>' +
-    '<div class="block"><h3>' + esc(TT('Sessional schedule')) + '</h3><div class="tbl"><table><thead><tr><th>' + esc(TT('Date')) + '</th><th>' + esc(TT('Paper')) + '</th><th>' + esc(TT('Time')) + '</th><th>' + esc(TT('Syllabus')) + '</th></tr></thead><tbody><tr><td colspan="4" class="cap">' + esc(TT('Dates will appear here once the schedule is announced.')) + '</td></tr></tbody></table></div></div>' +
+    '<div class="block"><h3>' + esc(TT('Sessional schedule')) + '</h3><div class="tbl"><table><thead><tr><th>' + esc(TT('Date')) + '</th><th>' + esc(TT('Paper')) + '</th><th>' + esc(TT('Time')) + '</th><th>' + esc(TT('Syllabus')) + '</th></tr></thead><tbody>' + SSCHED.map(function (r) { return '<tr><td>' + esc(FT('{#} Nov {#}', [r[0], 2026])) + '</td><td>' + (r[1] ? '<span class="mono cap">' + r[1] + '</span> ' : '') + esc(TT(r[2])) + '</td><td>—</td><td>—</td></tr>'; }).join('') + '</tbody></table></div></div>' +
     SESS.map(function (s) {
       var full = '';
       var cards = s[1].map(function (p) {
