@@ -81,6 +81,9 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .topbar.compact .crumbs { pointer-events: auto; box-shadow: 0 0 0 100vmax var(--nav), 0 2px 0 100vmax rgba(0,0,0,.2); }
 .topbar.compact .topmore { opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s linear .2s; }
 @media (prefers-reduced-motion: reduce) { .topmore { transition: none !important; } }
+.getans { white-space: nowrap; font-family: var(--display); font-weight: 700; font-size: 0.82rem; margin-left: 6px; color: var(--c3); text-decoration: underline; text-underline-offset: 3px; }
+.getans::after { content: " \203A"; }
+.getans:focus-visible { outline: 2px solid var(--c3); outline-offset: 2px; }
 .utabs { display: flex; gap: 4px; overflow-x: auto; padding-block: 4px 0; scrollbar-width: none; }
 .utabs::-webkit-scrollbar { display: none; }
 .utabs button {
@@ -14019,45 +14022,64 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   });
 
   /* ---------- sessionals ---------- */
+  /* Each question: [English, Hindi, German, CO/BL, unit tab to open, heading to land on]. The section follows the selected language (English by default). */
+  var SLANG = 'en';
+  try { var sq = new URLSearchParams(location.search).get('lang'); SLANG = sq || localStorage.getItem('tp-lang') || 'en'; } catch (e) {}
+  var SIDX = SLANG === 'hi' ? 1 : SLANG === 'de' ? 2 : 0;
   var SPAPERS = {
     'MPY26-C103': { exam: 'Mid-term · Nov 2026', time: '1 hour', marks: 25, sections: [
       { name: 'Section A · Very short answer', rule: 'Answer both questions in a few words (2 × 2 = 4 marks).', qs: [
-        ['What is the meaning of “basic anxiety” in Karen Horney’s theory?', 'कैरेन हॉर्नी के सिद्धांत में "बेसिक एंगजायटी" का क्या अर्थ है?', 'CO 2 · BL 2'],
-        ['What is the consistency paradox?', 'संगति विरोधाभास क्या है?', 'CO 5 · BL 2']] },
+        ['What is the meaning of “basic anxiety” in Karen Horney’s theory?', 'कैरेन हॉर्नी के सिद्धांत में "बेसिक एंगजायटी" का क्या अर्थ है?', 'Was bedeutet „Grundangst“ (basic anxiety) in Karen Horneys Theorie?', 'CO 2 · BL 2', 'u2-horney', 'Basic hostility → basic anxiety'],
+        ['What is the consistency paradox?', 'संगति विरोधाभास क्या है?', 'Was ist das Konsistenzparadox?', 'CO 5 · BL 2', 'u5-mischel', 'Background: the consistency paradox']] },
       { name: 'Section B · Short answer', rule: 'Answer any one in about 150 words (1 × 6 = 6 marks).', qs: [
-        ['Differentiate Carl Jung’s Analytical Psychology from Sigmund Freud’s Psychoanalysis.', 'कार्ल जुंग के विश्लेषणात्मक मनोविज्ञान और सिगमंड फ्रायड के मनोविश्लेषण के बीच अंतर स्पष्ट करें।', 'CO 2 · BL 4'],
-        ['Explain the four basic variables in Julian Rotter’s cognitive social learning theory: Behavior Potential, Expectancy, Reinforcement Value, and the Psychological Situation.', 'जूलियन रॉटर के संज्ञानात्मक सामाजिक अधिगम सिद्धांत में चार बुनियादी चरों (व्यवहार क्षमता, प्रत्याशा, पुनर्बलन मूल्य और मनोवैज्ञानिक स्थिति) की व्याख्या करें।', 'CO 5 · BL 2']] },
+        ['Differentiate Carl Jung’s Analytical Psychology from Sigmund Freud’s Psychoanalysis.', 'कार्ल जुंग के विश्लेषणात्मक मनोविज्ञान और सिगमंड फ्रायड के मनोविश्लेषण के बीच अंतर स्पष्ट करें।', 'Grenzen Sie Carl Jungs Analytische Psychologie von Sigmund Freuds Psychoanalyse ab.', 'CO 2 · BL 4', 'u2-compare', ''],
+        ['Explain the four basic variables in Julian Rotter’s cognitive social learning theory: Behavior Potential, Expectancy, Reinforcement Value, and the Psychological Situation.', 'जूलियन रॉटर के संज्ञानात्मक सामाजिक अधिगम सिद्धांत में चार बुनियादी चरों (व्यवहार क्षमता, प्रत्याशा, पुनर्बलन मूल्य और मनोवैज्ञानिक स्थिति) की व्याख्या करें।', 'Erläutern Sie die vier Grundvariablen in Julian Rotters kognitiver sozialer Lerntheorie: Verhaltenspotenzial (Behavior Potential), Erwartung (Expectancy), Verstärkungswert (Reinforcement Value) und die psychologische Situation.', 'CO 5 · BL 2', 'u5-rotter', 'Predicting a specific behaviour: the {#} variables']] },
       { name: 'Section C · Long answer', rule: 'Answer any one option in detail (1 × 15 = 15 marks).', qs: [
-        ['Critically evaluate the stages of Sigmund Freud’s psychosexual development as determinants of personality.', 'व्यक्तित्व के निर्धारक के रूप में सिगमंड फ्रायड के मनो-लैंगिक विकास के चरणों का आलोचनात्मक मूल्यांकन करें।', 'CO 2 · BL 5'],
-        ['OR: Elucidate George Kelly’s philosophical assumption of ‘Constructive Alternativism’ and his Fundamental Postulate. Critically examine supporting corollaries to explain how individuals anticipate events and construct reality.', 'जॉर्ज केली के दार्शनिक सिद्धांत \'रचनात्मक वैकल्पिकवाद\' और उनके मूलभूत सिद्धांत की व्याख्या कीजिए। व्यक्तियों द्वारा घटनाओं का पूर्वानुमान लगाने और वास्तविकता का निर्माण करने के तरीके को समझाने के लिए सहायक सिद्धांतों का आलोचनात्मक परीक्षण कीजिए।', 'CO 5 · BL 5']] }
+        ['Critically evaluate the stages of Sigmund Freud’s psychosexual development as determinants of personality.', 'व्यक्तित्व के निर्धारक के रूप में सिगमंड फ्रायड के मनो-लैंगिक विकास के चरणों का आलोचनात्मक मूल्यांकन करें।', 'Bewerten Sie die Stadien der psychosexuellen Entwicklung nach Sigmund Freud als Determinanten der Persönlichkeit kritisch.', 'CO 2 · BL 5', 'u2-freud', 'Psychosexual stages'],
+        ['OR: Elucidate George Kelly’s philosophical assumption of ‘Constructive Alternativism’ and his Fundamental Postulate. Critically examine supporting corollaries to explain how individuals anticipate events and construct reality.', 'जॉर्ज केली के दार्शनिक सिद्धांत \'रचनात्मक वैकल्पिकवाद\' और उनके मूलभूत सिद्धांत की व्याख्या कीजिए। व्यक्तियों द्वारा घटनाओं का पूर्वानुमान लगाने और वास्तविकता का निर्माण करने के तरीके को समझाने के लिए सहायक सिद्धांतों का आलोचनात्मक परीक्षण कीजिए।', 'ODER: Erläutern Sie George Kellys philosophische Annahme des „konstruktiven Alternativismus“ (Constructive Alternativism) und sein Fundamentalpostulat. Untersuchen Sie die unterstützenden Korollarien kritisch, um zu erklären, wie Menschen Ereignisse antizipieren und Wirklichkeit konstruieren.', 'CO 5 · BL 5', 'u5-kelly', 'Constructive alternativism']] }
     ] }
   };
   function sessPaper(code, title, P) {
-    return '<div class="block" id="sp-' + code + '"><div class="eyebrow">' + code + ' · ' + esc(P.exam) + '</div><h3>' + esc(title) + '</h3>' +
-      '<p class="cap">M.A./M.Sc. Psychology, Semester I · Time: ' + esc(P.time) + ' · Max. marks: ' + P.marks + ' · CO = course outcome, BL = Bloom’s level</p>' +
+    return '<div class="block" id="sp-' + code + '"><div class="eyebrow">' + code + ' · ' + esc(TT(P.exam)) + '</div><h3>' + esc(TT(title)) + '</h3>' +
+      '<p class="cap">' + esc(TT('M.A./M.Sc. Psychology, Semester I') + ' · ' + TT('Time') + ': ' + TT(P.time) + ' · ' + TT('Max. marks') + ': ' + P.marks + ' · ' + TT('CO = course outcome, BL = Bloom’s level')) + '</p>' +
       P.sections.map(function (sec) {
-        return '<div style="display:flex;flex-direction:column;gap:8px"><h4>' + esc(sec.name) + '</h4><p class="cap">' + esc(sec.rule) + '</p><ol style="margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px">' +
-          sec.qs.map(function (q) { return '<li><span>' + esc(q[0]) + '</span><br><span class="cap" lang="hi">' + esc(q[1]) + '</span><br><span class="mono cap">' + esc(q[2]) + '</span></li>'; }).join('') + '</ol></div>';
+        return '<div style="display:flex;flex-direction:column;gap:8px"><h4>' + esc(TT(sec.name)) + '</h4><p class="cap">' + esc(TT(sec.rule)) + '</p><ol style="margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px">' +
+          sec.qs.map(function (q) {
+            return '<li><span' + (SIDX === 1 ? ' lang="hi"' : '') + '>' + esc(q[SIDX] || q[0]) + '</span> <a class="getans" href="#' + q[4] + '" data-go="' + q[4] + '" data-find="' + esc(q[5]) + '">' + esc(TT('Get The Answer')) + '</a><br><span class="mono cap">' + esc(q[3]) + '</span></li>';
+          }).join('') + '</ol></div>';
       }).join('') + '</div>';
   }
   var sessView = document.createElement('section');
   sessView.className = 'view'; sessView.id = 'sessionals'; sessView.hidden = true;
   var SESS = [['Semester 1', [['MPY26-C101', 'Foundations of Psychology'], ['MPY26-C102', 'Advanced Social Psychology'], ['MPY26-C103', 'Psychology of Personality'], ['MPY26-C104', 'Research Methodology']]],
     ['Semester 3', [['MPY26-C301', 'Psychopathology'], ['MPY26-C302', 'Disabilities & Rehabilitation'], ['MPY26-E303', 'Health Psychology'], ['MPY26-E304', 'Stress Management'], ['MPY26-E305', 'Indian Psychology'], ['MPY26-E306', 'Western Thoughts and Psychology']]]];
-  sessView.innerHTML = '<div class="eyebrow">MA Psychology · Internal exams</div><h1>Sessionals</h1>' +
-    '<p class="lede">Sessional exam dates and past sessional papers, paper by paper. Practise each past paper under time, then check your answers against the unit notes.</p>' +
-    '<div class="block"><h3>Sessional schedule</h3><div class="tbl"><table><thead><tr><th>Date</th><th>Paper</th><th>Time</th><th>Syllabus</th></tr></thead><tbody><tr><td colspan="4" class="cap">Dates will appear here once the schedule is announced.</td></tr></tbody></table></div></div>' +
+  sessView.innerHTML = '<div class="eyebrow">' + esc(TT('MA Psychology · Internal exams')) + '</div><h1>' + esc(TT('Sessionals')) + '</h1>' +
+    '<p class="lede">' + esc(TT('Sessional exam dates and past sessional papers, paper by paper. Practise each past paper under time, then check your answers against the unit notes.')) + '</p>' +
+    '<div class="block"><h3>' + esc(TT('Sessional schedule')) + '</h3><div class="tbl"><table><thead><tr><th>' + esc(TT('Date')) + '</th><th>' + esc(TT('Paper')) + '</th><th>' + esc(TT('Time')) + '</th><th>' + esc(TT('Syllabus')) + '</th></tr></thead><tbody><tr><td colspan="4" class="cap">' + esc(TT('Dates will appear here once the schedule is announced.')) + '</td></tr></tbody></table></div></div>' +
     SESS.map(function (s) {
       var full = '';
       var cards = s[1].map(function (p) {
         var P = SPAPERS[p[0]];
-        if (!P) return '<div class="paper soon"><span class="code">' + p[0] + '</span><h3>' + esc(p[1]) + '</h3><div class="badges"><span class="badge soon">Not added yet</span></div></div>';
+        if (!P) return '<div class="paper soon"><span class="code">' + p[0] + '</span><h3>' + esc(TT(p[1])) + '</h3><div class="badges"><span class="badge soon">' + esc(TT('Not added yet')) + '</span></div></div>';
         full += sessPaper(p[0], p[1], P);
-        return '<a class="paper" href="#sessionals" data-sp="sp-' + p[0] + '" style="cursor:pointer;border:2px solid var(--good)"><span class="code">' + p[0] + '</span><h3>' + esc(p[1]) + '</h3><div class="badges"><span class="badge ready">' + esc(P.exam) + '</span></div></a>';
+        return '<a class="paper" href="#sessionals" data-sp="sp-' + p[0] + '" style="cursor:pointer;border:2px solid var(--good)"><span class="code">' + p[0] + '</span><h3>' + esc(TT(p[1])) + '</h3><div class="badges"><span class="badge ready">' + esc(TT(P.exam)) + '</span></div></a>';
       }).join('');
-      return '<div class="block"><h3>' + esc(s[0]) + ' · past sessional papers</h3><div class="papers">' + cards + '</div></div>' + full;
+      return '<div class="block"><h3>' + esc(FT('Semester {#}', [s[0].replace('Semester ', '')]) + ' · ' + TT('past sessional papers')) + '</h3><div class="papers">' + cards + '</div></div>' + full;
     }).join('');
   sessView.addEventListener('click', function (e) {
+    var g = e.target.closest('.getans');
+    if (g) {
+      /* the document-level [data-go] handler opens the unit tab; afterwards land on the matching heading */
+      e.preventDefault();
+      var need = g.getAttribute('data-find');
+      if (need) setTimeout(function () {
+        var want = FT(need, [4]).toLowerCase().replace(/\s+/g, ' ').trim();
+        var hs = all('.unit:not([hidden]) .panel:not([hidden]) h3, .unit:not([hidden]) .panel:not([hidden]) h4');
+        var h = hs.filter(function (x) { return x.textContent.toLowerCase().replace(/\s+/g, ' ').trim() === want; })[0];
+        if (h) { h.style.scrollMarginTop = '60px'; h.scrollIntoView({ block: 'start' }); }
+      }, 80);
+      return;
+    }
     var a = e.target.closest('[data-sp]'); if (!a) return;
     e.preventDefault(); var t = document.getElementById(a.dataset.sp); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
