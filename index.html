@@ -14022,11 +14022,22 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   });
 
   /* ---------- sessionals ---------- */
-  /* Each question: [English, Hindi, German, CO/BL, unit tab to open, heading to land on]. The section follows the selected language (English by default). */
+  /* Each question: [English, Hindi, German, CO/BL (if printed), unit tab to open, heading to land on, optional second link [tab, heading, label]]. The section follows the selected language (English by default). */
   var SLANG = 'en';
   try { var sq = new URLSearchParams(location.search).get('lang'); SLANG = sq || localStorage.getItem('tp-lang') || 'en'; } catch (e) {}
   var SIDX = SLANG === 'hi' ? 1 : SLANG === 'de' ? 2 : 0;
   var SPAPERS = {
+    'MPY26-C101': { exam: 'Mid-term · Nov 2026', time: '1 hour', marks: 25, sections: [
+      { name: 'Section A · Very short answer', rule: 'Answer both questions in a few words (2 × 2 = 4 marks).', qs: [
+        ['Define Psychology and mention any two goals of Psychology.', 'मनोविज्ञान को परिभाषित कीजिए तथा मनोविज्ञान के किन्हीं दो लक्ष्यों का उल्लेख कीजिए।', 'Definieren Sie Psychologie und nennen Sie zwei Ziele der Psychologie.', '', 'f1', 'Definitions to quote', ['f1-goals', '', 'Goals of psychology']],
+        ['Define working memory.', 'कार्यशील स्मृति (Working Memory) को परिभाषित कीजिए।', 'Definieren Sie das Arbeitsgedächtnis (Working Memory).', '', 'f3-stages', 'Working memory (Baddeley & Hitch, {#})']] },
+      { name: 'Section B · Short answer', rule: 'Answer any one in about 150 words (1 × 6 = 6 marks).', qs: [
+        ['Explain the major branches and scope of Psychology.', 'मनोविज्ञान की प्रमुख शाखाओं एवं इसके कार्यक्षेत्र की व्याख्या कीजिए।', 'Erläutern Sie die wichtigsten Teilgebiete und den Anwendungsbereich der Psychologie.', '', 'f1-branches', ''],
+        ['Explain observational learning with suitable examples.', 'उपयुक्त उदाहरणों सहित प्रेक्षणात्मक अधिगम (Observational Learning) की व्याख्या कीजिए।', 'Erläutern Sie das Beobachtungslernen anhand geeigneter Beispiele.', '', 'f2-observation', '']] },
+      { name: 'Section C · Long answer', rule: 'Answer any one option in detail (1 × 15 = 15 marks).', qs: [
+        ['Explain operant conditioning with reference to B. F. Skinner’s experiment. Discuss the concepts of reinforcement, punishment and schedules of reinforcement.', 'बी. एफ. स्किनर के प्रयोग के संदर्भ में क्रियाप्रसूत अनुबंधन (Operant Conditioning) की व्याख्या कीजिए। पुनर्बलन, दण्ड तथा पुनर्बलन की अनुसूचियों की अवधारणाओं पर चर्चा कीजिए।', 'Erläutern Sie die operante Konditionierung anhand des Experiments von B. F. Skinner. Erörtern Sie die Konzepte Verstärkung, Bestrafung und Verstärkungspläne.', '', 'f2-operant', ''],
+        ['OR: Explain the structure and functioning of long-term memory. Differentiate between declarative and procedural memory with suitable examples.', 'अथवा: दीर्घकालिक स्मृति की संरचना एवं कार्यप्रणाली की व्याख्या कीजिए। उपयुक्त उदाहरणों सहित घोषणात्मक स्मृति तथा प्रक्रियात्मक स्मृति में अंतर स्पष्ट कीजिए।', 'ODER: Erläutern Sie Struktur und Funktionsweise des Langzeitgedächtnisses. Unterscheiden Sie anhand geeigneter Beispiele zwischen deklarativem und prozeduralem Gedächtnis.', '', 'f3-stages', 'Types of long-term memory']] }
+    ] },
     'MPY26-C103': { exam: 'Mid-term · Nov 2026', time: '1 hour', marks: 25, sections: [
       { name: 'Section A · Very short answer', rule: 'Answer both questions in a few words (2 × 2 = 4 marks).', qs: [
         ['What is the meaning of “basic anxiety” in Karen Horney’s theory?', 'कैरेन हॉर्नी के सिद्धांत में "बेसिक एंगजायटी" का क्या अर्थ है?', 'Was bedeutet „Grundangst“ (basic anxiety) in Karen Horneys Theorie?', 'CO 2 · BL 2', 'u2-horney', 'Basic hostility → basic anxiety'],
@@ -14039,13 +14050,17 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
         ['OR: Elucidate George Kelly’s philosophical assumption of ‘Constructive Alternativism’ and his Fundamental Postulate. Critically examine supporting corollaries to explain how individuals anticipate events and construct reality.', 'जॉर्ज केली के दार्शनिक सिद्धांत \'रचनात्मक वैकल्पिकवाद\' और उनके मूलभूत सिद्धांत की व्याख्या कीजिए। व्यक्तियों द्वारा घटनाओं का पूर्वानुमान लगाने और वास्तविकता का निर्माण करने के तरीके को समझाने के लिए सहायक सिद्धांतों का आलोचनात्मक परीक्षण कीजिए।', 'ODER: Erläutern Sie George Kellys philosophische Annahme des „konstruktiven Alternativismus“ (Constructive Alternativism) und sein Fundamentalpostulat. Untersuchen Sie die unterstützenden Korollarien kritisch, um zu erklären, wie Menschen Ereignisse antizipieren und Wirklichkeit konstruieren.', 'CO 5 · BL 5', 'u5-kelly', 'Constructive alternativism']] }
     ] }
   };
+  function sessLink(tab, find, label) {
+    return '<a class="getans" href="#' + tab + '" data-go="' + tab + '" data-find="' + esc(find) + '">' + esc(TT(label)) + '</a>';
+  }
   function sessPaper(code, title, P) {
+    var hasCo = P.sections.some(function (sec) { return sec.qs.some(function (q) { return q[3]; }); });
     return '<div class="block" id="sp-' + code + '"><div class="eyebrow">' + code + ' · ' + esc(TT(P.exam)) + '</div><h3>' + esc(TT(title)) + '</h3>' +
-      '<p class="cap">' + esc(TT('M.A./M.Sc. Psychology, Semester I') + ' · ' + TT('Time') + ': ' + TT(P.time) + ' · ' + TT('Max. marks') + ': ' + P.marks + ' · ' + TT('CO = course outcome, BL = Bloom’s level')) + '</p>' +
+      '<p class="cap">' + esc(TT('M.A./M.Sc. Psychology, Semester I') + ' · ' + TT('Time') + ': ' + TT(P.time) + ' · ' + TT('Max. marks') + ': ' + P.marks + (hasCo ? ' · ' + TT('CO = course outcome, BL = Bloom’s level') : '')) + '</p>' +
       P.sections.map(function (sec) {
         return '<div style="display:flex;flex-direction:column;gap:8px"><h4>' + esc(TT(sec.name)) + '</h4><p class="cap">' + esc(TT(sec.rule)) + '</p><ol style="margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px">' +
           sec.qs.map(function (q) {
-            return '<li><span' + (SIDX === 1 ? ' lang="hi"' : '') + '>' + esc(q[SIDX] || q[0]) + '</span> <a class="getans" href="#' + q[4] + '" data-go="' + q[4] + '" data-find="' + esc(q[5]) + '">' + esc(TT('Get The Answer')) + '</a><br><span class="mono cap">' + esc(q[3]) + '</span></li>';
+            return '<li><span' + (SIDX === 1 ? ' lang="hi"' : '') + '>' + esc(q[SIDX] || q[0]) + '</span> ' + sessLink(q[4], q[5], 'Get The Answer') + (q[6] ? ' ' + sessLink(q[6][0], q[6][1], q[6][2]) : '') + (q[3] ? '<br><span class="mono cap">' + esc(q[3]) + '</span>' : '') + '</li>';
           }).join('') + '</ol></div>';
       }).join('') + '</div>';
   }
@@ -14073,9 +14088,9 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       e.preventDefault();
       var need = g.getAttribute('data-find');
       if (need) setTimeout(function () {
-        var want = FT(need, [4]).toLowerCase().replace(/\s+/g, ' ').trim();
+        var want = new RegExp('^' + TT(need).toLowerCase().replace(/\s+/g, ' ').trim().replace(/[.*+?^$()|[\]\\]/g, '\\$&').replace(/\{#\}/g, '\\d+') + '$');
         var hs = all('.unit:not([hidden]) .panel:not([hidden]) h3, .unit:not([hidden]) .panel:not([hidden]) h4');
-        var h = hs.filter(function (x) { return x.textContent.toLowerCase().replace(/\s+/g, ' ').trim() === want; })[0];
+        var h = hs.filter(function (x) { return want.test(x.textContent.toLowerCase().replace(/\s+/g, ' ').trim()); })[0];
         if (h) { h.style.scrollMarginTop = '60px'; h.scrollIntoView({ block: 'start' }); }
       }, 80);
       return;
