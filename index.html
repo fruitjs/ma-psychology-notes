@@ -82,7 +82,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .topbar.compact .topmore { opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s linear .2s; }
 @media (prefers-reduced-motion: reduce) { .topmore { transition: none !important; } }
 .reloadrow { display: flex; justify-content: flex-end; padding: 2px 0 6px; }
-#hardreload { cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 999px; border: 0; background: #c62828; color: #fff; }
+#hardreload { cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.75rem; width: 30px; height: 30px; line-height: 1; padding: 0; font-size: 1.05rem; border-radius: 50%; border: 0; background: #c62828; color: #fff; }
 #hardreload:hover { background: #b71c1c; }
 #hardreload:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 2px; }
 #hardreload:disabled { opacity: .7; cursor: wait; }
@@ -306,7 +306,7 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
       <div class="maintabs" id="maintabs" role="tablist" aria-label="Sections"></div>
       <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
       <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
-      <div class="reloadrow"><button type="button" id="hardreload" title="Clears the saved copy of this page and loads the newest version">↻ Get latest updates</button></div>
+      <div class="reloadrow"><button type="button" id="hardreload" title="Get latest updates" aria-label="Get latest updates">↻</button></div>
     </div>
   </div></div>
 </header>
