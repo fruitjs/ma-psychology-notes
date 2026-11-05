@@ -14113,6 +14113,11 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     var a = e.target.closest('[data-sp]'); if (!a) return;
     e.preventDefault(); var t = document.getElementById(a.dataset.sp); if (t) { t.open = true; t.style.scrollMarginTop = '60px'; t.scrollIntoView({ block: 'start' }); }
   });
+  /* one paper open at a time, also in browsers without <details name> */
+  sessView.addEventListener('toggle', function (e) {
+    if (!e.target.open || !e.target.classList.contains('sesspaper')) return;
+    all('.sesspaper[open]', sessView).forEach(function (d) { if (d !== e.target) d.open = false; });
+  }, true);
   document.getElementById('content').appendChild(sessView);
 
   /* ---------- top tabs ---------- */
