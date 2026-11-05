@@ -81,11 +81,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .topbar.compact .crumbs { pointer-events: auto; box-shadow: 0 0 0 100vmax var(--nav), 0 2px 0 100vmax rgba(0,0,0,.2); }
 .topbar.compact .topmore { opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s linear .2s; }
 @media (prefers-reduced-motion: reduce) { .topmore { transition: none !important; } }
-.reloadrow { display: flex; justify-content: flex-end; padding: 2px 0 6px; }
-#hardreload { cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.75rem; width: 30px; height: 30px; line-height: 1; padding: 0; font-size: 1.05rem; border-radius: 50%; border: 0; background: #c62828; color: #fff; }
-#hardreload:hover { background: #b71c1c; }
-#hardreload:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 2px; }
-#hardreload:disabled { opacity: .7; cursor: wait; }
 .utabs { display: flex; gap: 4px; overflow-x: auto; padding-block: 4px 0; scrollbar-width: none; }
 .utabs::-webkit-scrollbar { display: none; }
 .utabs button {
@@ -306,7 +301,6 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
       <div class="maintabs" id="maintabs" role="tablist" aria-label="Sections"></div>
       <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
       <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
-      <div class="reloadrow"><button type="button" id="hardreload" title="Get latest updates" aria-label="Get latest updates">↻</button></div>
     </div>
   </div></div>
 </header>
@@ -13786,25 +13780,6 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     }, { passive: true });
   })();
 
-  /* ---------- "Get latest updates": drop saved copies and reload with a fresh URL ---------- */
-  (function () {
-    var btn = document.getElementById('hardreload');
-    if (!btn) return;
-    btn.addEventListener('click', function () {
-      btn.disabled = true;
-      var jobs = [];
-      try { if (window.caches) jobs.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })); } catch (e) {}
-      try { if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); })); } catch (e) {}
-      ['hi', 'de'].forEach(function (l) { try { jobs.push(fetch('i18n/' + l + '.json', { cache: 'reload' }).catch(function () {})); } catch (e) {} });
-      var go = function () {
-        var u = new URL(location.href);
-        u.searchParams.set('v', Date.now());
-        location.replace(u.toString());
-      };
-      Promise.all(jobs.map(function (j) { return Promise.resolve(j).catch(function () {}); })).then(go, go);
-    });
-  })();
-
   /* ---------- timeline ---------- */
   var catColor = function (c) { return 'hsl(' + Math.round(cats.indexOf(c) * 360 / cats.length) + ',55%,46%)'; };
   var tlOff = {};
@@ -14043,8 +14018,53 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     if (k >= 0 && !qstate.answered) { answer(k % 4); e.preventDefault(); }
   });
 
+  /* ---------- sessionals ---------- */
+  var SPAPERS = {
+    'MPY26-C103': { exam: 'Mid-term · Nov 2026', time: '1 hour', marks: 25, sections: [
+      { name: 'Section A · Very short answer', rule: 'Answer both questions in a few words (2 × 2 = 4 marks).', qs: [
+        ['What is the meaning of “basic anxiety” in Karen Horney’s theory?', 'कैरेन हॉर्नी के सिद्धांत में "बेसिक एंगजायटी" का क्या अर्थ है?', 'CO 2 · BL 2'],
+        ['What is the consistency paradox?', 'संगति विरोधाभास क्या है?', 'CO 5 · BL 2']] },
+      { name: 'Section B · Short answer', rule: 'Answer any one in about 150 words (1 × 6 = 6 marks).', qs: [
+        ['Differentiate Carl Jung’s Analytical Psychology from Sigmund Freud’s Psychoanalysis.', 'कार्ल जुंग के विश्लेषणात्मक मनोविज्ञान और सिगमंड फ्रायड के मनोविश्लेषण के बीच अंतर स्पष्ट करें।', 'CO 2 · BL 4'],
+        ['Explain the four basic variables in Julian Rotter’s cognitive social learning theory: Behavior Potential, Expectancy, Reinforcement Value, and the Psychological Situation.', 'जूलियन रॉटर के संज्ञानात्मक सामाजिक अधिगम सिद्धांत में चार बुनियादी चरों (व्यवहार क्षमता, प्रत्याशा, पुनर्बलन मूल्य और मनोवैज्ञानिक स्थिति) की व्याख्या करें।', 'CO 5 · BL 2']] },
+      { name: 'Section C · Long answer', rule: 'Answer any one option in detail (1 × 15 = 15 marks).', qs: [
+        ['Critically evaluate the stages of Sigmund Freud’s psychosexual development as determinants of personality.', 'व्यक्तित्व के निर्धारक के रूप में सिगमंड फ्रायड के मनो-लैंगिक विकास के चरणों का आलोचनात्मक मूल्यांकन करें।', 'CO 2 · BL 5'],
+        ['OR: Elucidate George Kelly’s philosophical assumption of ‘Constructive Alternativism’ and his Fundamental Postulate. Critically examine supporting corollaries to explain how individuals anticipate events and construct reality.', 'जॉर्ज केली के दार्शनिक सिद्धांत \'रचनात्मक वैकल्पिकवाद\' और उनके मूलभूत सिद्धांत की व्याख्या कीजिए। व्यक्तियों द्वारा घटनाओं का पूर्वानुमान लगाने और वास्तविकता का निर्माण करने के तरीके को समझाने के लिए सहायक सिद्धांतों का आलोचनात्मक परीक्षण कीजिए।', 'CO 5 · BL 5']] }
+    ] }
+  };
+  function sessPaper(code, title, P) {
+    return '<div class="block" id="sp-' + code + '"><div class="eyebrow">' + code + ' · ' + esc(P.exam) + '</div><h3>' + esc(title) + '</h3>' +
+      '<p class="cap">M.A./M.Sc. Psychology, Semester I · Time: ' + esc(P.time) + ' · Max. marks: ' + P.marks + ' · CO = course outcome, BL = Bloom’s level</p>' +
+      P.sections.map(function (sec) {
+        return '<div style="display:flex;flex-direction:column;gap:8px"><h4>' + esc(sec.name) + '</h4><p class="cap">' + esc(sec.rule) + '</p><ol style="margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px">' +
+          sec.qs.map(function (q) { return '<li><span>' + esc(q[0]) + '</span><br><span class="cap" lang="hi">' + esc(q[1]) + '</span><br><span class="mono cap">' + esc(q[2]) + '</span></li>'; }).join('') + '</ol></div>';
+      }).join('') + '</div>';
+  }
+  var sessView = document.createElement('section');
+  sessView.className = 'view'; sessView.id = 'sessionals'; sessView.hidden = true;
+  var SESS = [['Semester 1', [['MPY26-C101', 'Foundations of Psychology'], ['MPY26-C102', 'Advanced Social Psychology'], ['MPY26-C103', 'Psychology of Personality'], ['MPY26-C104', 'Research Methodology']]],
+    ['Semester 3', [['MPY26-C301', 'Psychopathology'], ['MPY26-C302', 'Disabilities & Rehabilitation'], ['MPY26-E303', 'Health Psychology'], ['MPY26-E304', 'Stress Management'], ['MPY26-E305', 'Indian Psychology'], ['MPY26-E306', 'Western Thoughts and Psychology']]]];
+  sessView.innerHTML = '<div class="eyebrow">MA Psychology · Internal exams</div><h1>Sessionals</h1>' +
+    '<p class="lede">Sessional exam dates and past sessional papers, paper by paper. Practise each past paper under time, then check your answers against the unit notes.</p>' +
+    '<div class="block"><h3>Sessional schedule</h3><div class="tbl"><table><thead><tr><th>Date</th><th>Paper</th><th>Time</th><th>Syllabus</th></tr></thead><tbody><tr><td colspan="4" class="cap">Dates will appear here once the schedule is announced.</td></tr></tbody></table></div></div>' +
+    SESS.map(function (s) {
+      var full = '';
+      var cards = s[1].map(function (p) {
+        var P = SPAPERS[p[0]];
+        if (!P) return '<div class="paper soon"><span class="code">' + p[0] + '</span><h3>' + esc(p[1]) + '</h3><div class="badges"><span class="badge soon">Not added yet</span></div></div>';
+        full += sessPaper(p[0], p[1], P);
+        return '<a class="paper" href="#sessionals" data-sp="sp-' + p[0] + '" style="cursor:pointer;border:2px solid var(--good)"><span class="code">' + p[0] + '</span><h3>' + esc(p[1]) + '</h3><div class="badges"><span class="badge ready">' + esc(P.exam) + '</span></div></a>';
+      }).join('');
+      return '<div class="block"><h3>' + esc(s[0]) + ' · past sessional papers</h3><div class="papers">' + cards + '</div></div>' + full;
+    }).join('');
+  sessView.addEventListener('click', function (e) {
+    var a = e.target.closest('[data-sp]'); if (!a) return;
+    e.preventDefault(); var t = document.getElementById(a.dataset.sp); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+  document.getElementById('content').appendChild(sessView);
+
   /* ---------- top tabs ---------- */
-  [['home', 'Semesters'], ['psychologists', 'Famous Psychologists'], ['revise', 'Revise'], ['quiz', 'Quiz'], ['vineet', 'Vineet Kumar']].forEach(function (t) {
+  [['home', 'Semesters'], ['psychologists', 'Famous Psychologists'], ['revise', 'Revise'], ['quiz', 'Quiz'], ['sessionals', 'Sessionals'], ['vineet', 'Vineet Kumar']].forEach(function (t) {
     var b = document.createElement('button');
     b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.go = t[0]; b.textContent = t[1];
     maintabs.appendChild(b);
@@ -14058,6 +14078,29 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   langsel.id = 'langsel'; langsel.className = 'langsel notranslate'; langsel.setAttribute('translate', 'no'); langsel.setAttribute('aria-label', 'Language');
   LANGS.forEach(function (l) { var o = document.createElement('option'); o.value = l[0]; o.textContent = l[1]; langsel.appendChild(o); });
   maintabs.appendChild(langsel);
+  /* ---------- hard reload: clears caches and reloads with a fresh URL so every device gets the latest version ---------- */
+  var hardBtn = document.createElement('button');
+  hardBtn.type = 'button'; hardBtn.id = 'hardreload'; hardBtn.className = 'notranslate'; hardBtn.setAttribute('translate', 'no');
+  hardBtn.title = 'Clear saved copies and load the newest version';
+  hardBtn.textContent = '↻';
+  hardBtn.style.cssText = 'cursor:pointer;flex:0 0 auto;align-self:center;margin:4px 0 4px 8px;padding:6px 14px;border:0;border-radius:999px;background:#d32f2f;color:#fff;font-family:var(--display);font-weight:700;font-size:0.85rem;box-shadow:0 1px 3px rgba(0,0,0,.3)';
+  hardBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    hardBtn.disabled = true; hardBtn.textContent = 'Updating…';
+    var jobs = [];
+    try { if (window.caches && caches.keys) jobs.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })); } catch (err) {}
+    try { if (navigator.serviceWorker && navigator.serviceWorker.getRegistrations) jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); })); } catch (err) {}
+    var go = function () {
+      try {
+        var u = new URL(location.href);
+        u.searchParams.set('v', Date.now().toString(36));
+        location.replace(u.toString());
+      } catch (err) { location.reload(); }
+    };
+    Promise.all(jobs).then(go, go);
+    setTimeout(go, 2500);
+  });
+  maintabs.appendChild(hardBtn);
   function setTransCookie(v) {
     try {
       var h = location.hostname;
@@ -14106,11 +14149,11 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 
   function show(token, scroll) {
     token = token || 'home';
-    var kind = token === 'vineet' ? 'about' : token === 'revise' ? 'revise' : token === 'quiz' ? 'quiz' : token === 'search' ? 'search' :
+    var kind = token === 'vineet' ? 'about' : token === 'sessionals' ? 'sessionals' : token === 'revise' ? 'revise' : token === 'quiz' ? 'quiz' : token === 'search' ? 'search' :
       (token === 'psychologists' || token === 'timeline' || token === 'compare' || token.indexOf('who_') === 0 || token.indexOf('cmp~') === 0) ? 'psy' : 'sem';
-    [psyView, profView, aboutView, reviseView, searchView, timelineView, cmpView, quizView].forEach(function (v) { v.hidden = true; });
+    [psyView, profView, aboutView, reviseView, searchView, timelineView, cmpView, quizView, sessView].forEach(function (v) { v.hidden = true; });
     all('button', maintabs).forEach(function (b) {
-      var g = b.dataset.go, on = g === 'vineet' ? kind === 'about' : g === 'revise' ? kind === 'revise' : g === 'quiz' ? kind === 'quiz' : g === 'psychologists' ? kind === 'psy' : g === 'home' ? kind === 'sem' : false;
+      var g = b.dataset.go, on = g === 'vineet' ? kind === 'about' : g === 'sessionals' ? kind === 'sessionals' : g === 'revise' ? kind === 'revise' : g === 'quiz' ? kind === 'quiz' : g === 'psychologists' ? kind === 'psy' : g === 'home' ? kind === 'sem' : false;
       b.setAttribute('aria-selected', on ? 'true' : 'false');
     });
     if (kind !== 'sem') {
@@ -14119,6 +14162,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       subtabs.innerHTML = ''; utabs.innerHTML = ''; utabs.hidden = true;
       var h = crumb('MA Psychology', 'home');
       if (kind === 'about') { aboutView.hidden = false; h += crumb('Vineet Kumar'); }
+      else if (kind === 'sessionals') { sessView.hidden = false; h += crumb('Sessionals'); }
       else if (kind === 'quiz') { quizView.hidden = false; renderQuiz(); h += crumb('Quiz'); }
       else if (kind === 'revise') { reviseView.hidden = false; initRevise(); h += crumb('Revise'); }
       else if (kind === 'search') { searchView.hidden = false; renderSearch(); h += crumb('Search'); }
