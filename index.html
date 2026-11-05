@@ -273,6 +273,14 @@ summary { cursor: pointer; padding: 12px 14px; font-family: var(--display); font
 summary:focus-visible { outline: 3px solid var(--c3); outline-offset: 2px; }
 summary .marks { font-family: var(--mono); font-weight: 400; font-size: 0.75rem; color: var(--muted); margin-left: 6px; }
 details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap: 8px; font-size: 0.96rem; }
+.sesspaper.block { display: block; padding: 0; border-radius: 10px; }
+.sesspaper + .sesspaper { margin-top: 0; }
+.sesspaper summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 20px; list-style: none; }
+.sesspaper summary::-webkit-details-marker { display: none; }
+.sesspaper summary::after { content: "\25BE"; flex: 0 0 auto; color: var(--muted); transition: transform .2s; }
+.sesspaper[open] summary::after { transform: rotate(180deg); }
+.sesshead { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.sesspaper > div { padding: 0 20px 20px; gap: 14px; font-size: inherit; }
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; }
 .cards details + details { margin-top: 0; }
 
@@ -14057,14 +14065,14 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     return '<a class="getans" href="#' + tab + '" data-go="' + tab + '" data-find="' + esc(find) + '">' + esc(TT(label)) + '</a>';
   }
   function sessPaper(code, title, P) {
-    return '<div class="block" id="sp-' + code + '"><div class="eyebrow">' + code + ' · ' + esc(TT(P.exam)) + '</div><h3>' + esc(TT(title)) + '</h3>' +
+    return '<details class="block sesspaper" id="sp-' + code + '" name="sesspaper"><summary><span class="sesshead"><span class="eyebrow">' + code + ' · ' + esc(TT(P.exam)) + '</span><h3>' + esc(TT(title)) + '</h3></span></summary><div>' +
       '<p class="cap">' + esc(TT('M.A./M.Sc. Psychology, Semester I') + ' · ' + TT('Time') + ': ' + TT(P.time) + ' · ' + TT('Max. marks') + ': ' + P.marks) + '</p>' +
       P.sections.map(function (sec) {
         return '<div style="display:flex;flex-direction:column;gap:8px"><h4>' + esc(TT(sec.name)) + '</h4><p class="cap">' + esc(TT(sec.rule)) + '</p><ol style="margin:0;padding-left:1.3em;display:flex;flex-direction:column;gap:10px">' +
           sec.qs.map(function (q) {
             return '<li><span' + (SIDX === 1 ? ' lang="hi"' : '') + '>' + esc(q[SIDX] || q[0]) + '</span> ' + sessLink(q[3], q[4], 'Get The Answer') + (q[5] ? ' ' + sessLink(q[5][0], q[5][1], q[5][2]) : '') + '</li>';
           }).join('') + '</ol></div>';
-      }).join('') + '</div>';
+      }).join('') + '</div></details>';
   }
   /* Sessional dates, November 2026: [day, paper code, paper, time, syllabus]. No time or syllabus was announced for the practical. */
   var STIME = '11am–12pm';
@@ -14103,7 +14111,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       return;
     }
     var a = e.target.closest('[data-sp]'); if (!a) return;
-    e.preventDefault(); var t = document.getElementById(a.dataset.sp); if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    e.preventDefault(); var t = document.getElementById(a.dataset.sp); if (t) { t.open = true; t.style.scrollMarginTop = '60px'; t.scrollIntoView({ block: 'start' }); }
   });
   document.getElementById('content').appendChild(sessView);
 
