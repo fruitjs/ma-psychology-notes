@@ -13768,10 +13768,13 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   });
 
   /* ---------- top bar: only the breadcrumb row while scrolling down, everything again on scroll up ---------- */
+  var barCompact = function () {};
   (function () {
     var tb = document.querySelector('.topbar'), last = window.scrollY, lock = 0;
+    barCompact = function () { tb.classList.add('compact'); last = window.scrollY; lock = Date.now() + 400; };
     window.addEventListener('scroll', function () {
       var y = window.scrollY, now = Date.now();
+      if (y < 80) tb.classList.remove('compact');
       if (now < lock) { last = y; return; }
       var d = y - last, c = tb.classList.contains('compact'), want = c;
       if (y < 80) want = false;
@@ -14087,11 +14090,13 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       /* the document-level [data-go] handler opens the unit tab; afterwards land on the matching heading */
       e.preventDefault();
       var need = g.getAttribute('data-find');
-      if (need) setTimeout(function () {
+      setTimeout(function () {
+        var panel = all('.unit:not([hidden]) .panel:not([hidden])')[0];
+        if (!need) { if (panel) { panel.style.scrollMarginTop = '60px'; panel.scrollIntoView({ block: 'start' }); barCompact(); } return; }
         var want = new RegExp('^' + TT(need).toLowerCase().replace(/\s+/g, ' ').trim().replace(/[.*+?^$()|[\]\\]/g, '\\$&').replace(/\{#\}/g, '\\d+') + '$');
         var hs = all('.unit:not([hidden]) .panel:not([hidden]) h3, .unit:not([hidden]) .panel:not([hidden]) h4');
         var h = hs.filter(function (x) { return want.test(x.textContent.toLowerCase().replace(/\s+/g, ' ').trim()); })[0];
-        if (h) { h.style.scrollMarginTop = '60px'; h.scrollIntoView({ block: 'start' }); }
+        if (h) { h.style.scrollMarginTop = '60px'; h.scrollIntoView({ block: 'start' }); barCompact(); }
       }, 80);
       return;
     }
@@ -14213,7 +14218,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
         else { token = 'psychologists'; psyView.hidden = false; h += crumb('Famous Psychologists'); }
       }
       crumbs.innerHTML = h;
-      try { history.replaceState(null, '', '#' + token); } catch (e) {}
+      try { history.replaceState(history.state, '', '#' + token); } catch (e) {}
       try { localStorage.setItem('tp-last', token); } catch (e) {}
       if (scroll) window.scrollTo(0, 0);
       return;
@@ -14251,7 +14256,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       else html += crumb(u.dataset.num + ': ' + u.dataset.short, u.id) + crumb(p.dataset.label);
     }
     crumbs.innerHTML = html;
-    try { history.replaceState(null, '', '#' + token); } catch (e) {}
+    try { history.replaceState(history.state, '', '#' + token); } catch (e) {}
     try { localStorage.setItem('tp-last', token); } catch (e) {}
     if (scroll) window.scrollTo(0, 0);
   }
@@ -14259,9 +14264,18 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   document.addEventListener('click', function (e) {
     var b = e.target.closest('[data-go]');
     if (!b) return;
+    /* each click is a history entry, and the entry being left remembers its scroll position, so the browser's back button works */
+    try {
+      history.replaceState({ y: window.scrollY }, '', location.href);
+      if (location.hash !== '#' + b.dataset.go) history.pushState(null, '', '#' + b.dataset.go);
+    } catch (err) {}
     show(b.dataset.go, true);
   });
-  window.addEventListener('hashchange', function () { show(location.hash.slice(1), true); });
+  window.addEventListener('hashchange', function () {
+    var y = history.state && history.state.y;
+    show(location.hash.slice(1), y == null);
+    if (y != null) window.scrollTo(0, y);
+  });
 
   var start = location.hash.slice(1);
   if (!start) { try { start = localStorage.getItem('tp-last') || ''; } catch (e) {} }
