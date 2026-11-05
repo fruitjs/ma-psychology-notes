@@ -81,6 +81,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .topbar.compact .crumbs { pointer-events: auto; box-shadow: 0 0 0 100vmax var(--nav), 0 2px 0 100vmax rgba(0,0,0,.2); }
 .topbar.compact .topmore { opacity: 0; visibility: hidden; transition: opacity .2s, visibility 0s linear .2s; }
 @media (prefers-reduced-motion: reduce) { .topmore { transition: none !important; } }
+.reloadrow { display: flex; justify-content: flex-end; padding: 2px 0 6px; }
+#hardreload { cursor: pointer; font-family: var(--display); font-weight: 700; font-size: 0.75rem; padding: 4px 12px; border-radius: 999px; border: 0; background: #c62828; color: #fff; }
+#hardreload:hover { background: #b71c1c; }
+#hardreload:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 2px; }
+#hardreload:disabled { opacity: .7; cursor: wait; }
 .utabs { display: flex; gap: 4px; overflow-x: auto; padding-block: 4px 0; scrollbar-width: none; }
 .utabs::-webkit-scrollbar { display: none; }
 .utabs button {
@@ -301,6 +306,7 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
       <div class="maintabs" id="maintabs" role="tablist" aria-label="Sections"></div>
       <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
       <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
+      <div class="reloadrow"><button type="button" id="hardreload" title="Clears the saved copy of this page and loads the newest version">↻ Get latest updates</button></div>
     </div>
   </div></div>
 </header>
@@ -13778,6 +13784,25 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       last = y;
       if (want !== c) { tb.classList.toggle('compact', want); lock = now + 250; }
     }, { passive: true });
+  })();
+
+  /* ---------- "Get latest updates": drop saved copies and reload with a fresh URL ---------- */
+  (function () {
+    var btn = document.getElementById('hardreload');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      btn.disabled = true;
+      var jobs = [];
+      try { if (window.caches) jobs.push(caches.keys().then(function (ks) { return Promise.all(ks.map(function (k) { return caches.delete(k); })); })); } catch (e) {}
+      try { if (navigator.serviceWorker) jobs.push(navigator.serviceWorker.getRegistrations().then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); })); } catch (e) {}
+      ['hi', 'de'].forEach(function (l) { try { jobs.push(fetch('i18n/' + l + '.json', { cache: 'reload' }).catch(function () {})); } catch (e) {} });
+      var go = function () {
+        var u = new URL(location.href);
+        u.searchParams.set('v', Date.now());
+        location.replace(u.toString());
+      };
+      Promise.all(jobs.map(function (j) { return Promise.resolve(j).catch(function () {}); })).then(go, go);
+    });
   })();
 
   /* ---------- timeline ---------- */
