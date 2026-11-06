@@ -306,9 +306,30 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 </head>
 <body>
 <header class="topbar">
+<div class="edubanner">
+  <div class="ebtext">
+    <div class="ebt">Learn today, lead tomorrow</div>
+    <div class="ebs">Clear notes, practice quizzes and past papers for your MA Psychology journey.</div>
+  </div>
+  <svg viewBox="0 0 220 110" aria-hidden="true">
+    <rect x="28" y="84" width="150" height="16" rx="3" fill="#fff"/>
+    <rect x="28" y="84" width="14" height="16" rx="3" fill="#fed7aa"/>
+    <rect x="42" y="66" width="130" height="16" rx="3" fill="#ffedd5"/>
+    <rect x="42" y="66" width="14" height="16" rx="3" fill="#fdba74"/>
+    <rect x="34" y="48" width="134" height="16" rx="3" fill="#fff"/>
+    <rect x="34" y="48" width="14" height="16" rx="3" fill="#fed7aa"/>
+    <path d="M101 8 L158 28 L101 46 L44 28 Z" fill="#7c2d12"/>
+    <path d="M72 38 V46 C72 52 130 52 130 46 V38 L101 47 Z" fill="#9a3412"/>
+    <path d="M153 30 V50" stroke="#ffedd5" stroke-width="2.5"/>
+    <circle cx="153" cy="53" r="4" fill="#ffedd5"/>
+    <rect x="194" y="30" width="10" height="56" rx="2" fill="#ffedd5" transform="rotate(12 199 58)"/>
+    <path d="M187.5 83.5 L197.3 85.6 L190 96 Z" fill="#7c2d12"/>
+  </svg>
+</div>
   <div class="gutter"><div class="inner">
     <ol class="crumbs" id="crumbs" aria-label="Breadcrumb"></ol>
     <div class="topmore" id="topmore">
+      <button type="button" id="navtoggle" aria-expanded="true" aria-label="Collapse menu" title="Collapse menu"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M15 5 L8 12 L15 19" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="maintabs" id="maintabs" role="tablist" aria-label="Sections"></div>
       <div class="subtabs" id="subtabs" role="tablist" aria-label="Subjects"></div>
       <div class="utabs" id="utabs" role="tablist" aria-label="Units"></div>
@@ -7942,6 +7963,48 @@ body { top: 0 !important; position: static !important; }
   .panel + .panel { break-before: page; }
   figure, .block, .study, .who { break-inside: avoid; }
 }
+/* desktop only: orange banner at the top of the page, sticky breadcrumb below it, menus in a left navigation */
+.edubanner, #navtoggle { display: none; }
+@media (min-width: 1100px) and (hover: hover) and (pointer: fine) {
+  :root { --jumpTop: 53px; --navw: 250px; }
+  :root.navcollapsed { --navw: 52px; }
+  /* the bar sticks 72px above the window, so the banner scrolls away and the breadcrumb stays */
+  .topbar { top: -72px; }
+  .topbar .inner { max-width: none; }
+  .topbar.compact { background: var(--nav); box-shadow: 0 1px 0 rgba(0,0,0,.2); pointer-events: auto; }
+  .topmore, .topbar.compact .topmore {
+    position: fixed; top: 0; left: 0; bottom: 0; width: var(--navw); box-sizing: border-box; overflow-y: auto;
+    display: flex; flex-direction: column; gap: 14px; padding: 16px 12px 24px;
+    background: var(--nav); opacity: 1; visibility: visible; transition: width .3s; scrollbar-width: thin;
+  }
+  body > main, body > .gutter, .topbar > .gutter, .edubanner { margin-left: var(--navw); transition: margin-left .3s; }
+  #navtoggle { display: flex; align-self: flex-end; align-items: center; justify-content: center; flex: 0 0 auto; width: 30px; height: 30px; padding: 0; cursor: pointer; border: 1px solid rgba(255,255,255,.25); border-radius: 6px; background: transparent; color: var(--nav-fg); }
+  #navtoggle:hover { background: rgba(255,255,255,.1); }
+  #navtoggle:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: 2px; }
+  #navtoggle svg { transition: transform .3s; }
+  :root.navcollapsed #navtoggle { align-self: center; }
+  :root.navcollapsed #navtoggle svg { transform: rotate(180deg); }
+  :root.navcollapsed .topmore > :not(#navtoggle) { display: none; }
+  :root.navcollapsed .topmore, :root.navcollapsed .topbar.compact .topmore { padding: 16px 0 0; overflow: hidden; align-items: center; }
+  .maintabs { display: flex; flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 2px; }
+  .maintabs > button:not(#hardreload) { display: block; width: 100%; box-sizing: border-box; text-align: left; padding: 9px 12px; border: 0; border-left: 3px solid transparent; border-radius: 0 6px 6px 0; white-space: normal; }
+  .maintabs > button:not(#hardreload)[aria-selected="true"] { border-left-color: var(--hl-bg); background: rgba(255,255,255,.08); }
+  .gsearch { order: -1; width: 100%; box-sizing: border-box; margin: 0 0 10px; }
+  #langsel { width: 100% !important; max-width: none !important; box-sizing: border-box; margin: 10px 0 0 !important; align-self: stretch; }
+  #hardreload { align-self: flex-start !important; margin: 8px 0 0 !important; }
+  .subtabs { flex-direction: column; flex-wrap: nowrap; gap: 4px; padding: 12px 0 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .subtabs:empty { display: none; }
+  .subtabs button { text-align: left; border-radius: 6px; padding: 7px 12px; }
+  .utabs { flex-direction: column; overflow: visible; gap: 2px; padding: 12px 0 0; border-top: 1px solid rgba(255,255,255,.15); }
+  .utabs button { flex: none; text-align: left; padding: 7px 12px; border-bottom: 0; border-left: 3px solid transparent; }
+  .utabs button[aria-selected="true"] { border-left-color: var(--hl-bg); border-bottom-color: transparent; background: rgba(255,255,255,.08); }
+  .edubanner { display: flex; align-items: center; justify-content: space-between; gap: 20px; box-sizing: border-box; height: 72px; overflow: hidden; padding: 8px 24px; background: linear-gradient(100deg, #9a3412 0%, #c2410c 55%, #ea580c 100%); color: #fff; }
+  .edubanner svg { flex: 0 0 auto; width: 112px; height: 56px; }
+  .ebt { font-family: var(--display); font-weight: 800; font-size: 1.2rem; line-height: 1.2; }
+  .ebs { font-size: 0.9rem; line-height: 1.3; margin-top: 2px; }
+}
+@media (prefers-reduced-motion: reduce) { .topmore, .edubanner, body > main, body > .gutter, .topbar > .gutter, #navtoggle svg { transition: none !important; } }
+@media print { .edubanner, #navtoggle { display: none !important; } }
 </style>
 
 <section class="view" id="searchview" data-label="Search" hidden>
@@ -13794,6 +13857,24 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     }, { passive: true });
   })();
 
+  /* ---------- desktop left menu: collapse and expand, remembered for next time ---------- */
+  (function () {
+    var btn = document.getElementById('navtoggle'), root = document.documentElement;
+    function setNav(c) {
+      root.classList.toggle('navcollapsed', c);
+      var label = TT(c ? 'Expand menu' : 'Collapse menu');
+      btn.setAttribute('aria-expanded', c ? 'false' : 'true');
+      btn.setAttribute('aria-label', label); btn.title = label;
+    }
+    var saved = false; try { saved = localStorage.getItem('tp-nav') === 'collapsed'; } catch (e) {}
+    setNav(saved);
+    btn.addEventListener('click', function () {
+      var c = !root.classList.contains('navcollapsed');
+      setNav(c);
+      try { localStorage.setItem('tp-nav', c ? 'collapsed' : 'open'); } catch (e) {}
+    });
+  })();
+
   /* ---------- timeline ---------- */
   var catColor = function (c) { return 'hsl(' + Math.round(cats.indexOf(c) * 360 / cats.length) + ',55%,46%)'; };
   var tlOff = {};
@@ -14081,8 +14162,10 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   sessView.className = 'view'; sessView.id = 'sessionals'; sessView.hidden = true;
   var SESS = [['Semester 1', [['MPY26-C101', 'Foundations of Psychology'], ['MPY26-C102', 'Advanced Social Psychology'], ['MPY26-C103', 'Psychology of Personality'], ['MPY26-C104', 'Research Methodology']]],
     ['Semester 3', [['MPY26-C301', 'Psychopathology'], ['MPY26-C302', 'Disabilities & Rehabilitation'], ['MPY26-E303', 'Health Psychology'], ['MPY26-E304', 'Stress Management'], ['MPY26-E305', 'Indian Psychology'], ['MPY26-E306', 'Western Thoughts and Psychology']]]];
-  sessView.innerHTML = '<div class="eyebrow">' + esc(TT('MA Psychology · Internal exams')) + '</div><h1>' + esc(TT('Sessionals')) + '</h1>' +
-    '<p class="lede">' + esc(TT('Sessional exam dates and past sessional papers, paper by paper. Practise each past paper under time, then check your answers against the unit notes.')) + '</p>' +
+  sessView.innerHTML = '<div class="eyebrow">' + esc(TT('MA Psychology · Exams')) + '</div><h1>' + esc(TT('Exam')) + '</h1>' +
+    '<p class="lede">' + esc(TT('Exam dates and past papers, paper by paper, for sessional exams and semester end exams. Practise each past paper under time, then check your answers against the unit notes.')) + '</p>' +
+    '<div class="stabs examtabs" role="tablist" aria-label="' + esc(TT('Exam type')) + '"><button type="button" role="tab" data-ex="sess" aria-selected="true">' + esc(TT('Sessional Exam')) + '</button><button type="button" role="tab" data-ex="end" aria-selected="false">' + esc(TT('Semester End Exam')) + '</button></div>' +
+    '<div class="expane" data-pane="sess" style="display:flex;flex-direction:column;gap:24px">' +
     '<div class="block"><h3>' + esc(TT('Sessional schedule')) + '</h3><div class="tbl"><table><thead><tr><th>' + esc(TT('Date')) + '</th><th>' + esc(TT('Paper')) + '</th><th>' + esc(TT('Time')) + '</th><th>' + esc(TT('Syllabus')) + '</th></tr></thead><tbody>' + SSCHED.map(function (r) { return '<tr><td>' + esc(FT('{#} Nov {#}', [r[0], 2026])) + '</td><td>' + (r[1] ? '<span class="mono cap">' + r[1] + '</span> ' : '') + esc(TT(r[2])) + '</td><td>' + (r[3] ? esc(TT(r[3])) : '—') + '</td><td>' + (r[4] ? esc(TT(r[4])) : '—') + '</td></tr>'; }).join('') + '</tbody></table></div></div>' +
     SESS.map(function (s) {
       var full = '';
@@ -14093,7 +14176,22 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
         return '<a class="paper" href="#sessionals" data-sp="sp-' + p[0] + '" style="cursor:pointer;border:2px solid var(--good)"><span class="code">' + p[0] + '</span><h3>' + esc(TT(p[1])) + '</h3><div class="badges"><span class="badge ready">' + esc(TT(P.exam)) + '</span></div></a>';
       }).join('');
       return '<div class="block"><h3>' + esc(FT('Semester {#}', [s[0].replace('Semester ', '')]) + ' · ' + TT('past sessional papers')) + '</h3><div class="papers">' + cards + '</div></div>' + full;
-    }).join('');
+    }).join('') + '</div>' +
+    /* semester end exams: schedule and past papers, filled in as they arrive */
+    '<div class="expane" data-pane="end" style="display:none;flex-direction:column;gap:24px">' +
+    '<div class="block"><h3>' + esc(TT('Semester end exam schedule')) + '</h3><div class="tbl"><table><thead><tr><th>' + esc(TT('Date')) + '</th><th>' + esc(TT('Paper')) + '</th><th>' + esc(TT('Time')) + '</th><th>' + esc(TT('Syllabus')) + '</th></tr></thead><tbody><tr><td colspan="4" class="cap">' + esc(TT('Dates will appear here once the semester end exam schedule is announced.')) + '</td></tr></tbody></table></div></div>' +
+    SESS.map(function (s) {
+      return '<div class="block"><h3>' + esc(FT('Semester {#}', [s[0].replace('Semester ', '')]) + ' · ' + TT('past semester end exam papers')) + '</h3><div class="papers">' + s[1].map(function (p) {
+        return '<div class="paper soon"><span class="code">' + p[0] + '</span><h3>' + esc(TT(p[1])) + '</h3><div class="badges"><span class="badge soon">' + esc(TT('Not added yet')) + '</span></div></div>';
+      }).join('') + '</div></div>';
+    }).join('') + '</div>';
+  /* exam type tabs: Sessional Exam / Semester End Exam */
+  sessView.addEventListener('click', function (e) {
+    var xb = e.target.closest('[data-ex]'); if (!xb) return;
+    e.preventDefault();
+    all('[data-ex]', sessView).forEach(function (b) { b.setAttribute('aria-selected', b === xb ? 'true' : 'false'); });
+    all('.expane', sessView).forEach(function (p) { p.style.display = p.dataset.pane === xb.dataset.ex ? 'flex' : 'none'; });
+  });
   /* accordion: one paper open at a time, opening and closing over 0.3s */
   function sessSet(d, open, toTop) {
     var body = d.lastElementChild;
@@ -14103,7 +14201,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
     var done = function () {
       d._anim = null; body.style.overflow = '';
       if (!open) d.open = false;
-      if (open && (toTop || d.getBoundingClientRect().top < 60)) { d.style.scrollMarginTop = '60px'; d.scrollIntoView({ block: 'start' }); }
+      if (open && (toTop || d.getBoundingClientRect().top < (parseInt(getComputedStyle(document.documentElement).getPropertyValue('--jumpTop'), 10) || 60))) { d.style.scrollMarginTop = 'var(--jumpTop, 60px)'; d.scrollIntoView({ block: 'start' }); }
     };
     d.open = true;
     if (!body.animate || window.matchMedia('(prefers-reduced-motion: reduce)').matches) { done(); return; }
@@ -14118,7 +14216,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   }
   function sessOpen(d, toTop) {
     all('.sesspaper.is-open', sessView).forEach(function (x) { if (x !== d) sessSet(x, false); });
-    if (d.classList.contains('is-open')) { if (toTop) { d.style.scrollMarginTop = '60px'; d.scrollIntoView({ block: 'start' }); } return; }
+    if (d.classList.contains('is-open')) { if (toTop) { d.style.scrollMarginTop = 'var(--jumpTop, 60px)'; d.scrollIntoView({ block: 'start' }); } return; }
     sessSet(d, true, toTop);
   }
   sessView.addEventListener('click', function (e) {
@@ -14129,11 +14227,11 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       var need = g.getAttribute('data-find');
       setTimeout(function () {
         var panel = all('.unit:not([hidden]) .panel:not([hidden])')[0];
-        if (!need) { if (panel) { panel.style.scrollMarginTop = '60px'; panel.scrollIntoView({ block: 'start' }); barCompact(); } return; }
+        if (!need) { if (panel) { panel.style.scrollMarginTop = 'var(--jumpTop, 60px)'; panel.scrollIntoView({ block: 'start' }); barCompact(); } return; }
         var want = new RegExp('^' + TT(need).toLowerCase().replace(/\s+/g, ' ').trim().replace(/[.*+?^$()|[\]\\]/g, '\\$&').replace(/\{#\}/g, '\\d+') + '$');
         var hs = all('.unit:not([hidden]) .panel:not([hidden]) h3, .unit:not([hidden]) .panel:not([hidden]) h4');
         var h = hs.filter(function (x) { return want.test(x.textContent.toLowerCase().replace(/\s+/g, ' ').trim()); })[0];
-        if (h) { h.style.scrollMarginTop = '60px'; h.scrollIntoView({ block: 'start' }); barCompact(); }
+        if (h) { h.style.scrollMarginTop = 'var(--jumpTop, 60px)'; h.scrollIntoView({ block: 'start' }); barCompact(); }
       }, 80);
       return;
     }
@@ -14145,7 +14243,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
   document.getElementById('content').appendChild(sessView);
 
   /* ---------- top tabs ---------- */
-  [['home', 'Semesters'], ['psychologists', 'Famous Psychologists'], ['revise', 'Revise'], ['quiz', 'Quiz'], ['sessionals', 'Sessionals'], ['vineet', 'Vineet Kumar']].forEach(function (t) {
+  [['home', 'Semesters'], ['psychologists', 'Famous Psychologists'], ['revise', 'Revise'], ['quiz', 'Quiz'], ['sessionals', 'Exam'], ['vineet', 'Vineet Kumar']].forEach(function (t) {
     var b = document.createElement('button');
     b.type = 'button'; b.setAttribute('role', 'tab'); b.dataset.go = t[0]; b.textContent = t[1];
     maintabs.appendChild(b);
@@ -14243,7 +14341,7 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
       subtabs.innerHTML = ''; utabs.innerHTML = ''; utabs.hidden = true;
       var h = crumb('MA Psychology', 'home');
       if (kind === 'about') { aboutView.hidden = false; h += crumb('Vineet Kumar'); }
-      else if (kind === 'sessionals') { sessView.hidden = false; h += crumb('Sessionals'); }
+      else if (kind === 'sessionals') { sessView.hidden = false; h += crumb('Exam'); }
       else if (kind === 'quiz') { quizView.hidden = false; renderQuiz(); h += crumb('Quiz'); }
       else if (kind === 'revise') { reviseView.hidden = false; initRevise(); h += crumb('Revise'); }
       else if (kind === 'search') { searchView.hidden = false; renderSearch(); h += crumb('Search'); }
