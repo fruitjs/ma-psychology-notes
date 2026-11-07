@@ -342,12 +342,12 @@ details > div { padding: 0 14px 14px; display: flex; flex-direction: column; gap
 <section class="view" id="home" data-label="MA Psychology">
   <div class="eyebrow">Two-year programme · four semesters</div>
   <h1>MA Psychology Study Guides</h1>
-  <p class="lede">Pick a semester, then a paper, then a unit. Every unit has an overview, one tab per theorist or topic, diagrams, yellow memory tricks, and a self-test at the end. Use the breadcrumb at the top to step back out.</p>
+  <p class="lede">Pick a semester, then a paper, then a unit. Every unit has one tab per theorist or topic, with diagrams and yellow memory tricks, and a self-test at the end. Use the breadcrumb at the top to step back out.</p>
   <div class="scards" id="semcards"></div>
   <div class="block">
     <h3>How to use this for your unit test</h3>
     <ol>
-      <li>Read the unit <b>Overview</b> tab first: it tells you the big idea in a few lines.</li>
+      <li>Start with the first tab of the unit and work through the tabs in order.</li>
       <li>Open each tab. Learn the <b>yellow memory tricks</b> and practise drawing the diagrams. Examiners reward a neat labelled diagram.</li>
       <li>Learn the <b>key studies</b> with the researcher's name and year. Quoting them earns marks.</li>
       <li>Finish with the <b>Self-test</b> tab. Say the answer aloud before you open it.</li>
@@ -8092,6 +8092,14 @@ body { top: 0 !important; position: static !important; }
     <p>Report a mistake, request a topic, share an idea, ask a question or connect with me. You will need to sign in with a Google account.</p>
     <div><a class="setlink" href="https://docs.google.com/forms/d/e/1FAIpQLScNpv-LEl3a_Xiwnxcg0ZdaU0VWPQ4RYKocYq8J7QYfDe0KgQ/viewform" target="_blank" rel="noopener">Open the form</a></div>
   </div>
+  <div class="block setrow" id="setvisitors" hidden>
+    <h3>Visitors</h3>
+    <p>Totals for this website. They can take up to four hours to update, and someone using two devices counts as two users.</p>
+    <div class="setstats">
+      <div class="setstat"><b id="statusers"></b><span>Unique users</span></div>
+      <div class="setstat"><b id="statvisits"></b><span>Page visits</span></div>
+    </div>
+  </div>
 </section>
 <style>
 .maintabs { display: flex; gap: 4px; padding-top: 6px; border-bottom: 1px solid rgba(255,255,255,.12); }
@@ -9777,6 +9785,10 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 .setlink { display: inline-flex; align-items: center; min-height: 42px; box-sizing: border-box; padding: 8px 16px; border-radius: 8px; background: var(--campus-green); color: var(--campus-on-green); font-family: var(--display); font-weight: 700; font-size: 0.92rem; text-decoration: none; }
 .setlink:hover { background: var(--campus-green-hover); }
 .setlink:focus-visible { outline: 2px solid var(--campus-green); outline-offset: 2px; }
+.setstats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.setstat { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
+.setstat b { font-family: var(--display); font-size: 1.6rem; font-weight: 800; line-height: 1.15; color: var(--campus-green); font-variant-numeric: tabular-nums; }
+.setstat span { color: var(--muted); font-size: 0.9rem; }
 @media (max-width: 480px) {
   #themesel { display: flex; width: 100%; }
   #themesel button { padding-inline: 6px; }
@@ -14663,7 +14675,7 @@ th { background: var(--bg); }
       semesters.concat(subjects, units).forEach(function (x) { x.hidden = true; });
       subtabs.innerHTML = ''; utabs.innerHTML = ''; utabs.hidden = true;
       var h = crumb('MA Psychology', 'home');
-      if (kind === 'settings') { settingsView.hidden = false; h += crumb('Settings'); }
+      if (kind === 'settings') { settingsView.hidden = false; h += crumb('Settings'); loadVisitorTotals(); }
       else if (kind === 'about') { aboutView.hidden = false; h += crumb('Vineet Kumar'); }
       else if (kind === 'sessionals') { sessView.hidden = false; h += crumb('Exam'); }
       else if (kind === 'quiz') { quizView.hidden = false; renderQuiz(); h += crumb('Quiz'); }
@@ -14750,9 +14762,39 @@ th { background: var(--bg); }
     var title = names.slice(1).join(' > ') || names[0] || document.title, tries = 0;
     (function send() {
       var g = window.goatcounter;
-      if (g && g.count) g.count({ path: '/' + token, title: title, event: false });
+      if (g && g.count) { g.count({ path: '/' + token, title: title, event: false }); countVisitor(g); }
       else if (tries++ < 40) setTimeout(send, 250);
     })();
+  }
+
+  /* unique users: GoatCounter's public counter has one total per path, so each browser reports this path once */
+  var VISITOR_PATH = 'unique-visitor';
+  function countVisitor(g) {
+    if (g.filter && g.filter()) return;
+    try {
+      if (localStorage.getItem('tp-visitor-counted')) return;
+      localStorage.setItem('tp-visitor-counted', '1');
+    } catch (e) { return; }
+    g.count({ path: VISITOR_PATH, title: 'Unique visitor', event: true });
+  }
+
+  /* Settings page totals: the card stays hidden unless both numbers load, for example inside the artifact viewer, which blocks this request */
+  var visitorsLoaded = false;
+  function loadVisitorTotals() {
+    if (visitorsLoaded || !window.fetch) return;
+    visitorsLoaded = true;
+    function total(path) {
+      return fetch('https://ma-psychology-notes.goatcounter.com/counter/' + encodeURIComponent(path) + '.json').then(function (r) {
+        if (r.status === 404 && path === VISITOR_PATH) return { count: '0' }; /* no browser has reported yet */
+        if (!r.ok) throw new Error('counter ' + r.status);
+        return r.json();
+      });
+    }
+    Promise.all([total(VISITOR_PATH), total('TOTAL')]).then(function (res) {
+      document.getElementById('statusers').textContent = res[0].count;
+      document.getElementById('statvisits').textContent = res[1].count;
+      document.getElementById('setvisitors').hidden = false;
+    }).catch(function () {});
   }
 
   var start = location.hash.slice(1);
