@@ -9772,6 +9772,9 @@ mark { background: var(--campus-mark); color: var(--campus-mark-fg); }
 /* cards */
 .block { border-radius: 14px; }
 .ucard, .scard, .paper { border-radius: 14px; }
+/* unit and paper labels: the same tinted strip as card headings; the card clips it to its rounded corners */
+.ucard, .paper { overflow: hidden; }
+.ucard > .num:first-child, .paper > .code:first-child { margin: -16px -16px 6px; padding: 8px 16px; background: var(--campus-soft); color: var(--ink); border-bottom: 1px solid var(--line); }
 .ucard:hover, .scard:hover { border-color: var(--campus-green); }
 button.paper { border: 2px solid var(--campus-green); }
 button.paper:hover { border-color: var(--campus-green-hover); background: var(--campus-mark); color: var(--campus-mark-fg); }
