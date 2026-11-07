@@ -19,6 +19,7 @@
   if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
 })();
 </script>
+<script data-goatcounter="https://ma-psychology-notes.goatcounter.com/count" data-goatcounter-settings='{"no_onload": true}' async src="//gc.zgo.at/count.js"></script>
 <style>
 /* Layout: sticky breadcrumb + unit tab bar; each unit has a row of section tabs (overview, one per theorist, compare, test); one reading column below */
 :root {
@@ -14490,6 +14491,7 @@ th { background: var(--bg); }
         else { token = 'psychologists'; psyView.hidden = false; h += crumb('Famous Psychologists'); }
       }
       crumbs.innerHTML = h;
+      countView(token);
       try { history.replaceState(history.state, '', '#' + token); } catch (e) {}
       try { localStorage.setItem('tp-last', token); } catch (e) {}
       if (scroll) window.scrollTo(0, 0);
@@ -14528,6 +14530,7 @@ th { background: var(--bg); }
       else html += crumb(u.dataset.num + ': ' + u.dataset.short, u.id) + crumb(p.dataset.label);
     }
     crumbs.innerHTML = html;
+    countView(token);
     try { history.replaceState(history.state, '', '#' + token); } catch (e) {}
     try { localStorage.setItem('tp-last', token); } catch (e) {}
     if (scroll) window.scrollTo(0, 0);
@@ -14548,6 +14551,20 @@ th { background: var(--bg); }
     show(location.hash.slice(1), y == null);
     if (y != null) window.scrollTo(0, y);
   });
+
+  /* visitor counting: GoatCounter sees each unit and tab, because this page changes views without loading a new page */
+  var lastCounted = null;
+  function countView(token) {
+    if (token === lastCounted) return;
+    lastCounted = token;
+    var names = Array.prototype.map.call(crumbs.children, function (c) { return c.textContent.trim(); }).filter(Boolean);
+    var title = names.slice(1).join(' > ') || names[0] || document.title, tries = 0;
+    (function send() {
+      var g = window.goatcounter;
+      if (g && g.count) g.count({ path: '/' + token, title: title, event: false });
+      else if (tries++ < 40) setTimeout(send, 250);
+    })();
+  }
 
   var start = location.hash.slice(1);
   if (!start) { try { start = localStorage.getItem('tp-last') || ''; } catch (e) {} }
