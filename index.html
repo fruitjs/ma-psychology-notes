@@ -9786,6 +9786,20 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 }
 @media print { .menuicon { display: none; } }
 
+/* units listed under their subject: left menu on desktop only, no divider lines above the subjects */
+.subunits { display: none; }
+@media (min-width: 1100px) and (hover: hover) and (pointer: fine) {
+  .maintabs { border-bottom: 0; }
+  .subtabs { border-top: 0; padding-top: 0; }
+  .utabs { display: none; }
+  .subunits { display: flex; flex-direction: column; gap: 1px; margin: 2px 0 8px 10px; border-left: 1px solid rgba(255,255,255,.18); }
+  #subtabs .subunits button { display: block; width: 100%; box-sizing: border-box; margin: 0 0 0 -1px; padding: 5px 10px; border: 0; border-left: 3px solid transparent; border-radius: 0 6px 6px 0; background: transparent; color: var(--nav-muted); font-size: 0.82rem; line-height: 1.25; text-align: left; }
+  #subtabs .subunits button small { display: block; font-weight: 500; font-size: 0.72rem; opacity: .85; }
+  #subtabs .subunits button:hover { background: rgba(255,255,255,.08); color: var(--nav-fg); }
+  #subtabs .subunits button[aria-selected="true"] { border-left-color: var(--hl-bg); background: rgba(255,255,255,.08); color: var(--nav-fg); }
+  #subtabs .subunits button:focus-visible { outline: 2px solid var(--hl-bg); outline-offset: -2px; }
+}
+
 /* settings cog: beside the breadcrumb, so it stays reachable after the tabs scroll away */
 #settingstab { display: none; }
 .topbar .inner { position: relative; }
@@ -13538,7 +13552,16 @@ th { background: var(--bg); }
     });
   }
 
-  function fillTopTabs(sem, s) {
+  /* desktop keeps the open unit, or else the open subject, in view inside the left menu, clear of the pinned Settings tab */
+  function revealMenuUnit() {
+    var a = subtabs.querySelector('.subunits [aria-selected="true"]') || subtabs.querySelector('[aria-selected="true"]'), m = document.getElementById('topmore');
+    if (!a || !a.offsetParent) return;
+    var r = a.getBoundingClientRect(), b = m.getBoundingClientRect(), pad = 60;
+    if (r.bottom > b.bottom - pad) m.scrollTop += r.bottom - b.bottom + pad;
+    else if (r.top < b.top + 8) m.scrollTop -= b.top + 8 - r.top;
+  }
+
+  function fillTopTabs(sem, s, activeUnit) {
     subtabs.innerHTML = '';
     var list = sem ? subjectsOf(sem) : semesters;
     list.forEach(function (x) {
@@ -13547,6 +13570,19 @@ th { background: var(--bg); }
       b.textContent = sem ? x.dataset.short : x.dataset.name;
       b.setAttribute('aria-selected', x === s ? 'true' : 'false');
       subtabs.appendChild(b);
+      /* the open subject's units sit under it and the others stay collapsed; CSS shows this list on desktop only, other screens keep the unit row */
+      var us = sem && x === s ? unitsOf(x) : [];
+      if (!us.length) return;
+      var g = document.createElement('div');
+      g.className = 'subunits'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', x.dataset.short);
+      us.forEach(function (u) {
+        var ub = document.createElement('button');
+        ub.type = 'button'; ub.dataset.go = u.id;
+        ub.setAttribute('aria-selected', u === activeUnit ? 'true' : 'false');
+        ub.innerHTML = u.dataset.num + '<small>' + u.dataset.short + '</small>';
+        g.appendChild(ub);
+      });
+      subtabs.appendChild(g);
     });
     subtabs.setAttribute('aria-label', sem ? 'Subjects in ' + sem.dataset.name : 'Semesters');
   }
@@ -14586,7 +14622,8 @@ th { background: var(--bg); }
     semesters.forEach(function (x) { x.hidden = !(x === sem && !s); });
     subjects.forEach(function (x) { x.hidden = !(x === s && !u); });
     units.forEach(function (x) { x.hidden = x !== u; });
-    fillTopTabs(sem, s);
+    fillTopTabs(sem, s, u);
+    revealMenuUnit();
     fillUnitTabs(s, u);
 
     var html = '';
