@@ -9165,6 +9165,359 @@ paranjpe:[`Paranjpe compares Indian ideas of self, such as the jivatman and the 
 });
 </script>
 <script>
+/* Word help: uncommon English words get a dotted underline and a short meaning on hover or tap (English only; see 99-foot.html).
+   Key: the word and its other forms, separated by |. Value: a short meaning in simple English. */
+window.GLOSS = {
+ "absenteeism": "Being absent from work or school often.",
+ "abstraction": "Thinking in general ideas rather than real, concrete things.",
+ "adherence": "Sticking to a rule, plan or medical treatment.",
+ "adversity": "Hard or unlucky times; difficulty.",
+ "aetiology|etiology": "The cause or origin of a disease or disorder.",
+ "affiliation": "A connection with, or wish to belong to, a group or person.",
+ "afflictions": "Troubles or illnesses that cause suffering.",
+ "agentic": "Acting only as an agent who follows orders, not taking personal responsibility.",
+ "aggravates": "Makes something worse.",
+ "aggregate": "A total made by adding parts together.",
+ "agitation|agitated": "Restless, nervous excitement; unable to keep calm.",
+ "agnosia": "Inability to recognise objects, faces or sounds, though the senses work.",
+ "alienation": "Feeling cut off from other people or from society.",
+ "altruism": "Helping others without expecting anything in return.",
+ "alternativism": "Kelly's idea that any event can be understood in many different ways.",
+ "ambiguity|ambiguous": "Having more than one possible meaning; unclear.",
+ "anhedonia": "Inability to feel pleasure from things that used to be enjoyable.",
+ "antecedents|antecedent": "Things that happen just before a behaviour.",
+ "anterograde": "Forward-acting: unable to form new memories after an injury.",
+ "anticipation|anticipate": "Expecting or looking ahead to something.",
+ "apathy": "Lack of interest, feeling or concern.",
+ "aphasia": "Loss of the ability to speak or understand language.",
+ "aphorisms": "Short, wise sayings.",
+ "apperception": "Understanding something new by linking it to past experience.",
+ "appraisal|appraisals|appraised|appraises": "Judging how good, bad or threatening something is.",
+ "apraxia": "Inability to carry out planned movements, though the muscles work.",
+ "aptitude": "Natural ability to learn a particular skill.",
+ "arbitrary": "Chosen by chance or personal wish, not by reason.",
+ "archetype|archetypes": "A universal image or pattern shared by all humans (Jung).",
+ "armchair": "Based on thinking alone, without research or experiments.",
+ "arousal|aroused": "A state of being alert, excited or stirred up, in body and mind.",
+ "assent": "Agreement to take part, for example from a child.",
+ "assertiveness|assertive": "Stating your needs and views confidently while respecting others.",
+ "assimilation": "Fitting new information into what you already know; blending into another group.",
+ "atomistic": "Breaking something down into its smallest separate parts.",
+ "attribution": "The cause you think explains someone's behaviour.",
+ "attrition": "Loss of participants from a study over time.",
+ "austerity": "Simple, strict living without comforts.",
+ "autogenic": "Produced by yourself, for example relaxing through self-suggestion.",
+ "autonomy|autonomous": "Independence; the freedom to decide for yourself.",
+ "aversion|aversive": "A strong dislike; something unpleasant you want to avoid.",
+ "avolition": "Lack of motivation to start or finish everyday tasks.",
+ "barrelled|barreled": "A 'double-barrelled' question asks two things at once.",
+ "bereavement": "Losing a loved one through death, and the grief that follows.",
+ "binge": "Eating or drinking far too much in a short time.",
+ "blueprint": "A detailed plan or design.",
+ "brooding": "Thinking for a long time about worries or troubles.",
+ "burnout": "Complete exhaustion from long-term stress, usually at work.",
+ "bystander|bystanders": "A person who is present but does not take part.",
+ "capillaries": "The tiniest blood vessels in the body.",
+ "catastrophic": "Extremely harmful; disastrous.",
+ "catatonic|catatonia": "Staying motionless or in odd postures and not responding.",
+ "catharsis": "Release of strong, pent-up emotion.",
+ "causation|causal": "One thing causing another.",
+ "cessation": "Stopping, for example stopping smoking.",
+ "chronometry": "Measuring how long mental processes take.",
+ "circadian": "Following the body's daily 24-hour rhythm.",
+ "clinician|clinicians": "A doctor or psychologist who treats patients.",
+ "coherence": "Being logical and consistent; parts fitting together.",
+ "cohesion|cohesive|cohesiveness": "How strongly members of a group stick together.",
+ "communitarian": "Putting the community before the individual.",
+ "compulsions|compulsive": "Strong urges to repeat an action again and again.",
+ "conductance": "How easily electricity passes through, for example through skin.",
+ "confabulation": "Filling memory gaps with made-up details, without meaning to lie.",
+ "confederate|stooge": "Someone who secretly works for the experimenter and pretends to be a participant.",
+ "confound|confounding": "A hidden factor that mixes up the results of a study.",
+ "congruent": "Matching or in agreement.",
+ "construe|construes|construed|reconstrue": "To interpret or understand something in a certain way.",
+ "contemplation": "Thinking deeply; in change models, the stage of considering a change.",
+ "contempt": "Strong disrespect for someone.",
+ "contingency": "A link where one event depends on another.",
+ "continuum": "A smooth range from one end to the other, without sharp divisions.",
+ "corollary|corollaries": "An idea that follows naturally from a main idea.",
+ "correlates": "Things that vary together with something else.",
+ "counterbalancing|counterbalance": "Changing the order of conditions so that order effects cancel out.",
+ "covariate": "An extra variable that changes along with the ones being studied.",
+ "covert": "Hidden; not openly seen.",
+ "cramming": "Studying a lot just before an exam.",
+ "craving": "A very strong desire for something.",
+ "credible|credibility": "Believable; trustworthy.",
+ "criterion": "A standard used to judge or decide something.",
+ "cynicism": "Believing people act only out of selfishness.",
+ "debriefing|debriefed": "Telling participants the true purpose of a study after it ends.",
+ "deception": "Tricking someone into believing something false.",
+ "deindividuation": "Losing your sense of self and responsibility in a crowd.",
+ "denial": "Refusing to accept something painful as true.",
+ "desirability": "How much something is wanted; 'social desirability' means answering to look good.",
+ "detachment|detached": "Not being emotionally involved.",
+ "determinism": "The belief that every event is caused by earlier events.",
+ "deviation|deviations": "Moving away from what is normal or average.",
+ "devotee": "A devoted follower.",
+ "diaphragmatic": "Using the diaphragm, the breathing muscle below the lungs.",
+ "diastolic": "Blood pressure while the heart rests between beats.",
+ "diathesis": "A natural weakness that makes someone likely to develop a disorder.",
+ "diffuse": "Spread out; not focused in one place.",
+ "discrepancy|discrepancies": "A difference between things that should match.",
+ "discredited": "Shown to be false or untrustworthy.",
+ "discrete": "Separate and distinct.",
+ "disengagement": "Withdrawing and giving up effort.",
+ "displacement": "Redirecting feelings onto a safer target.",
+ "disposition|dispositional": "A person's natural tendency or inner traits.",
+ "dissent": "Disagreement with the majority.",
+ "dissociation|dissociative": "Feeling disconnected from your thoughts, memories or identity.",
+ "dissonance": "An uncomfortable clash between two beliefs, or a belief and an action.",
+ "drowsiness": "Feeling sleepy.",
+ "dualism": "The belief that mind and body are separate things.",
+ "dutifulness": "Carefully doing your duty.",
+ "dystonic": "Not in harmony with your self-image; feels foreign.",
+ "echoic": "Echoic memory: a very brief memory of sounds.",
+ "efficacy": "Effectiveness; 'self-efficacy' is belief in your own ability.",
+ "egocentric|egocentrism": "Seeing things only from your own point of view.",
+ "empiricism|empiricist|empiricists|empirical": "Based on experience and observation rather than theory.",
+ "endorse": "To support or approve.",
+ "enduring": "Lasting a long time.",
+ "enumerator": "A person who collects survey data.",
+ "episodic": "Episodic memory: memory of personal events, with their time and place.",
+ "equanimity": "A calm, balanced state of mind.",
+ "erodes": "Slowly wears away.",
+ "esteem": "Respect; 'self-esteem' is how much you value yourself.",
+ "ethnography": "Studying a culture by living among its people.",
+ "eudaimonic": "Wellbeing that comes from meaning and personal growth.",
+ "euphoric": "Intensely happy and excited.",
+ "eustress": "Positive stress that motivates you.",
+ "evoke|evokes": "To bring out a feeling or memory.",
+ "exaggerated": "Made to seem bigger than it really is.",
+ "excitability": "Being easily excited or stimulated.",
+ "existential": "About human existence, its meaning, freedom and choice.",
+ "expectancy": "Expectation of what will happen.",
+ "extraneous": "Coming from outside; not part of what is being studied.",
+ "extrinsic": "Coming from outside, such as rewards or praise.",
+ "eyewitness": "A person who saw an event happen.",
+ "fabrication": "Something made up or false.",
+ "facet|facets": "One side or part of something.",
+ "factorial": "A design that studies two or more independent variables together.",
+ "fallacy": "A mistaken belief or faulty reasoning.",
+ "falsifiable": "Possible to prove false by a test.",
+ "falsification": "Proving something false; also, faking research data.",
+ "feasibility|feasible": "Whether something can practically be done.",
+ "fidelity": "Faithfulness or accuracy.",
+ "fixation|fixations": "Getting stuck at an earlier stage of development.",
+ "flashbacks": "Sudden, vivid memories of a past event, as if it is happening again.",
+ "flattery|ingratiation": "Praising someone to win their favour.",
+ "fluctuating|fluctuates|fluctuations": "Changing up and down.",
+ "fraternal": "Fraternal twins develop from two different eggs, so they are not identical.",
+ "fugue": "Sudden travel away from home with loss of memory of one's identity.",
+ "gait": "A person's way of walking.",
+ "generalisability|generalisable": "How far results apply to other people or settings.",
+ "generativity": "Caring for and guiding the next generation.",
+ "gratification": "Getting pleasure or a reward.",
+ "gregariousness": "Enjoying the company of others.",
+ "guardianship": "Legal responsibility to care for someone.",
+ "gullible": "Easily tricked or fooled.",
+ "habituation": "Responding less to something because it keeps repeating.",
+ "hardiness": "Inner toughness that helps a person stay strong under stress.",
+ "heredity": "The passing of traits from parents to children through genes.",
+ "heritability": "How much of the difference between people in a trait is due to genes.",
+ "heterogeneous": "Mixed; made of different kinds.",
+ "heuristic|heuristics": "A mental shortcut for making quick judgements.",
+ "hierarchy": "An order of ranks, from lower to higher.",
+ "hoarding": "Collecting things and being unable to throw them away.",
+ "homeostasis": "The body keeping its internal state steady.",
+ "homogeneity": "Being all of the same kind.",
+ "hostility": "Unfriendly, angry behaviour towards others.",
+ "humane": "Kind and caring.",
+ "humility|modesty": "Not boasting about yourself.",
+ "hypocrisy": "Saying one thing but doing another.",
+ "iconic": "Iconic memory: a very brief memory of what you saw.",
+ "illiterate": "Unable to read or write.",
+ "illusory": "Not real; based on an illusion.",
+ "impartial": "Fair; not taking sides.",
+ "impetus": "A driving force.",
+ "implicit": "Not stated directly; working without awareness.",
+ "impulsive|impulsivity|impulsiveness": "Acting suddenly without thinking first.",
+ "inborn|innate": "Present from birth; not learned.",
+ "incentive": "A reward that motivates you to act.",
+ "incongruent": "Not matching; in conflict.",
+ "incontinence": "Inability to control urine or stool.",
+ "individuation": "Becoming a whole, unique person (Jung).",
+ "industrious": "Hard-working.",
+ "inertia": "A tendency to stay still or unchanged.",
+ "inference|inferred": "A conclusion worked out from evidence, not seen directly.",
+ "inferential": "Used to draw conclusions about a whole population from a sample.",
+ "infirmity": "Physical weakness or illness.",
+ "informant|informants": "A person who gives information about someone, such as a relative.",
+ "inhibition": "Holding back an action or response.",
+ "inoculation": "Building resistance by exposure to a small dose, as in 'stress inoculation'.",
+ "insecurity|insecure": "Lack of confidence; feeling unsafe.",
+ "interdependent|interdependence": "Depending on each other.",
+ "intimacy": "A close, personal relationship.",
+ "intrinsic": "Coming from within, such as interest or enjoyment.",
+ "introspection": "Looking inward at your own thoughts and feelings.",
+ "intrusive": "Unwanted and forcing its way into the mind.",
+ "invulnerable|invulnerability": "Unable to be harmed.",
+ "irritability|irritable": "Getting annoyed or angry very easily.",
+ "isomorphism": "Having the same form, for example brain activity matching what we perceive.",
+ "judgemental|judgmental": "Quick to criticise or judge others.",
+ "labile|lability": "Changing quickly and unpredictably, as with emotions.",
+ "laissez": "Laissez-faire: a hands-off style that lets people do as they like.",
+ "latent": "Hidden; present but not yet active.",
+ "lesion": "An area of damage in the body or brain.",
+ "lexical": "About the words of a language.",
+ "libido": "Sexual or life energy (Freud).",
+ "livelihood": "A way of earning money to live.",
+ "loafing": "Social loafing: putting in less effort when working in a group.",
+ "loci": "Places; the 'method of loci' links items to places in your mind.",
+ "locomotion|locomotor": "Movement from one place to another.",
+ "locus": "Place; 'locus of control' is where you believe control over your life lies.",
+ "longitudinal": "Studying the same people over a long period.",
+ "luminous": "Shining; full of light.",
+ "maladaptive": "Unhelpful; making adjustment harder.",
+ "malingering": "Faking illness on purpose to gain something.",
+ "manifest": "Clearly shown; visible.",
+ "mastery": "Complete skill or control.",
+ "maturation": "Natural growing up with age.",
+ "melancholic": "Deeply and persistently sad.",
+ "moderation": "Avoiding extremes; keeping to a sensible amount.",
+ "moratorium": "A period of delay or exploring before making a firm choice.",
+ "mysticism": "Seeking union with the divine through direct inner experience.",
+ "narcissism": "Too much self-love and need for admiration.",
+ "nativism": "The belief that some knowledge or abilities are inborn.",
+ "neologism": "A newly made-up word.",
+ "nomothetic": "Studying general laws that apply to everyone.",
+ "idiographic": "Studying one individual in depth.",
+ "nuisance": "Something annoying.",
+ "nurture": "Upbringing and care; the effect of the environment.",
+ "obedient|obedience": "Following orders or rules.",
+ "observable": "Able to be seen or measured.",
+ "onset": "The beginning of something, such as an illness.",
+ "orthodox": "Traditional and generally accepted.",
+ "overt": "Open and easy to see.",
+ "pampered": "Given too much care and attention; spoiled.",
+ "paradigm": "A model or framework of thinking.",
+ "paradox": "Something that seems to contradict itself but may still be true.",
+ "parsimonious": "The simplest possible explanation.",
+ "passivity": "Not acting; letting things happen to you.",
+ "perceptual": "About how we sense and interpret the world.",
+ "peripheral": "At the edge; not central.",
+ "permeable|permeability": "Open to letting new things in, such as new ideas.",
+ "impermeable": "Closed; not letting new things in.",
+ "perpetuating": "Keeping something going.",
+ "persecutory": "Falsely believing others are trying to harm you.",
+ "perseveration": "Repeating a response even when it no longer fits.",
+ "persona": "The public mask or role a person shows to others.",
+ "pessimism": "Expecting things to turn out badly.",
+ "phenomenological": "About experience as it directly appears to the person.",
+ "physique": "The size and shape of a person's body.",
+ "placebo": "A fake treatment with no active ingredient.",
+ "plagiarism": "Copying someone else's work and passing it off as your own.",
+ "plateau": "A stage where progress stops for a while.",
+ "pluralistic": "Pluralistic ignorance: everyone wrongly assumes others think differently from them.",
+ "postulate": "A basic idea accepted as true and used as a starting point.",
+ "precipitating": "Triggering; causing something to start.",
+ "predictor|predictors": "Something that helps forecast a result.",
+ "predisposing": "Making a person more likely to develop something.",
+ "preparedness": "Readiness.",
+ "presumed": "Taken to be true without proof.",
+ "primacy": "Being first; the 'primacy effect' is remembering the first items best.",
+ "proactive": "Acting in advance to prevent problems.",
+ "prodromal": "The early warning stage before an illness fully starts.",
+ "prolonged": "Lasting a long time.",
+ "prone": "Likely to suffer from something.",
+ "proximity": "Nearness.",
+ "pseudo": "False; only appearing to be real.",
+ "psychogenic": "Caused by the mind rather than the body.",
+ "psychopathy": "Lack of empathy and guilt, with antisocial behaviour.",
+ "psychophysical": "Linking the mind and the body.",
+ "psychosomatic": "A physical illness caused or made worse by the mind.",
+ "purposive": "Having a purpose or goal.",
+ "quasi": "Partly; a 'quasi-experiment' does not assign people to groups at random.",
+ "rapport": "A friendly, trusting relationship.",
+ "rationale": "The reason behind something.",
+ "reappraisal|reappraise": "Looking at a situation again in a new, more helpful way.",
+ "reassurance|reassure": "Words that remove someone's fear or doubt.",
+ "recapitulation": "Repeating earlier stages, for example of human evolution.",
+ "recency": "Being recent; the 'recency effect' is remembering the last items best.",
+ "reciprocity": "Give and take; returning what you receive.",
+ "reframing": "Seeing a situation in a different, more helpful way.",
+ "regression": "Going back to an earlier stage of behaviour; in statistics, a method of prediction.",
+ "relapse": "Falling back into an illness or old habit after improving.",
+ "relativism": "The belief that truth depends on culture or point of view.",
+ "remediation": "Correcting or improving a problem.",
+ "renunciation|renounced": "Giving up worldly things or desires.",
+ "replicable|replicate|replication": "Able to be repeated with the same results.",
+ "repressed|repression": "Pushed out of the conscious mind.",
+ "resemblance": "Likeness; similarity.",
+ "residual": "Remaining; left over.",
+ "resilience": "The ability to bounce back from difficulty.",
+ "respite": "A short break or relief.",
+ "retrieval|retrieve": "Getting stored information back out of memory.",
+ "retrograde": "Backward-acting: loss of memories from before an injury.",
+ "rigid": "Stiff; not flexible.",
+ "rigorous": "Very careful and thorough.",
+ "rumination": "Thinking about the same worries again and again.",
+ "salivation|salivate|saliva": "Producing saliva (spit) in the mouth.",
+ "sarcasm": "Saying the opposite of what you mean, to mock someone.",
+ "scapegoating": "Blaming an innocent person or group for problems.",
+ "scepticism|skepticism": "Doubt; not easily believing.",
+ "schema": "A mental framework that organises what you know.",
+ "segregation": "Keeping groups apart.",
+ "sensitization|sensitisation": "Responding more strongly to something after repeated exposure.",
+ "sequential": "In order, one after another.",
+ "serene|serenity": "Calm and peaceful.",
+ "sociable": "Friendly; enjoying the company of others.",
+ "somatic": "Of the body.",
+ "speculative": "Based on guesses rather than evidence.",
+ "spontaneous": "Happening naturally, without planning.",
+ "stagnation": "Not growing or developing.",
+ "stigma|stigmatised|stigmatise": "Shame or disgrace that society attaches to something.",
+ "stingy": "Unwilling to spend or share.",
+ "stratified|strata": "Divided into layers or subgroups.",
+ "stupor": "A state of barely being conscious or responding.",
+ "submissive": "Too ready to obey others.",
+ "subliminal": "Below the level of conscious awareness.",
+ "subvocal": "Silent speech in the mind or throat.",
+ "sundowning": "Confusion that gets worse in the late afternoon or evening.",
+ "superordinate": "Higher in rank; including others under it.",
+ "susceptibility": "How likely someone is to be affected.",
+ "syntonic": "In harmony with your self-image; feels like 'me'.",
+ "systolic": "Blood pressure while the heart is beating.",
+ "taboo": "Forbidden by custom.",
+ "tangible": "Real; able to be touched.",
+ "teleology": "Explaining things by their purpose or goal.",
+ "temperament|temperaments": "A person's natural, inborn emotional style.",
+ "tenets": "Main principles or beliefs.",
+ "tentative": "Not final; uncertain.",
+ "testable": "Able to be checked by a test or experiment.",
+ "tokenism": "Doing something only for show.",
+ "transactional": "Based on give-and-take exchanges.",
+ "transcendence|transcendent": "Going beyond ordinary limits or experience.",
+ "transpersonal": "Going beyond the personal self, as in spiritual experience.",
+ "tremble|tremor": "To shake slightly.",
+ "triad|triads": "A group of three.",
+ "triangulation": "Using several methods to check the same finding.",
+ "turbulent": "Disturbed and restless.",
+ "tyranny": "Cruel and unfair control.",
+ "unanimity": "Complete agreement.",
+ "underlies": "Is the hidden basis of.",
+ "unmoved": "Not emotionally affected.",
+ "utopia": "An imagined perfect society.",
+ "valence": "Whether a feeling is pleasant or unpleasant.",
+ "vicarious": "Experienced through watching others rather than directly.",
+ "vigorous": "Strong and energetic.",
+ "vindictive": "Wanting revenge.",
+ "viscera|visceral": "The internal organs; a 'visceral' feeling is felt deep in the gut.",
+ "visuospatial": "About seeing and where things are in space.",
+ "vulnerable": "Easily harmed.",
+ "withdrawal": "Unpleasant symptoms after stopping a drug; also pulling away from people."
+};
+</script>
+<script>
 /* detail: key -> {c: [[concept, explanation]...], s: [[title, what was done, what it showed, evaluation]...]} */
 window.PSYD = window.PSYD || {};
 Object.assign(window.PSYD, {
@@ -9785,6 +10138,12 @@ s:[[`Self and Identity in Modern Psychology and Indian Thought (1998)`,`Paranjpe
 .setlink { display: inline-flex; align-items: center; min-height: 42px; box-sizing: border-box; padding: 8px 16px; border-radius: 8px; background: var(--campus-green); color: var(--campus-on-green); font-family: var(--display); font-weight: 700; font-size: 0.92rem; text-decoration: none; }
 .setlink:hover { background: var(--campus-green-hover); }
 .setlink:focus-visible { outline: 2px solid var(--campus-green); outline-offset: 2px; }
+/* word help: dotted underline on uncommon words, meaning in a floating box */
+.gl { text-decoration: underline dotted; text-decoration-color: var(--muted); text-decoration-thickness: 1.5px; text-underline-offset: 3px; cursor: help; }
+.gl:hover, .gl[aria-describedby] { text-decoration-color: var(--campus-green); }
+#gltip { position: fixed; z-index: 60; box-sizing: border-box; max-width: min(320px, calc(100vw - 16px)); padding: 8px 11px; border-radius: 8px; background: var(--ink); color: var(--bg); font-family: var(--body); font-size: 0.88rem; line-height: 1.4; box-shadow: 0 4px 14px rgba(0,0,0,.25); pointer-events: none; }
+#gltip b { display: block; margin-bottom: 2px; font-family: var(--display); font-weight: 700; text-transform: capitalize; }
+@media print { .gl { text-decoration: none; } #gltip { display: none !important; } }
 .setstats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
 .setstat { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); }
 .setstat b { font-family: var(--display); font-size: 1.6rem; font-weight: 800; line-height: 1.15; color: var(--campus-green); font-variant-numeric: tabular-nums; }
@@ -14691,6 +15050,7 @@ th { background: var(--bg); }
         else { token = 'psychologists'; psyView.hidden = false; h += crumb('Famous Psychologists'); }
       }
       crumbs.innerHTML = h;
+      glossVisible();
       countView(token);
       try { history.replaceState(history.state, '', '#' + token); } catch (e) {}
       try { localStorage.setItem('tp-last', token); } catch (e) {}
@@ -14731,6 +15091,7 @@ th { background: var(--bg); }
       else html += crumb(u.dataset.num + ': ' + u.dataset.short, u.id) + crumb(p.dataset.label);
     }
     crumbs.innerHTML = html;
+    glossVisible();
     countView(token);
     try { history.replaceState(history.state, '', '#' + token); } catch (e) {}
     try { localStorage.setItem('tp-last', token); } catch (e) {}
@@ -14795,6 +15156,104 @@ th { background: var(--bg); }
       document.getElementById('statvisits').textContent = res[1].count;
       document.getElementById('setvisitors').hidden = false;
     }).catch(function () {});
+  }
+
+  /* word help: uncommon English words (window.GLOSS, 186-glossary.html) get a dotted underline and a short meaning
+     on hover or tap. English only, because other languages translate the words. Each word is marked once per section. */
+  var GL = null, glTip = null, glCur = null, glPinned = false;
+  var GL_SKIP = /^(A|BUTTON|SCRIPT|STYLE|SVG|INPUT|SELECT|TEXTAREA|LABEL|SUMMARY|H1|H2|H3|H4|CODE|NAV)$/;
+  function glSetup() {
+    if (GL !== null) return GL;
+    GL = false;
+    if (!window.GLOSS || !/^en/i.test(document.documentElement.lang || 'en')) return GL;
+    var map = {}, forms = [];
+    Object.keys(window.GLOSS).forEach(function (k) { k.split('|').forEach(function (w) { map[w] = k; forms.push(w); }); });
+    forms.sort(function (a, b) { return b.length - a.length; });
+    GL = { map: map, re: new RegExp('\\b(' + forms.join('|') + ')\\b', 'gi') };
+    glTip = document.createElement('div');
+    glTip.id = 'gltip'; glTip.setAttribute('role', 'tooltip'); glTip.hidden = true;
+    glTip.innerHTML = '<b></b><span></span>';
+    document.body.appendChild(glTip);
+    document.addEventListener('mouseover', function (e) {
+      var el = e.target.closest && e.target.closest('.gl');
+      if (el && el !== glCur) { glPinned = false; glShow(el); }
+    });
+    document.addEventListener('mouseout', function (e) {
+      var el = e.target.closest && e.target.closest('.gl');
+      if (el && !glPinned && !(e.relatedTarget && el.contains(e.relatedTarget))) glHide();
+    });
+    /* a tap or click keeps the meaning open until the next tap, which suits touch screens */
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest && e.target.closest('.gl');
+      if (!el) { if (glCur) glHide(); return; }
+      if (el === glCur && glPinned) glHide(); else { glShow(el); glPinned = true; }
+    });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && glCur) glHide(); });
+    window.addEventListener('scroll', function () { if (glCur) glHide(); }, { passive: true });
+    window.addEventListener('resize', function () { if (glCur) glHide(); });
+    return GL;
+  }
+  function glShow(el) {
+    if (glCur && glCur !== el) glCur.removeAttribute('aria-describedby');
+    glCur = el;
+    glTip.firstChild.textContent = el.textContent;
+    glTip.lastChild.textContent = window.GLOSS[el.dataset.k] || '';
+    glTip.hidden = false;
+    el.setAttribute('aria-describedby', 'gltip');
+    var r = el.getBoundingClientRect(), w = glTip.offsetWidth, h = glTip.offsetHeight, vw = document.documentElement.clientWidth;
+    var left = Math.max(8, Math.min(r.left + r.width / 2 - w / 2, vw - w - 8)), top = r.top - h - 8;
+    if (top < 8) top = r.bottom + 8;
+    glTip.style.left = left + 'px'; glTip.style.top = top + 'px';
+  }
+  function glHide() {
+    if (glCur) glCur.removeAttribute('aria-describedby');
+    glCur = null; glPinned = false;
+    if (glTip) glTip.hidden = true;
+  }
+  function glLetterNear(node, before) {
+    var s = before ? node.previousSibling : node.nextSibling;
+    var t = s ? s.textContent : '';
+    return before ? /[A-Za-z]$/.test(t) : /^[A-Za-z]/.test(t);
+  }
+  function glossify(root) {
+    var g = glSetup();
+    if (!g || !root) return;
+    var used = {}, nodes = [];
+    Array.prototype.forEach.call(root.querySelectorAll('.gl'), function (s) { used[s.dataset.k] = 1; });
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
+      for (var p = n.parentNode; p && p !== root.parentNode; p = p.parentNode) {
+        if (GL_SKIP.test(p.nodeName.toUpperCase())) return NodeFilter.FILTER_REJECT;
+        if (p.classList && (p.classList.contains('gl') || p.classList.contains('notranslate') || p.classList.contains('stabs') || p.classList.contains('pager'))) return NodeFilter.FILTER_REJECT;
+      }
+      return NodeFilter.FILTER_ACCEPT;
+    } });
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      var text = n.nodeValue, last = 0, frag = null, m;
+      g.re.lastIndex = 0;
+      while ((m = g.re.exec(text))) {
+        var key = g.map[m[0].toLowerCase()], end = m.index + m[0].length;
+        if (!key || used[key]) continue;
+        /* skip words split by markup, such as a styled first letter */
+        if ((m.index === 0 && glLetterNear(n, true)) || (end === text.length && glLetterNear(n, false))) continue;
+        used[key] = 1;
+        frag = frag || document.createDocumentFragment();
+        frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        var s = document.createElement('span');
+        s.className = 'gl'; s.dataset.k = key; s.textContent = m[0];
+        frag.appendChild(s);
+        last = end;
+      }
+      if (frag) { frag.appendChild(document.createTextNode(text.slice(last))); n.parentNode.replaceChild(frag, n); }
+    });
+  }
+  function glossVisible() {
+    if (!glSetup()) return;
+    glHide();
+    Array.prototype.forEach.call(document.querySelectorAll('main .view:not([hidden])'), function (v) {
+      var parts = v.classList.contains('unit') ? v.querySelectorAll('.panel:not([hidden])') : [v];
+      Array.prototype.forEach.call(parts, glossify);
+    });
   }
 
   var start = location.hash.slice(1);
